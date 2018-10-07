@@ -1,2 +1,2 @@
-# CodeStreak-Backend
-Backend functionality for CodeStreak(Online portal for lab assignments assessment)
+# CodeStreak
+CodeStreak - Online portal for lab assignments assessment
