@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<script>
+	var ctr=1;
+	function add(){		
+		var element = document.getElementById("form");
+		var divToCopy = document.getElementById("form").childNodes[1];
+		var newElement = divToCopy.cloneNode(true);
+		ctr=ctr+1;
+		newElement.setAttribute('id',ctr);
+		var submitButton = document.getElementById("submit");
+
+		newElement.setAttribute('style','background-color:rgb(204, 204, 204)');
+		//newElement.setAttribute('id',"div2");
+		// newElement.innerHTML = '<h3>New Contest</h3><form action="">Section Name:<br><input type="text" name="firstname" value=""><br>Contest name:<br><input type="text" name="lastname" value=""><br>Contest Begin:<br><input type="datetime-local" name="Contest Begin"><br>Contest End:<br><input type="datetime-local" name="Contest End"><br>Type Of Lab:<br><input type="checkbox" name="Subject1" value="DS">Data Structures<br><input type="checkbox" name="Subject2" value="Algo">Algorithms<br>QUESTION BANK<br><select name="QA"><option value="Q1">Question 1</option><option value="Q2">Question 2</option><option value="Q3">Question 3</option><option value="Q4">Question 4</option></select><br><br><input type="submit" value="Submit"></form>';
+		element.appendChild(newElement);
+	}
+	function del(arg) {
+	    var el_id = arg.parentElement.id;
+		var el = document.getElementById(el_id);
+		el.parentNode.removeChild(el);
+		
+		
+		return;
+	}
+</script>
+<html>
+<body>
+
+<h1  style="background-color:rgb(255, 229, 229)"><font color="grey" face="sans-serif">Create Contest Page </font></h1>
+
+<div style="" style="background-color:rgb(77, 77, 77)" id="s">
+	<h3 style="position:absolute;top:0;right:0;">
+		<button type="button" onclick="add()">
+		<font color="Blue" face="sans-serif" style="background-color:Lightgreen">
+			Add Section
+		</font>
+		</button>
+	</h3>
+  <h3>New Contest</h3>
+	<form action="" id = "form">
+		<div name = "div1" style="background-color:rgb(204, 204, 204)" id=1>
+			Section Name:<br><input type="text" name="firstname" value=""><br>
+			Contest name:<br><input type="text" name="lastname" value=""><br>
+			Contest Begin:<br><input type="datetime-local" name="Contest Begin"><br>
+			Contest End:<br><input type="datetime-local" name="Contest End"><br>
+			Type Of Lab:<br>
+				<input type="checkbox" name="Subject1" value="DS">Data Structures<br>
+				<input type="checkbox" name="Subject2" value="Algo">Algorithms<br>
+			QUESTION BANK<br>
+				<select name="QA">
+					<option value="Q1">Question 1</option>
+					<option value="Q2">Question 2</option>
+					<option value="Q3">Question 3</option>
+					<option value="Q4">Question 4</option>
+				</select>
+			<br><br>
+			<input type="submit" value="Submit" id = "submit">
+			<br>
+				<button type="button" onclick="del(this)">
+					<font color="Blue" face="sans-serif" style="background-color:Lightgreen">
+						Delete Section
+					</font>
+				</button>
+			
+		</div>
+	   
+	</form>
+</div>
+</body>
+</html>
