@@ -1,0 +1,245 @@
+{
+  "question": {
+          "q_id": {
+            "type": "String",
+            "required": true
+          },
+          "a_id": {
+              "type": "String",
+              "required": true,
+              "reference": "a_id(admin)"
+          },
+          "problem_statement": {
+              "type": "String",
+              "required": true,
+              "markdown": true
+          },
+          "editorial": {
+              "type": "String",
+              "required": true,
+              "markdown": true
+          },
+          "constraints": {
+             "time_seconds" : {
+                 "type" : "Integer",
+                 "required": true
+              },
+              "memory_kb" : {
+                "type": "Integer",
+                "required": false,
+                "default": 1024
+              }
+          },
+          "test_cases": {
+            "type": "List",
+            "required": true,
+            "extra": "List of test_case_ids, see below",
+            "test_case_id" :{
+              "input" : {
+                "type": "Blob",
+                "required": true
+              },
+              "output": {
+                "type": "Blob",
+                "required": true
+              },
+              "points": {
+                "type": "Integer",
+                "required": true,
+                "default": 0
+              },
+              "is_sample": {
+                "type": "Boolean",
+                "required": true,
+                "default": false
+              }
+            }
+          },
+          
+          "allowed_languages": {
+            "type": "List",
+            "required": true,
+            "extra": "List of languages",
+            "reference": "l_id(languages)"
+          },
+          "tags": {
+            "type": "List",
+            "required": false, 
+            "extra": "List of tags, type and difficulty",
+            "tag": {
+              "type": "String",
+              "check" : "Some predefined list of tags"
+            }
+          },
+          "difficulty":{
+            "type":"String",
+            "required": true,
+          }
+       },
+  "language": {
+        "l_id": {
+          "type" : "Integer",
+          "required" : true
+        },
+        "name" : {
+          "type" : "String",
+          "required" : true
+        },
+        "time_factor" : {
+          "type" : "Integer",
+          "required" : true,
+          "default" : 1
+        },
+        "memory_factor" : {
+          "type" : "Integer",
+          "required" : true,
+          "default" : 1
+        },
+        "version" : {
+          "type" : "String",
+          "required" : true
+        },
+        "command" : {
+          "required" : true,
+          "prefix" : {
+            "type" : "String",
+            "required" : true
+          },
+          "suffix" : {
+            "type" : "String",
+            "required" : false
+          },
+          "extra": "This will be used to generate the command line statement to execute the file in a given language"
+        }
+    },
+  "submission": {
+      "s_id" : {
+        "type" : "String",
+        "required" : true
+      },
+      "u_id" : {
+        "type" : "String",
+        "required" : true,
+        "reference" : "USN(Users)"
+      },
+      "c_id" : {
+        "type" : "String",
+        "required" : false,
+        "extra" : "required is false because if creator wanted to test the question created"
+      },
+      "q_id" : {
+        "type" : "String",
+        "required" : true,
+        "reference" : "q_id(question)"
+      },
+      "score" : {
+        "type" : "Integer",
+        "required" : false,
+        "extra":"calculated based on number test cases passed"
+      },
+      "code" : {
+        "type" : "String",
+        "required" : true,
+        "extra" : "front-end check if the code size is less than 50kb"
+      },
+      "language" : {
+        "type" : "String",
+        "required" : true,
+        "reference" : "l_id(language)"
+      },
+      "test_case_status" : {
+        "type" : "List",
+        "required" : false,
+        "extra" : "reqired is false because code may not be evaluated as soon as it is submitted.",
+        "status_id" : {
+          "status" : {
+            "type" : "String",
+            "required" : false,
+            "check" : "ac,tle,wa,nzec,sigsev",
+            "extra" : "status can be any one of the value specified in check"
+          },
+          "time" : {
+            "type" : "Double",
+            "required" : false
+          },
+          "memory" : {
+            "type" : "Integer",
+            "required" : false
+          }
+        }
+      }
+  },
+  "admin": {
+    "name": {
+      "type": "String",
+      "required": true
+    },
+    "email": {
+      "type": "String",
+      "required": true,
+      "extra": "Add regex to front end to match email"
+    },
+    "password": {
+      "type": "String",
+      "required": true,
+      "extra": "This will have hashed version of password"
+    },
+    "is_asst" :{
+      "type": "boolean",
+      "required": true,
+      "extra": "used to decide if he/she can create the questions"      
+    }
+  },
+  "contest": {
+    "c_id": {
+      "type": "String",
+      "required": true
+    },
+    "a_id": {
+    "type": "String",
+    "required": true,
+    "reference": "a_id(admin)"
+    },
+    "name": {
+      "type": "String",
+      "required": true,
+      "extra": "limit the name to about 30 characters"
+    },
+    "questions": {
+      "type": "List",
+      "extra": "list of questions",
+      "question" : "references q_id(question)"
+    },
+    "start_time": {
+      "type": "Timestamp",
+      "required": true
+    },
+    "stop_time": {
+      "type": "Timestamp",
+      "required": true,
+      "extra": "validate start_time < stop_time"
+    },
+    "sections":{
+     "type": "String",
+      "required": true,
+      "extra":"primary key - timestamp+section_name - to avoid overlapping of assignments"
+    },
+    "leaderboard": {
+      "extra": "can be derived from submissions so whether this should be here needs to be decided"
+    }
+  },
+  "user":{
+    "student_name":{
+      "type":"string",
+      "required":true
+    },
+    "usn":{
+      "type":"string",
+      "required":true
+    },
+    "section":{
+      "type":"string",
+      "required":true
+    }
+  }
+}
