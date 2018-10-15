@@ -1,0 +1,41 @@
+<html>
+	<style>
+	#button{
+	   position:relative; 
+	   margin-left:auto;
+	   
+	}
+	</style>
+	<body>
+
+		<h1  style="background-color:rgb(255, 229, 229)"><font color="grey" face="sans-serif">Create Contest Page </font></h1>
+
+		<div style="" style="background-color:rgb(77, 77, 77)" id="s">
+		  <h3>New Contest</h3>
+			<form action="{{ url_for('createLab') }}" id = "form" method="POST" >
+				<div name = "div1" id="div1" style="background-color:rgb(204, 204, 204)">
+					Section Name:<br><input type="text" name="section" value="" required="required"><br>
+					Lab name:<br><input type="text" name="lab_name" value="" required="required"><br>
+					Lab Begin:<br><input type="datetime-local" name="start_time" required="required"><br>
+					Lab End:<br><input type="datetime-local" name="end_time" required="required"><br>
+					Type Of Lab:<br>
+						<select name="lab_type" required="required">
+							<option value="DS">Data Structure</option>
+							<option value="Algo">Algorithm</option>
+						</select><br>
+					QUESTION BANK<br>
+						<select name="q_ids" required="required" multiple="multiple">
+							<option value="Q1">Question 1</option>
+							<option value="Q2">Question 2</option>
+							<option value="Q3">Question 3</option>
+							<option value="Q4">Question 4</option>
+						</select>
+					<br><br>
+					
+					<br>
+				</div>
+			   <input type="submit" id="button" value="Submit" >
+			</form>
+		</div>
+	</body>
+</html>
