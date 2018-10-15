@@ -193,14 +193,15 @@
   "contest": {
     "c_id": {
       "type": "String",
-      "required": true
+      "required": true,
+      "extra" : "refers to _id in document"
     },
     "a_id": {
     "type": "String",
     "required": true,
     "reference": "a_id(admin)"
     },
-    "name": {
+    "lab_name": {
       "type": "String",
       "required": true,
       "extra": "limit the name to about 30 characters"
@@ -226,6 +227,10 @@
     },
     "leaderboard": {
       "extra": "can be derived from submissions so whether this should be here needs to be decided"
+    },
+    "lab_type" : {
+      "type" : "String",
+      "required" : true
     }
   },
   "user":{

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, jsonify
 from flask_pymongo import PyMongo
 from gridfs import GridFS
 # from werkzeug import secure_filename
@@ -10,6 +10,28 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/myDatabase"
 mongo = PyMongo(app)
 FS = GridFS(mongo.db)
 
+@app.route("/")
+@app.route("/home",methods = ["POST","GET"])
+def home():
+	return render_template("Dashboard.html")
+
+@app.route("/createLab", methods = ["POST","GET"])
+def createLab():
+	data = request.form.to_dict(flat=False)
+	if(data):
+		assignments = mongo.db.assignments
+		assignments.insert({
+				"section" 		: data['section'],
+				"lab_name" 		: data['lab_name'],
+				"start_time" 	: data['start_time'],
+				"end_time"		: data['end_time'],
+				"lab_type"		: data['lab_type'],
+				"q_id"			: data['q_ids']
+			})
+		# print("Data -> ",data)
+		return render_template("Dashboard.html")
+	return render_template("Create_Assignment.html")
+
 @app.route("/addQues", methods = ["POST", "GET"])
 def addQues():
 	data = request.form
@@ -17,7 +39,7 @@ def addQues():
 		questions = mongo.db.questions
 		input_files = request.files.getlist('in')
 		output_files = request.files.getlist('out')
-
+		
 		# contains reference to file in id
 		input_file_id = []
 		output_file_id = []
