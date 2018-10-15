@@ -1,97 +1,41 @@
-<!DOCTYPE html>
-<head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
 <html>
-
-<style>
-#button{
-   position:relative; 
-   margin-left:auto;
-   
-}
-</style>
-
-<script>
-	// function sub(){
-	// 	$.ajax({
-	// 		type:"POST",
-	// 		url:"/submit",
-	// 		data:$('#form').val(),
-	// 		type:"json"
-	// 	}).done(function(){
-	// 		console.log("success");
-	// 	});
-	// }
-	var ctr=1;
-	function add(){		
-		var element = document.getElementById("form");
-		var del=document.getElementById('delete');
-		del.style.visibility="visible";
-		var copyDiv = document.getElementById("form").getElementsByTagName("div")[0];
-		var newElement = copyDiv.cloneNode(true);
-		ctr=ctr+1;
-		newElement.setAttribute('id',"div" + ctr);
-		newElement.setAttribute('margin-bottom',"5%");
-		var submitButton = document.getElementById("button");
-		
-		newElement.setAttribute('style','background-color:rgb(204, 204, 204)');
-		element.appendChild(newElement);
-		element.appendChild(submitButton);
+	<style>
+	#button{
+	   position:relative; 
+	   margin-left:auto;
+	   
 	}
-	function del(arg) {
-		if(document.getElementById("form").childElementCount!=2)
-		{
-			var el_id = arg.parentElement.id;
-			var el = document.getElementById(el_id);
-			el.parentNode.removeChild(el);
-		}
-		return;
-	}
-</script>
+	</style>
+	<body>
 
-<body>
+		<h1  style="background-color:rgb(255, 229, 229)"><font color="grey" face="sans-serif">Create Contest Page </font></h1>
 
-<h1  style="background-color:rgb(255, 229, 229)"><font color="grey" face="sans-serif">Create Contest Page </font></h1>
-
-<div style="" style="background-color:rgb(77, 77, 77)" id="s">
-	<h3 style="position:absolute;top:0;right:0;">
-		<button type="button" onclick="add()">
-		<font color="Blue" face="sans-serif" style="background-color:Lightgreen">
-			Add Section
-		</font>
-		</button>
-	</h3>
-  <h3>New Contest</h3>
-	<form action="{{ url_for('home') }}" id = "form" method="POST" >
-		<div name = "div1" id="div1" style="background-color:rgb(204, 204, 204)">
-			Section Name:<br><input type="text" name="firstname" value="" required="required"><br>
-			Contest name:<br><input type="text" name="lastname" value="" required="required"><br>
-			Contest Begin:<br><input type="datetime-local" name="Contest Begin" required="required"><br>
-			Contest End:<br><input type="datetime-local" name="Contest End" required="required"><br>
-			Type Of Lab:<br>
-				<select name="lab" required="required">
-					<option value="DS">Data Structure</option>
-					<option value="Algo">Algorithm</option>
-				</select><br>
-			QUESTION BANK<br>
-				<select name="QA" required="required">
-					<option value="Q1">Question 1</option>
-					<option value="Q2">Question 2</option>
-					<option value="Q3">Question 3</option>
-					<option value="Q4">Question 4</option>
-				</select>
-			<br><br>
-			
-			<br>
-				<button type="button" id="delete"onclick="del(this)" style="visibility: hidden">
-					<font color="Blue" face="sans-serif" style="background-color:Lightgreen">
-						Delete Section
-					</font>
-				</button>
-			</div>
-	   <input type="submit" id="button" value="Submit" >
-	</form>
-</div>
-</body>
+		<div style="" style="background-color:rgb(77, 77, 77)" id="s">
+		  <h3>New Contest</h3>
+			<form action="{{ url_for('createLab') }}" id = "form" method="POST" >
+				<div name = "div1" id="div1" style="background-color:rgb(204, 204, 204)">
+					Section Name:<br><input type="text" name="section" value="" required="required"><br>
+					Lab name:<br><input type="text" name="lab_name" value="" required="required"><br>
+					Lab Begin:<br><input type="datetime-local" name="start_time" required="required"><br>
+					Lab End:<br><input type="datetime-local" name="end_time" required="required"><br>
+					Type Of Lab:<br>
+						<select name="lab_type" required="required">
+							<option value="DS">Data Structure</option>
+							<option value="Algo">Algorithm</option>
+						</select><br>
+					QUESTION BANK<br>
+						<select name="q_ids" required="required" multiple="multiple">
+							<option value="Q1">Question 1</option>
+							<option value="Q2">Question 2</option>
+							<option value="Q3">Question 3</option>
+							<option value="Q4">Question 4</option>
+						</select>
+					<br><br>
+					
+					<br>
+				</div>
+			   <input type="submit" id="button" value="Submit" >
+			</form>
+		</div>
+	</body>
 </html>
