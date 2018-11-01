@@ -26,6 +26,7 @@ CREATE TABLE question(
   q_id varchar(50) PRIMARY KEY,
   p_id varchar(50) REFERENCES professor(p_id),
   name varchar(50),
+  create_time timestamp DEFAULT NOW(),
   problem varchar(10000),
   difficulty varchar(50),
   editorial varchar(10000),
