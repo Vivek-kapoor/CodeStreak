@@ -54,6 +54,7 @@ CREATE TABLE submission(
   q_id varchar(50) REFERENCES question(q_id),
   c_id varchar(50) REFERENCES contest(c_id),
   score int DEFAULT 0,
+  is_evaluated bool DEFAULT false,
   plagiarism float DEFAULT 0,
   submit_time timestamp DEFAULT NOW(),
   code varchar(10000),

@@ -22,7 +22,7 @@ def get_section(usn):
 
 insert_str = "INSERT INTO student values('{}', '{}', {}, {}, '{}', '{}', {}, '{}');"
 
-for usn in json_db:
+for usn in json_db: 
     name = json_db[usn]['name']
     rating = json_db[usn]['rating']
     best = json_db[usn]['best']
