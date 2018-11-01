@@ -17,7 +17,7 @@ def student_login():
 
 	if request.method == 'POST':
 		print("here")
-		username = request.form['usn']
+		usn = request.form['usn']
 		password = request.form['password']
 
 		if validate_student(usn, password):
