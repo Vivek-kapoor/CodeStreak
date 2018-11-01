@@ -1,0 +1,172 @@
+Algorithms
+
+Warmup
+Implementation
+Strings
+Sorting
+Search
+Graph Theory
+Greedy
+Dynamic Programming
+Constructive Algorithms
+Bit Manipulation
+Recursion
+Game Theory
+NP Complete
+Debugging
+
+Data Structures
+
+Arrays
+Linked Lists
+Trees
+Balanced Trees
+Stacks
+Queues
+Heap
+Disjoint Set
+Multiple Choice
+Trie
+Advanced
+
+
+Mathematics
+
+Fundamentals
+Number Theory
+Combinatorics
+Algebra
+Geometry
+Probability
+Linear Algebra Foundations
+
+C
+
+Introduction
+Conditionals and Loops
+Arrays and Strings
+Functions
+Structs and Enums
+
+C++
+
+Introduction
+Strings
+Classes
+STL
+Inheritance
+Debugging
+Other Concepts
+
+JAVA
+
+Introduction
+Strings
+BigNumber
+Data Structures
+Object Oriented Programming
+Exception Handling
+Advanced
+
+Python
+
+Introduction
+Basic Data Types
+Strings
+Sets
+Math
+Itertools
+Collections
+Date and Time
+Errors and Exceptions
+Classes
+Built-Ins
+Python Functionals
+Regex and Parsing
+XML
+Closures and Decorators
+Numpy
+Debugging
+
+Ruby
+
+Introduction
+Control Structures
+Arrays & Hashes
+Enumerables
+Methods
+Strings
+
+Linux Shell
+
+Bash
+Text Processing
+Arrays in Bash
+Grep Sed Awk
+
+Functional Programming
+
+Introduction
+Recursion
+Functional Structures
+Memoization and DP
+Persistent Structures
+Ad Hoc
+Parsers
+Interpreter and Compilers
+
+Artificial Intelligence
+
+Bot Building
+A* Search
+Alpha Beta Pruning
+Combinatorial Search
+Games
+Statistics and Machine Learning
+Digital Image Analysis
+Natural Language Processing
+Probability & Statistics - Foundations
+
+SQL
+
+Basic Select
+Advanced Select
+Aggregation
+Basic Join
+Advanced Join
+Alternative Queries
+
+Databases
+
+Relational Algebra
+Indexes
+OLAP
+Set and Algebra
+NoSQL - XML, MapReduce
+Database Normalization
+
+Distributed Systems
+
+Multiple Choice
+Client Server
+MapReduce Basics
+
+Regex
+
+Introduction
+Character Class
+Repetitions
+Grouping and Capturing
+Backreferences
+Assertions
+Applications
+
+Security
+
+Funcitons
+Terminology and Concepts
+Cryptography
+
+
+
+
