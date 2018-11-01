@@ -12,6 +12,20 @@ codestreak=# \d
  public | student    | table | postgres
  public | submission | table | postgres
 (5 rows)
+
+codestreak=# \d professor;
+                     Table "public.professor"
+  Column  |         Type          | Collation | Nullable | Default
+----------+-----------------------+-----------+----------+---------
+ p_id     | character varying(50) |           | not null |
+ name     | character varying(50) |           |          |
+ password | character varying(50) |           |          |
+ email    | character varying(50) |           |          |
+Indexes:
+    "professor_pkey" PRIMARY KEY, btree (p_id)
+Referenced by:
+    TABLE "contest" CONSTRAINT "contest_p_id_fkey" FOREIGN KEY (p_id) REFERENCES professor(p_id)
+    TABLE "question" CONSTRAINT "question_p_id_fkey" FOREIGN KEY (p_id) REFERENCES professor(p_id)
 """
 
 def connect_db():
@@ -19,10 +33,11 @@ def connect_db():
     Connects to the postgres database
     :return: postgres connection object
     """
-    connect_str = "dbname='codestreak' user='postgres' password='student'"
+    connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432'"
     try:
         conn = psycopg2.connect(connect_str)
         return conn
+
     except:
         logging.error('Failed to connect to database')
         return None
@@ -52,4 +67,4 @@ def validate_professor(a_id, password):
 
 
 if __name__ == "__main__":
-    print(validate_student('01FB15ECS342', '01FB15ECS342'))
+    print(validate_student('01FB16ECS249', '01FB15ECS342'))
