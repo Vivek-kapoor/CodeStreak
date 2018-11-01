@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>CodeStreak</title>
+    <title>CodeStorm</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/static/devc.css">
 </head>
 <body id="index" class="home">
-<div>
-    {% block question %}
-    {% endblock %}
-</div>
-
-<div id="links" styl="position:relative">
+<div id="links">
 <ul>
 <li><a href="/">C Code</a></li>
 <li><a href="/cpp">C++ Code</a></li>
@@ -20,7 +15,7 @@
 </div>
 <div id="content">
     <!-- ************  CODING ZONE  ************ -->
-    <div style="width:70%" id="code">
+    <div id="code">
         <form method="post" action="{{ url_for(target) }}">
             <div id="title-code" class="head-section">
               Source Code
@@ -50,13 +45,13 @@
     
     <!-- ************ RUNNING ZONE RESULTS ************ -->
     
-  <!--- <div id="result">
+    <div id="result">
         <div id="title-result" class="head-section">
             Output result
         </div>
         {% block run %}
         {% endblock %}
-    </div> -->
+    </div>
 
 <!-- ****Input **** -->
 
@@ -67,9 +62,7 @@
         <div id="title-compile" class="head-section">
             Compilation / Output
         </div>
-      
-
-         {% block comp %}
+        {% block comp %}
         {% endblock %}
     </div>
     
@@ -91,7 +84,7 @@
 
     // Set up the editor
     var editor = ace.edit("text-code-ace");
-    editor.setFontSize(17);
+    editor.fontSize='22px';
     editor.setTheme("ace/theme/monokai");
     var language = ("{{ target }}" === "runpy") ? "python" : "c_cpp";
     editor.getSession().setMode("ace/mode/" + language);
