@@ -1,18 +1,4 @@
 from flask import Flask, render_template, redirect, url_for, request, session
-import psycopg2
-
-# from werkzeug import secure_filename
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '59d3ca27e6701d3fd06eb960ca5866a5'
-
-try:
-    conn = psycopg2.connect("dbname='temp' user='postgres' host='localhost' password='welcomeback'")
-    print("connected")
-except:
-    print("I am unable to connect to the database")
-
-cur = conn.cursor()
 
 @app.route("/")
 @app.route("/home",methods = ["POST","GET"])
