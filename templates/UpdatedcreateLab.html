@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+
+<!--<script>
+function add()
+{						var p = document.getElementById("s");
+  						var newElement = document.createElement('div');
+						//newElement.setAttribute('id', elementId);
+						newElement.setAttribute('style','background-color:rgb(204, 204, 204)');
+						newElement.innerHTML = '<table style="width:100%"><tr><th>Question Name</th><th>Tags</th> <th>Created</th><th>Owner</th><th>Add to Contest</th></tr><tr><td id = "Q1">Q1</td><td  id = "tag_q1">demo_tag</td><td id ="time_q1">demo_time</td><td id ="owner_q1">vora</td><td id ="y/n"><input type="checkbox" name="yes" value="yes"></td></tr></table>
+						p.appendChild(newElement);
+}
+</script>-->
+
+
+
+<html>
+<body>
+
+<h1  style="background-color:rgb(255, 229, 229)"><font color="grey" face="sans-serif">Create Contest Page </font></h1>
+
+<div style="" style="background-color:rgb(77, 77, 77)" id="s">
+	
+  <h3>New Contest</h3>
+	<form action="" id = "form">
+		<div name = "div1" style="background-color:rgb(204, 204, 204)" id=1>
+	
+			Contest name:<br><input type="text" name="lastname" value=""><br>
+			Contest Begin:<br><input type="datetime-local" name="Contest Begin"><br>
+			Contest End:<br><input type="datetime-local" name="Contest End"><br><br>
+			Semester				
+				<select name="sem">
+					<option value="1"> 1</option>
+					<option value="2"> 2</option>
+					<option value="3"> 3</option>
+					<option value="4"> 4</option>
+					<option value="5"> 5</option>
+					<option value="6"> 6</option>
+					<option value="7"> 7</option>
+					<option value="8"> 8</option>
+
+				</select>
+			Section
+				<select name="sec">
+					<option value="a"> A</option>
+					<option value="b"> B</option>
+					<option value="c"> C</option>
+					<option value="d"> D</option>
+					<option value="e"> E</option>
+					<option value="f"> F</option>
+					<option value="g"> G</option>
+					<option value="h"> H</option>
+
+				</select>
+		<br>
+
+			<br>QUESTION BANK <br>
+			<div id="s"></div>
+				<table style="width:100%">
+  <tr>
+    <th>Question Name</th>
+    <th>Tags</th> 
+    <th>Created</th>
+	<th>Owner</th>
+	<th>Add to Contest</th>
+  </tr>
+  <tr>
+    <td id = "Q1">Q1</td>
+    <td  id = "tag_q1">demo_tag</td>
+    <td id ="time_q1">demo_time</td>
+	<td id ="owner_q1">vora</td>
+	<td id ="y/n"><input type="checkbox" name="yes" value="yes"></td>
+	
+  </tr>
+  
+  </table>
+
+			<br><br>
+			<input type="submit" value="Submit" id = "submit">
+			<br>
+				
+			
+		</div>
+	   
+	</form>
+</div>
+</body>
+</html>
