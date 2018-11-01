@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from db_access import validate_student, validate_professor
 
 app = Flask(__name__)
-app._static_folder = "C:/Users/Varun/Documents/SE/CodeStreak/static"
+app._static_folder = "/static"
 
 
 @app.route('/')
