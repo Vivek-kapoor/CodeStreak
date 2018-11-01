@@ -26,10 +26,10 @@ function add()
 <div style="" style="background-color:rgb(77, 77, 77)" id="s">
 	
   <h3>New Contest</h3>
-	<form action="" id = "form">
+	<form action=" {{ url_for('create_assignment') }} " id = "form">
 		<div name = "div1" style="background-color:rgb(204, 204, 204)" id=1>
 	
-			Contest name:<br><input type="text" name="lastname" value=""><br>
+			Contest name:<br><input type="text" name="name" value=""><br>
 			Contest Begin:<br><input type="datetime-local" name="Contest Begin"><br>
 			Contest End:<br><input type="datetime-local" name="Contest End"><br><br>
 			Semester				
@@ -42,7 +42,6 @@ function add()
 					<option value="6"> 6</option>
 					<option value="7"> 7</option>
 					<option value="8"> 8</option>
-
 				</select>
 			Section
 				<select name="sec">
@@ -54,10 +53,8 @@ function add()
 					<option value="f"> F</option>
 					<option value="g"> G</option>
 					<option value="h"> H</option>
-
 				</select>
 		<br>
-
 			<br>QUESTION BANK <br>
 			<div id="s"></div>
 				<table style="width:100%">
@@ -68,24 +65,21 @@ function add()
 	<th>Owner</th>
 	<th>Add to Contest</th>
   </tr>
-  <tr>
-    <td id = "Q1">Q1</td>
-    <td  id = "tag_q1">demo_tag</td>
-    <td id ="time_q1">demo_time</td>
-	<td id ="owner_q1">vora</td>
-	<td id ="y/n"><input type="checkbox" name="yes" value="yes"></td>
-	
-  </tr>
-  
-  </table>
+	{% for question in questions %}
+		<tr>
+			<td id = "Q1"> {{question.problem}} </td>
+			<td  id = "tag_q1"> {{question.tags}} </td>
+			<td id = "time_q1"> {{question.time_limit}} </td>
+			<td id = "owner_q1"> {{ question.q_id }} </td>
+			<td id = "y/n"><input type="checkbox" name="questions" value="yes"></td>
+		</tr>
+	{% endfor %}
 
+  </table>
 			<br><br>
 			<input type="submit" value="Submit" id = "submit">
 			<br>
-				
-			
 		</div>
-	   
 	</form>
 </div>
 </body>
