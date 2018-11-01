@@ -1,0 +1,2 @@
+ curl -k -d "loginId=01FB15ECS338" -X POST https://pesuacade
+my.com/Academy/getStudentClassInfo
