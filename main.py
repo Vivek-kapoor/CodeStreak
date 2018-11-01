@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from db_access import validate_student, validate_professor
 
 app = Flask(__name__)
 app._static_folder = "C:/Users/Varun/Documents/SE/CodeStreak/static"
@@ -10,18 +11,21 @@ def codestreak():
 
 
 
-@app.route('/login',methods = ['POST', 'GET'])
+@app.route('/student_login',methods = ['POST', 'GET'])
 
-def login():
+def student_login():
 
 	if request.method == 'POST':
 		print("here")
 		username = request.form['usn']
 		password = request.form['password']
 
-		if username == "usn":
-			print(username)
+		if validate_student(usn, password):
 			return render_template("check.html")
+		else:
+			return render_template("login.html")
+
+
 
 
 
