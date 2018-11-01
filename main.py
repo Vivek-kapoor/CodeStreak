@@ -1,8 +1,9 @@
+import sys
 from flask import Flask, render_template, request
 from db_access import validate_student, validate_professor
 
 app = Flask(__name__)
-app._static_folder = "/static"
+app._static_folder = sys.path[0]+"/static"
 
 
 @app.route('/')
