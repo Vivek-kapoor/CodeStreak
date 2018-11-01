@@ -15,6 +15,9 @@
     margin-top: 5%;
     margin-bottom: 5%;
 }
+body {
+    background-image: url("{{ url_for('static', filename='back.jpg') }}");
+}
 .login-logo{
     position: relative;
     margin-left: -41.5%;
@@ -39,7 +42,7 @@
 }
 .login-form-2{
     padding: 9%;
-    background: #f05837;
+    background: #0061c3;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 .login-form-2 h3{
@@ -74,9 +77,9 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<body background-color="red" class="single is-preload">
+<body class="single is-preload">
 <!-- Wrapper -->
-			<div  style="background-color:#f05837" id="wrapper">
+			<div   id="wrapper">
 
 				<!-- Header -->
 					<header id="header">
