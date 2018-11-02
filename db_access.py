@@ -14,6 +14,7 @@ import logging
 import random
 import string
 import json
+import re
 
 """
 codestreak=# \d
@@ -31,7 +32,7 @@ codestreak=# \d
 
 # 1. FUNCTIONS AND OBJECTS used by multiple functions
 
-none_list = ['None', None, False, {}, [], set(), 'null', 'NULL']
+none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0"]
 
 
 def random_alnum(prefix="", length=16):
@@ -58,14 +59,19 @@ def _execute_query(query):
     """
     Helper function to execute any query and fetches all rows
     :param query: Query string in SQL
-    :return: None if query unsuccessful, else list of tuples
+    :return: None if query unsuccessful,
+                list of tuples for SELECT query
+                number of rows updated for UPDATE query
+                number of rows inserted for INSERT query
     """
     conn = connect_db()
     if conn:
         cur = conn.cursor()
         cur.execute(query)
         logging.info('Executed: '+query)
-        res = cur.fetchall()
+        res = cur.rowcount
+        if re.fullmatch(r"^SELECT.*", query, re.IGNORECASE):
+            res = cur.fetchall()
         logging.info('Returned: '+str(res))
         conn.commit()
         cur.close()
@@ -143,6 +149,7 @@ def submit_code(usn, q_id, c_id, code, language, test_case_status="{}"):
         logging.error('Failed to add submission to database')
         return None
     logging.info('Submitted code successfully')
+    return res
 
 
 def get_unevaluated_submission():
@@ -178,15 +185,6 @@ def set_evaluated_submission(s_id, test_case_status):
     return None
 
 
-
-def query_student_login(**dictionary):
-    """
-    Function used in student_login in routes.py
-
-    Validates Login credentail of student
-    :param dictionary is the dictionary of student usn and password to be verified
-    :return: returns boolean value true - indicating valid student 
-    """
 def add_contest(**dictionary):
     """
     Function used in create_assignment in routes.py
@@ -202,7 +200,11 @@ def questions_list():
     
     return list of dictionary, where each dictionary is a row of question table.
     """
+
+logging.basicConfig(level='INFO')
 if __name__ == "__main__":
+    res = _execute_query("SELECT * from student;")
+    print(res, type(res))
     submission = {
         "usn": '01FB15ECS341',
         "q_id": 10,
