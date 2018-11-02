@@ -212,6 +212,16 @@ def create_contest(p_id, name, start_time, end_time, questions, semester, sectio
         return None
     return res
 
+def fetch_active_labs(usn):
+           //takes usn as input parameter
+           //returns json containing active lab info. info including contest id, lab name
+           //all this for labs whose start time is greater than the present time.
+
+def fetch_archive_labs(usn):
+           //same functionality as above but json contains lab info of labs past this present time.
+           
+    
+
 
 logging.basicConfig(level='INFO')
 if __name__ == "__main__":
