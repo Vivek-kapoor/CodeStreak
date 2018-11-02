@@ -1,0 +1,14 @@
+There are n beads placed in a single line horizontally. One small letter [a-z] is written on each of them.
+A pick-place operation is described as :- "You are allowed to pick any one of the first K(1<=K<=n-1) beads, and place it at the end of the line."
+(For Ex :- If K=2, then you are allowed to pick either the first bead or the second bead.)
+Find the lexicographically smallest string that can be formed by performing pick-place operation any number of times.
+The string is read starting from the character on the first bead and ending at the character on the last bead.
+
+Input:
+The first line contains N(1<=N<=10^4) representing the number of sequences of beads.
+Then each of the N lines contain an integer K and a string S(2<=|S|<=10^3) (both are space seperated), where each character in the string represents the characters written on the beads in line.
+
+For example S = "anubhaw". Then, character 'a' is written on the first bead, character 'n' is written on the second bead, and so on.
+
+Output:
+Print N lines where each line contains the lexicographically smallest string that can be formed by performing pick-place operations any number of times.
