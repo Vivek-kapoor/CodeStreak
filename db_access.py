@@ -86,5 +86,28 @@ def validate_professor(p_id, password):
     return res
 
 
+def query_student_login(**dictionary):
+    """
+    Function used in student_login in routes.py
+
+    Validates Login credentail of student
+    :param dictionary is the dictionary of student usn and password to be verified
+    :return: returns boolean value true - indicating valid student 
+    """
+def add_contest(**dictionary):
+    """
+    Function used in create_assignment in routes.py
+
+    Add new entry in the contest table
+    param: dictionary of columns of a row of contest table
+    return : nothing 
+    """
+
+def questions_list():
+    """
+    Function used in create_assignment in routes.py
+    
+    return list of dictionary, where each dictionary is a row of question table.
+    """
 if __name__ == "__main__":
     print(validate_professor('abcd', 'pqrs'))

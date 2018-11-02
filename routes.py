@@ -39,7 +39,7 @@ def create_assignment():
 	else:
 		# return value of the functions should be list
 		# of dicts where each dict is a row of question table
-		questions = question_list()
+		questions = questions_list()
 		return render_template("UpdatedcreateLab.html", 
 			questions = questions)
 
