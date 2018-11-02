@@ -14,7 +14,7 @@ def student_login():
     data = request.form.to_dict(flat=False)
     # verify the credentail of users
     if (data):
-        response = query_student_login(data)
+        response = validate_student(data)
         if (response):
             session['id'] = data['usn']
             return "successfully loggedin"
