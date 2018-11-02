@@ -55,10 +55,11 @@ def connect_db():
         logging.error('Failed to connect to database')
         return None
 
-def _execute_query(query):
+def _execute_query(query, json_ouput=False):
     """
     Helper function to execute any query and fetches all rows
     :param query: Query string in SQL
+    :param json_output: True when return type is expected to be of JSON format
     :return: None if query unsuccessful,
                 list of tuples for SELECT query
                 number of rows updated for UPDATE query
@@ -67,6 +68,9 @@ def _execute_query(query):
     conn = connect_db()
     if conn:
         cur = conn.cursor()
+        if json_ouput:
+            json_query = """SELECT array_to_json(array_agg(row_to_json(t))) FROM ({}) t;"""
+            query = json_query.format(query)
         cur.execute(query)
         logging.info('Executed: '+query)
         res = cur.rowcount
@@ -133,12 +137,14 @@ def get_testcases_by_question(q_id=0):
 
 def submit_code(usn, q_id, c_id, code, language, test_case_status="{}"):
     """
-    :param usn:
-    :param q_id:
-    :param c_id:
-    :param code:
-    :param language:
-    :return:
+    Submits the code, makes an entry in submission
+    These entries will be evaluated by compiler
+    :param usn: usn of student submitting the code
+    :param q_id: question id for which the code is submitted
+    :param c_id: contest id for which the code is submitted
+    :param code: the code in the form of string
+    :param language: language in which the code is submitted
+    :return: 1 if successfully inserted else None
     """
 
     s_id = random_alnum("s_")
@@ -158,15 +164,10 @@ def get_unevaluated_submission():
     :return: None if nothing to evaluate else a dict with s_id, code and language
     """
     query = """SELECT s_id, code, language FROM submission where is_evaluated = false ORDER BY submit_time DESC LIMIT 1;"""
-    res = _execute_query(query)
+    res = _execute_query(query, json_ouput=True)
     if res in none_list:  # error or nothing to evaluate
         return None
-    code_to_evaluate = {
-        "s_id": res[0][0],
-        "code": res[0][1],
-        "language": res[0][2]
-    }
-    return code_to_evaluate
+    return res
 
 
 def set_evaluated_submission(s_id, test_case_status):
@@ -185,12 +186,21 @@ def set_evaluated_submission(s_id, test_case_status):
     return None
 
 
-def questions_list():
+def get_questions_by_prof(p_id):
     """
-    Function used in create_assignment in routes.py
-    
-    return list of dictionary, where each dictionary is a row of question table.
+    Gets all the questions created by the given professor
+    in descending order of the time it was created
+    :param p_id: unique id of the professor
+    :return: list of all question information in json format
     """
+    query = """SELECT * from question where p_id = '{}' ORDER BY create_time DESC;"""
+    query = query.format(p_id)
+    res = _execute_query(query, json_ouput=True)
+    if res in none_list:
+        logging.error('Could not get any questions for '+p_id)
+        return None
+    return res
+
 
 def create_contest(p_id, name, start_time, end_time, questions, semester, section):
 
@@ -203,6 +213,7 @@ def create_contest(p_id, name, start_time, end_time, questions, semester, sectio
         return None
     return res
 
+
 def get_active_contest(usn):
     """
     Gets a list of active contests for the given student
@@ -211,10 +222,10 @@ def get_active_contest(usn):
     """
     query = """SELECT * FROM contest WHERE semester = (SELECT semester FROM student where usn = '{}') AND section = (SELECT semester FROM student where usn = '{}') AND end_time > NOW();"""
     query = query.format(usn, usn)
-    res = _execute_query(query)
+    res = _execute_query(query, json_ouput=True)
     if res in none_list:
         return None
-    return json.dumps(res)
+    return res
 
 
 def get_archived_contest(usn):
@@ -225,21 +236,12 @@ def get_archived_contest(usn):
     """
     query = """SELECT * FROM contest WHERE semester = (SELECT semester FROM student where usn = '{}') AND section = (SELECT semester FROM student where usn = '{}') AND end_time < NOW();"""
     query = query.format(usn, usn)
-    res = _execute_query(query)
+    res = _execute_query(query, json_ouput=True)
     if res in none_list:
         return None
-    return json.dumps(res)
+    return res
 
 
 logging.basicConfig(level='INFO')
 if __name__ == "__main__":
-    res = _execute_query("SELECT * from student;")
-    print(res, type(res))
-    submission = {
-        "usn": '01FB15ECS341',
-        "q_id": 10,
-        "c_id": 15,
-        "code": "int main(){;}",
-        "language": "c"
-    }
-    print(submit_code(**submission))
+    pass
