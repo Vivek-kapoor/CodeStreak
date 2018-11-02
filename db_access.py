@@ -157,7 +157,7 @@ def get_unevaluated_submission():
     Gets the oldest unevaluated code
     :return: None if nothing to evaluate else a dict with s_id, code and language
     """
-    query = """SELECT s_id, code, language FROM submission where is_evaluated = false ORDER BY submit_time DESC;"""
+    query = """SELECT s_id, code, language FROM submission where is_evaluated = false ORDER BY submit_time DESC LIMIT 1;"""
     res = _execute_query(query)
     if res in none_list:  # error or nothing to evaluate
         return None
@@ -200,6 +200,18 @@ def questions_list():
     
     return list of dictionary, where each dictionary is a row of question table.
     """
+
+def create_contest(p_id, name, start_time, end_time, questions, semester, section):
+
+    c_id = random_alnum("c_")
+    query = """INSERT INTO contest VALUES('{}', '{}','{}','{}','{}','{}','{}');"""
+    query = query.format(c_id, p_id, name, start_time, end_time, questions, semester, section)
+    res = _execute_query(query)
+    if res in none_list:
+        logging.error('Could not create contest')
+        return None
+    return res
+
 
 logging.basicConfig(level='INFO')
 if __name__ == "__main__":
