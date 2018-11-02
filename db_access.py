@@ -32,7 +32,7 @@ codestreak=# \d
 
 # 1. FUNCTIONS AND OBJECTS used by multiple functions
 
-none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0"]
+none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()]
 
 
 def random_alnum(prefix="", length=16):
@@ -75,7 +75,10 @@ def _execute_query(query, json_ouput=False):
         logging.info('Executed: '+query)
         res = cur.rowcount
         if re.fullmatch(r"^SELECT.*", query, re.IGNORECASE):
-            res = cur.fetchall()
+            if json_ouput:
+                res = cur.fetchone()
+            else:
+                res = cur.fetchall()
         logging.info('Returned: '+str(res))
         conn.commit()
         cur.close()
@@ -167,7 +170,7 @@ def get_unevaluated_submission():
     res = _execute_query(query, json_ouput=True)
     if res in none_list:  # error or nothing to evaluate
         return None
-    return res
+    return res[0]
 
 
 def set_evaluated_submission(s_id, test_case_status):
@@ -199,7 +202,7 @@ def get_questions_by_prof(p_id):
     if res in none_list:
         logging.error('Could not get any questions for '+p_id)
         return None
-    return res
+    return res[0]
 
 
 def create_contest(p_id, name, start_time, end_time, questions, semester, section):
@@ -225,7 +228,7 @@ def get_active_contest(usn):
     res = _execute_query(query, json_ouput=True)
     if res in none_list:
         return None
-    return res
+    return res[0]
 
 
 def get_archived_contest(usn):
@@ -234,14 +237,16 @@ def get_archived_contest(usn):
     :param usn: usn of the student
     :return: a list of contests with all details in JSON
     """
-    query = """SELECT * FROM contest WHERE semester = (SELECT semester FROM student where usn = '{}') AND section = (SELECT semester FROM student where usn = '{}') AND end_time < NOW();"""
+    query = """SELECT * FROM contest WHERE semester = (SELECT semester FROM student where usn = '{}') AND section = (SELECT semester FROM student where usn = '{}') AND end_time < NOW()"""
     query = query.format(usn, usn)
     res = _execute_query(query, json_ouput=True)
     if res in none_list:
         return None
-    return res
+    return res[0]
 
 
 logging.basicConfig(level='INFO')
 if __name__ == "__main__":
-    pass
+    res = _execute_query("SELECT * from student limit 10", json_ouput=True)
+    print(type(res))
+    print(res)
