@@ -60,5 +60,6 @@ CREATE TABLE submission(
   submit_time timestamp DEFAULT NOW(),
   code varchar(10000),
   language varchar(50),
-  test_case_status json
+  test_case_status json,
+  status varchar(50)
 );

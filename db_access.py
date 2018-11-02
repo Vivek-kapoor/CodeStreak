@@ -244,9 +244,49 @@ def get_archived_contest(usn):
         return None
     return res[0]
 
+# QUERIES FOR PROFILE PAGE
+def get_student_details(usn):
+    """
+    Gets all student details includeing
+    rating, best rating, rank, batch rank, class rank from database
+    :param usn: usn of student
+    :return: json with the all attributes of that student
+    """
+
+    query = """SELECT * FROM student WHERE usn = '{}'"""
+    query = query.format(usn)
+    res = _execute_query(query, json_ouput=True)
+    if res in none_list:
+        logging.error('Could not retrieve student information')
+        return None
+
+    student_details = res[0][0]
+    sem_clause = "semester = " + str(student_details['semester'])
+    sec_clause = "section = '" + str(student_details['section']) + "'"
+    for attr, clause1, clause2 in [('rank','true', 'true'), ('batch_rank',sem_clause, 'true'), ('class_rank',sem_clause, sec_clause)]:
+        query = """SELECT rank from (SELECT usn, rank() over (order by rating desc) as rank from student where {} and {}) as a WHERE usn = '{}'"""
+        query = query.format(clause1, clause2, usn)
+        res = _execute_query(query)
+        student_details[attr] = int(res[0][0])
+
+    return json.dumps(student_details)
+
+def get_submission_distribution(usn):
+    """
+    Distribution of all submissions to create pie chart
+    :param usn: usn of the student
+    :return: json with frequency of all verdicts
+    """
+    query = """SELECT status, count(*) from submission where usn = '{}' GROUP BY status"""
+    query = query.format(usn)
+    res = _execute_query(query)
+    #todo
+
 
 logging.basicConfig(level='INFO')
+
 if __name__ == "__main__":
-    res = _execute_query("SELECT * from student limit 10", json_ouput=True)
-    print(type(res))
-    print(res)
+    # res = _execute_query("SELECT * from student WHERE usn = '01FB15ECS342'", json_ouput=True)
+    # print(type(res))
+    # print(res)
+    print(get_submission_distribution('01FB15ECS342'))
