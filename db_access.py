@@ -185,15 +185,6 @@ def set_evaluated_submission(s_id, test_case_status):
     return None
 
 
-def add_contest(**dictionary):
-    """
-    Function used in create_assignment in routes.py
-
-    Add new entry in the contest table
-    param: dictionary of columns of a row of contest table
-    return : nothing 
-    """
-
 def questions_list():
     """
     Function used in create_assignment in routes.py
@@ -212,15 +203,32 @@ def create_contest(p_id, name, start_time, end_time, questions, semester, sectio
         return None
     return res
 
-def fetch_active_labs(usn):
-           //takes usn as input parameter
-           //returns json containing active lab info. info including contest id, lab name
-           //all this for labs whose start time is greater than the present time.
+def get_active_contest(usn):
+    """
+    Gets a list of active contests for the given student
+    :param usn: usn of the student
+    :return: a list of contests with all details in JSON
+    """
+    query = """SELECT * FROM contest WHERE semester = (SELECT semester FROM student where usn = '{}') AND section = (SELECT semester FROM student where usn = '{}') AND end_time > NOW();"""
+    query = query.format(usn, usn)
+    res = _execute_query(query)
+    if res in none_list:
+        return None
+    return json.dumps(res)
 
-def fetch_archive_labs(usn):
-           //same functionality as above but json contains lab info of labs past this present time.
-           
-    
+
+def get_archived_contest(usn):
+    """
+    Gets a list of active contests for the given student
+    :param usn: usn of the student
+    :return: a list of contests with all details in JSON
+    """
+    query = """SELECT * FROM contest WHERE semester = (SELECT semester FROM student where usn = '{}') AND section = (SELECT semester FROM student where usn = '{}') AND end_time < NOW();"""
+    query = query.format(usn, usn)
+    res = _execute_query(query)
+    if res in none_list:
+        return None
+    return json.dumps(res)
 
 
 logging.basicConfig(level='INFO')
