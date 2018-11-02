@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<!--
+	Future Imperfect by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Single - Future Imperfect by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+		/*Question*/
+		.question {
+			-moz-appearance: none;
+			-webkit-appearance: none;
+			-ms-appearance: none;
+			appearance: none;
+			-moz-transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+			-webkit-transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+			-ms-transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+			transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+
+			border: 0;
+			box-shadow: inset 0 0 0 1px rgba(160, 160, 160, 0.3);
+			color: #3c3b3b !important;
+			cursor: pointer;
+			font-family: "Raleway", Helvetica, sans-serif;
+			font-size: 0.7em;
+			font-weight: 800;
+			padding: 1.0em 2.5em;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
+
+		.question:focus {
+			box-shadow: inset 0 0 0 1px #2ebaae;
+			background-color: #2ebaae !important;
+		}
+
+		.question:hover {
+			box-shadow: inset 0 0 0 1px #2ebaae;
+			color: #2ebaae !important;
+		}
+
+			.question:hover:active {
+				background-color: rgba(46, 186, 174, 0.05);
+			}
+
+		.question:before,
+		.question:after {
+			color: #aaaaaa;
+			position: relative;
+		}
+
+		.question:before {
+			left: -1em;
+			padding: 0 0 0 0.75em;
+		}
+
+		.question:after {
+			left: 1em;
+			padding: 0 0.75em 0 0;
+		}
+
+		</style>
+	</head>
+	<body class="single is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html">Future Imperfect</a></h1>
+						<nav class="links">
+							<ul>
+								<li><a href="#">Question Bank</a></li>
+								<li><a href="#">Create Contest</a></li>
+								<li><a href="#">Feugiat</a></li>
+								<li><a href="#">Tempus</a></li>
+								<li><a href="#">Adipiscing</a></li>
+							</ul>
+						</nav>
+						<nav class="main">
+							<ul>
+								<li class="search">
+									<a class="fa-search" href="#search">Search</a>
+									<form id="search" method="get" action="#">
+										<input type="text" name="query" placeholder="Search" />
+									</form>
+								</li>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<section id="menu">
+
+						<!-- Search -->
+							<section>
+								<form class="search" method="get" action="#">
+									<input type="text" name="query" placeholder="Search" />
+								</form>
+							</section>
+
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<li>
+										<a href="#">
+											<h3>Lorem ipsum</h3>
+											<p>Feugiat tempus veroeros dolor</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>Dolor sit amet</h3>
+											<p>Sed vitae justo condimentum</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>Feugiat veroeros</h3>
+											<p>Phasellus sed ultricies mi congue</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>Etiam sed consequat</h3>
+											<p>Porta lectus amet ultricies</p>
+										</a>
+									</li>
+								</ul>
+							</section>
+
+						<!-- Actions -->
+							<section>
+								<ul class="actions stacked">
+									<li><a href="#" class="button large fit">Log In</a></li>
+								</ul>
+							</section>
+
+					</section>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<article class="post">
+								<header>
+									<div class="title">
+										<h2><a href="#">Question Bank</a></h2>
+									</div>
+								</header>
+								<div style="display:flex; height:65vh;">
+									<div style="display:block; width:6000px; height:100%;">
+										<!-- Placeholder Questions -->
+										<div  class="question" onclick="qdetails(event)" style="text-align:center; font-size:20px; color:green; box-shadow: inset 0 0 0 5px rgba(160, 160, 160, 0.3);">ADD QUESTION</div>
+										<div style="display:block; overflow:scroll; width:100%; height:550px;" id="Qs">
+										<div class="question" onclick="qdetails(event)">AMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">BMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">CMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">DMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">EMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">FMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">GMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">HMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">IMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">JMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">KMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">LMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">NMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+										<div class="question"  onclick="qdetails(event)">OMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+									</div>
+									</div>
+
+									<!-- div where question details are hidden which is displayed when a question is clicked on -->
+									<div style="display: none; background-color:black; color:white; overflow:scroll;" id="qdisplay">
+										<form id="frm" method="POST" enctype="multipart/form-data" action="#">
+											<label style="color:white">Problem Name:</label>
+											<input type="text" name="name" placeholder="Problem name" style="color:white" />
+
+											<label style="color:white">Problem Statement:</label>
+											<textarea id="froala-editor" type="text" name="statement" placeholder="Problem Statement" style="color:white">Initialize the Froala WYSIWYG HTML Editor on a textarea.</textarea>
+
+											<label style="color:white">Difficulty Level</label>
+											<select name="difficulty" style="color:white">
+ 													<option value="Easy" style="color:white">Easy</option>
+ 													<option value="Medium" style="color:white">Medium</option>
+ 													<option value="Hard" style="color:white">Hard</option>
+											</select>
+										</br>
+
+											<ul id="testcases">
+												<li style="border:2px solid grey;" id="case1">
+													<label style="color:white">Input File</label>
+													<input id="input" type="file" name="input1" style="color:white"/>
+
+													<label style="color:white">Output File</label>
+													<input id="output" type="file" name="output1" style="color:white"/>
+
+													<input id="editq" type="button" value="Add TestCase" onclick="testcase()"/>
+										</li>
+									</ul>
+
+											<label style="color:white">Tags:</label>
+											<input type="text" name="tags" placeholder="Tag" style="color:white" />
+
+										</br>
+											<input id="editq" type="button" value="Submit" onclick="addq()"/>
+										</form>
+									</div>
+								</div>
+
+
+								<!--<footer>
+									<ul class="stats">
+										<li><a href="#">General</a></li>
+										<li><a href="#" class="icon fa-heart">28</a></li>
+										<li><a href="#" class="icon fa-comment">128</a></li>
+									</ul>
+								</footer>-->
+							</article>
+
+					</div>
+
+				<!-- Footer -->
+					<section id="footer">
+						<ul class="icons">
+							<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
+							<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
+						</ul>
+						<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="assets/js/ql.js"></script>
+	</body>
+</html>
