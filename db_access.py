@@ -223,7 +223,7 @@ def get_active_contest(usn):
     :param usn: usn of the student
     :return: a list of contests with all details in JSON
     """
-    query = """SELECT * FROM contest WHERE semester = (SELECT semester FROM student where usn = '{}') AND section = (SELECT semester FROM student where usn = '{}') AND end_time > NOW();"""
+    query = """SELECT * FROM contest WHERE semester IN (SELECT semester FROM student where usn = '{}') AND section IN (SELECT semester FROM student where usn = '{}') AND end_time > NOW();"""
     query = query.format(usn, usn)
     res = _execute_query(query, json_ouput=True)
     if res in none_list:
@@ -231,23 +231,29 @@ def get_active_contest(usn):
     return res[0]
 
 
-def get_archived_contest(usn):
+def get_archived_contest(usn, semester=None, section=None):
     """
     Gets a list of active contests for the given student
     :param usn: usn of the student
     :return: a list of contests with all details in JSON
     """
-    query = """SELECT * FROM contest WHERE semester = (SELECT semester FROM student where usn = '{}') AND section = (SELECT semester FROM student where usn = '{}') AND end_time < NOW()"""
-    query = query.format(usn, usn)
+    if semester is None or section is None:
+        student_details = json.loads(get_student_details(usn, get_ranks=False))
+        semester = student_details['semester']
+        section = student_details['section']
+
+    query = """SELECT * FROM contest WHERE semester = '{}' AND section  = '{}' AND end_time < NOW()"""
+    query = query.format(semester, section)
     res = _execute_query(query, json_ouput=True)
     if res in none_list:
         return None
     return res[0]
 
+
 # QUERIES FOR PROFILE PAGE
-def get_student_details(usn):
+def get_student_details(usn, get_ranks=True):
     """
-    Gets all student details includeing
+    Gets all student details including
     rating, best rating, rank, batch rank, class rank from database
     :param usn: usn of student
     :return: json with the all attributes of that student
@@ -261,15 +267,18 @@ def get_student_details(usn):
         return None
 
     student_details = res[0][0]
-    sem_clause = "semester = " + str(student_details['semester'])
-    sec_clause = "section = '" + str(student_details['section']) + "'"
-    for attr, clause1, clause2 in [('rank','true', 'true'), ('batch_rank',sem_clause, 'true'), ('class_rank',sem_clause, sec_clause)]:
-        query = """SELECT rank from (SELECT usn, rank() over (order by rating desc) as rank from student where {} and {}) as a WHERE usn = '{}'"""
-        query = query.format(clause1, clause2, usn)
-        res = _execute_query(query)
-        student_details[attr] = int(res[0][0])
+
+    if get_ranks:
+        sem_clause = "semester = " + str(student_details['semester'])
+        sec_clause = "section = '" + str(student_details['section']) + "'"
+        for attr, clause1, clause2 in [('rank','true', 'true'), ('batch_rank',sem_clause, 'true'), ('class_rank',sem_clause, sec_clause)]:
+            query = """SELECT rank from (SELECT usn, rank() over (order by rating desc) as rank from student where {} and {}) as a WHERE usn = '{}'"""
+            query = query.format(clause1, clause2, usn)
+            res = _execute_query(query)
+            student_details[attr] = int(res[0][0])
 
     return json.dumps(student_details)
+
 
 def get_submission_distribution(usn):
     """
@@ -283,10 +292,15 @@ def get_submission_distribution(usn):
     #todo
 
 
+def get_questions_by_contest(c_id):
+    pass
+
+
 logging.basicConfig(level='INFO')
+
 
 if __name__ == "__main__":
     # res = _execute_query("SELECT * from student WHERE usn = '01FB15ECS342'", json_ouput=True)
     # print(type(res))
     # print(res)
-    print(get_submission_distribution('01FB15ECS342'))
+    print(get_archived_contest('01FB15ECS342'))
