@@ -128,29 +128,25 @@
 
 						<section>
 									<h3>QUESTION BANK</h3>
-									
 									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
 										<table>
-											
 												<tr>
 													<th>Question Name</th>
 													<th>Tags</th> 
 													<th>Created</th>
 													<th>Owner</th>
 													<th>Add to Contest</th>
-													
-													
 												</tr>
-											
-											
-												<tr>
-													<td id = "Q1">Q1</td>
-													<td  id = "tag_q1">demo_tag</td>
-													<td id ="time_q1">demo_time</td>
-													<td id ="owner_q1">vora</td>
-													<td id ="y/n"><div class="col-6 col-12-small"><input type="checkbox" id="demo-human" name="demo-human" checked><label for="demo-human">Add</label></div>
-													</td>
-												</tr>
+												{% for question in questions %}
+													<tr>
+														<td id = "Q1"> {{question.problem}} </td>
+														<td  id = "tag_q1"> {{question.tags}} </td>
+														<td id = "time_q1"> {{question.time_limit}} </td>
+														<td id = "owner_q1"> {{ question.q_id }} </td>
+														<td id ="y/n"><div class="col-6 col-12-small"><input type="checkbox" id="demo-human" name="questions" value = "{{ question.q_id }}"><label for="demo-human">Add</label></div>
+														</td>
+													</tr>
+												{% endfor %}
 											</table>
 											<div class="col-12">
 												<ul class="actions">
@@ -159,32 +155,14 @@
 												</ul>
 											</div>
 									</div>
-
-									
-								</section>
-
-							>
-
-								
-								
-
+							</section>
 					</div>
-
-				
-
-						
-	
-
-						
-
 			</div>
-
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
 	</body>
 </html>
