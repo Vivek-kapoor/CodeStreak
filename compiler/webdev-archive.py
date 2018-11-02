@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request
 from compiler.runcode import runcode
-from db_access import submit_code
-from main import SESSION
-
 import socket
+
 app = Flask(__name__)
 app._static_folder = "/home/sumanth/projects/flask_compiler/codelauncher/static/"
 import code
 import random
-temp=""
+
+temp = ""
 default_c_code = """#include <stdio.h>
 
 int main(int argc, char **argv)
@@ -33,22 +32,23 @@ default_py_code = """import sys
 import os
 
 if __name__ == "__main__":
-    print "Hello Python World!!"
+    print("Hello Python World!!")
 """
 
 default_rows = "15"
 default_cols = "60"
 Index = 0
-test_case_output="hello"
+test_case_output = "hello"
+
 
 def get_data(c_id):
     return {
-        "name" : "Sherlock and Cost",
-        "problem" : "In this challenge, you will be given an array  and must determine an array . There is a special rule: For all , . That is,  can be any number you choose such that . Your task is to select a series of  given  such that the sum of the absolute difference of consecutive pairs of  is maximized. This will be the array's cost, and will be represented by the variable  below.",
+        "name": "Sherlock and Cost",
+        "problem": "In this challenge, you will be given an array  and must determine an array . There is a special rule: For all , . That is,  can be any number you choose such that . Your task is to select a series of  given  such that the sum of the absolute difference of consecutive pairs of  is maximized. This will be the array's cost, and will be represented by the variable  below.",
         "difficulty": "Medium",
-        "time" : "2s",
-        "memory" : "256kB",
-        "tags" : "Dynamic programming" 
+        "time": "2s",
+        "memory": "256kB",
+        "tags": "Dynamic programming"
     }
 
 
@@ -60,36 +60,42 @@ def get_question(contest_id):
     data["difficulty"] = output_dict['difficulty']
     data["time"] = output_dict['time']
     data["memory"] = output_dict['memory']
-    data["tags"] = output_dict['tags'] 
+    data["tags"] = output_dict['tags']
     return data
+
 
 @app.route("/")
 @app.route("/runc", methods=['POST', 'GET'])
 def runc():
     contest_id = 1
-    question =  get_question(contest_id)
+    question = get_question(contest_id)
     if request.method == 'POST':
         code = request.form['code']
         resinput = format(request.form['resinput'])
-        submission = {
-            "usn": SESSION['usn'],
-            "q_id":SESSION['q_id'],
-            "c_id": SESSION['c_id'],
-            "code": code,
-            "language": "c"
-        }
+        # if len(resinput.strip()) == 0:
+        global Index
+        Index += 1
+        ID = Index
+        instr = "./running/input" + str(ID) + ".txt"
+        f = open(instr, "w")
+        f.write(resinput)
+        f.close()
 
-        submit_code(**submission)
+        run = runcode.RunCCode(code, Index)
+        rescompil, resrun, test_case_output = run.run_c_code()
+        print(test_case_output)
+
+        if not resrun:
+            resrun = 'No result!'
     else:
         code = default_c_code
         resrun = 'No result!'
         rescompil = ''
-        test_case_output=""
-    
-    
+        test_case_output = ""
+
     return render_template("main.html",
-                           question= question,
-                           code=code,    
+                           question=question,
+                           code=code,
                            target="runc",
                            resrun=resrun,
                            test_case_output=test_case_output,
@@ -97,14 +103,13 @@ def runc():
                            rows=default_rows, cols=default_cols)
 
 
-@app.route("/submission", methods = ['POST'])
-
+@app.route("/submission", methods=['POST'])
 def submission():
-        output=runcode.RunCCode()
-        test_case_output=output.all_submissions()
-        l=test_case_output.split('\n')
-        print(l)
-        return render_template("Table/table.html",output=l)
+    output = runcode.RunCCode()
+    test_case_output = output.all_submissions()
+    l = test_case_output.split('\n')
+    print(l)
+    return render_template("Table/table.html", output=l)
 
 
 @app.route("/cpp")
@@ -127,6 +132,7 @@ def runcpp():
                            rescomp=rescompil,
                            rows=default_rows, cols=default_cols)
 
+
 @app.route("/py")
 @app.route("/runpy", methods=['POST', 'GET'])
 def runpy():
@@ -140,13 +146,14 @@ def runpy():
         code = default_py_code
         resrun = 'No result!'
         rescompil = "No compilation for Python"
-        
+
     return render_template("main.html",
                            code=code,
                            target="runpy",
                            resrun=resrun,
-                           rescomp=rescompil,#"No compilation for Python",
+                           rescomp=rescompil,  # "No compilation for Python",
                            rows=default_rows, cols=default_cols)
 
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port="5000")
+    app.run(host='127.0.0.1', port="5000")

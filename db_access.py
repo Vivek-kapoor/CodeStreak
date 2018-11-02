@@ -2,10 +2,18 @@
 This file contains the code that connects the backend to database
 Run this file to check if the connection to database works
 If it doesn't throw an error, it works!
+
+CONTENTS:
+1. FUNCTIONS AND OBJECTS USED BY MULTIPLE FUNCTIONS
+2. QUERIES FOR LOGIN
+3. QUERIES FOR COMPILER
 """
 
 import psycopg2
 import logging
+import random
+import string
+import json
 
 """
 codestreak=# \d
@@ -19,20 +27,16 @@ codestreak=# \d
  public | submission | table | postgres
 (5 rows)
 
-codestreak=# \d professor;
-                     Table "public.professor"
-  Column  |         Type          | Collation | Nullable | Default
-----------+-----------------------+-----------+----------+---------
- p_id     | character varying(50) |           | not null |
- name     | character varying(50) |           |          |
- password | character varying(50) |           |          |
- email    | character varying(50) |           |          |
-Indexes:
-    "professor_pkey" PRIMARY KEY, btree (p_id)
-Referenced by:
-    TABLE "contest" CONSTRAINT "contest_p_id_fkey" FOREIGN KEY (p_id) REFERENCES professor(p_id)
-    TABLE "question" CONSTRAINT "question_p_id_fkey" FOREIGN KEY (p_id) REFERENCES professor(p_id)
 """
+
+# 1. FUNCTIONS AND OBJECTS used by multiple functions
+
+none_list = ['None', None, False, {}, [], set(), 'null', 'NULL']
+
+
+def random_alnum(prefix="", length=16):
+    x = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(length))
+    return prefix + x
 
 
 def connect_db():
@@ -43,12 +47,34 @@ def connect_db():
     connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432'"
     try:
         conn = psycopg2.connect(connect_str)
+        logging.info('Connection successful')
         return conn
 
     except:
         logging.error('Failed to connect to database')
         return None
 
+def _execute_query(query):
+    """
+    Helper function to execute any query and fetches all rows
+    :param query: Query string in SQL
+    :return: None if query unsuccessful, else list of tuples
+    """
+    conn = connect_db()
+    if conn:
+        cur = conn.cursor()
+        cur.execute(query)
+        logging.info('Executed: '+query)
+        res = cur.fetchall()
+        logging.info('Returned: '+str(res))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return res
+    return None
+
+
+# 2. QUERIES FOR LOGIN
 
 def validate_student(usn, password):
     """
@@ -58,14 +84,10 @@ def validate_student(usn, password):
     :return: False if usn does not exist or password doesn't match. Else True
     """
     query = """SELECT (SELECT '""" + usn + """' IN (SELECT usn FROM student)) AND (SELECT (SELECT password FROM student where usn = '""" + usn + """') = '""" + password + """');"""
-    conn = connect_db()
-    res = False
-    if conn:
-        cursor = conn.cursor()
-        cursor.execute(query)
-        res = cursor.fetchall()[0][0]
-        conn.close()
-    return res
+    res = _execute_query(query)
+    if res not in none_list:
+        return res[0][0]
+    return False
 
 
 def validate_professor(p_id, password):
@@ -76,14 +98,85 @@ def validate_professor(p_id, password):
     :return: False if p_id does not exist or password doesn't match. Else True
     """
     query = """SELECT (SELECT '""" + p_id + """' IN (SELECT p_id FROM professor)) AND (SELECT (SELECT password FROM professor where p_id = '""" + p_id + """') = '""" + password + """');"""
-    conn = connect_db()
-    res = False
-    if conn:
-        cursor = conn.cursor()
-        cursor.execute(query)
-        res = cursor.fetchall()[0][0]
-        conn.close()
-    return res
+    res = _execute_query(query)
+    if res not in none_list:
+        return res[0][0]
+    return False
+
+
+# 3. QUERIES FOR COMPILER
+def get_testcases_by_question(q_id=0):
+    """
+    Gets the test cases for a given question
+    :param q_id: the unique identifier for each question in db
+    :return: A json object of test cases
+    """
+    query1 = "SELECT COUNT(*) FROM question where q_id = '{}';".format(q_id)
+    query2 = "SELECT test_cases FROM question where q_id = '{}';".format(q_id)
+    res1 = _execute_query(query1)
+    if res1 in none_list or int(res1[0][0]) == 0:  # checks if q_id exists
+        logging.error('Could not find required question')
+        return None
+
+    res2 = _execute_query(query2)
+    if res2 not in none_list:
+        return json.loads(res2[0][0])
+
+    return None
+
+
+def submit_code(usn, q_id, c_id, code, language, test_case_status="{}"):
+    """
+    :param usn:
+    :param q_id:
+    :param c_id:
+    :param code:
+    :param language:
+    :return:
+    """
+
+    s_id = random_alnum("s_")
+    query = """INSERT INTO submission (s_id, usn, q_id, c_id, code, language, test_case_status) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}');"""
+    query = query.format(s_id, usn, q_id, c_id, code, language, test_case_status)
+    res = _execute_query(query)
+    if res in none_list:
+        logging.error('Failed to add submission to database')
+        return None
+    logging.info('Submitted code successfully')
+
+
+def get_unevaluated_submission():
+    """
+    Gets the oldest unevaluated code
+    :return: None if nothing to evaluate else a dict with s_id, code and language
+    """
+    query = """SELECT s_id, code, language FROM submission where is_evaluated = false ORDER BY submit_time DESC;"""
+    res = _execute_query(query)
+    if res in none_list:  # error or nothing to evaluate
+        return None
+    code_to_evaluate = {
+        "s_id": res[0][0],
+        "code": res[0][1],
+        "language": res[0][2]
+    }
+    return code_to_evaluate
+
+
+def set_evaluated_submission(s_id, test_case_status):
+    """
+    Saves the evaluated submission to the database
+    :param s_id:
+    :param test_case_status:
+    :return:
+    """
+    query = """UPDATE submission SET test_case_status = '{}' WHERE s_id = '{}'"""
+    query = query.format(s_id, test_case_status)
+    res = _execute_query(query)
+    if res not in none_list:
+        return res
+    logging.error('Could not update test_case_status')
+    return None
+
 
 
 def query_student_login(**dictionary):
@@ -110,4 +203,11 @@ def questions_list():
     return list of dictionary, where each dictionary is a row of question table.
     """
 if __name__ == "__main__":
-    print(validate_professor('abcd', 'pqrs'))
+    submission = {
+        "usn": '01FB15ECS341',
+        "q_id": 10,
+        "c_id": 15,
+        "code": "int main(){;}",
+        "language": "c"
+    }
+    print(submit_code(**submission))

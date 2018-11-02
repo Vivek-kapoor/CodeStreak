@@ -73,7 +73,7 @@
           },
           "difficulty":{
             "type":"String",
-            "required": true,
+            "required": true
           }
        },
   "language": {

@@ -1,6 +1,7 @@
 import sys
 from flask import Flask, render_template, request
 from db_access import validate_student, validate_professor
+SESSION = dict()
 
 app = Flask(__name__)
 app._static_folder = "/home/t/CodeStreak/static"
