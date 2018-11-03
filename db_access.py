@@ -194,9 +194,9 @@ def get_questions_by_prof(p_id):
     Gets all the questions created by the given professor
     in descending order of the time it was created
     :param p_id: unique id of the professor
-    :return: list of all question information in json format
+    :return: list of dict where each question is a dict
     """
-    query = """SELECT * from question where p_id = '{}' ORDER BY create_time DESC;"""
+    query = """SELECT * from question where p_id = '{}' ORDER BY create_time DESC"""
     query = query.format(p_id)
     res = _execute_query(query, json_ouput=True)
     if res in none_list:
@@ -208,7 +208,7 @@ def get_questions_by_prof(p_id):
 def create_contest(p_id, name, start_time, end_time, questions, semester, section):
 
     c_id = random_alnum("c_")
-    query = """INSERT INTO contest VALUES('{}', '{}','{}','{}','{}','{}','{}');"""
+    query = """INSERT INTO contest VALUES('{}', '{}','{}','{}','{}','{}','{}')"""
     query = query.format(c_id, p_id, name, start_time, end_time, questions, semester, section)
     res = _execute_query(query)
     if res in none_list:
@@ -217,14 +217,19 @@ def create_contest(p_id, name, start_time, end_time, questions, semester, sectio
     return res
 
 
-def get_active_contest(usn):
+def get_active_contest(usn, semester=None, section=None):
     """
     Gets a list of active contests for the given student
     :param usn: usn of the student
     :return: a list of contests with all details in JSON
     """
-    query = """SELECT * FROM contest WHERE semester IN (SELECT semester FROM student where usn = '{}') AND section IN (SELECT semester FROM student where usn = '{}') AND end_time > NOW();"""
-    query = query.format(usn, usn)
+    if semester is None or section is None:
+        student_details = json.loads(get_student_details(usn, get_ranks=False))
+        semester = student_details['semester']
+        section = student_details['section']
+
+    query = """SELECT * FROM contest WHERE semester = '{}' AND section  = '{}' AND end_time > NOW()"""
+    query = query.format(semester, section)
     res = _execute_query(query, json_ouput=True)
     if res in none_list:
         return None
@@ -296,6 +301,11 @@ def get_questions_by_contest(c_id):
     pass
 
 
+def create_question(p_id, name, problem, difficulty, editorial, time_limit=1, memory_limit=1024, test_cases="{}", score=0, languages='{"c"}', tags='{}'):
+    query = """INSERT INTO ques"""
+    pass
+
+
 logging.basicConfig(level='INFO')
 
 
@@ -303,4 +313,4 @@ if __name__ == "__main__":
     # res = _execute_query("SELECT * from student WHERE usn = '01FB15ECS342'", json_ouput=True)
     # print(type(res))
     # print(res)
-    print(get_archived_contest('01FB15ECS342'))
+    print(get_questions_by_prof('01FB15ECS342'))
