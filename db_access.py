@@ -20,18 +20,19 @@ CONTENTS (not in order):
     9. get_active_contest: Gets a list of active contests for given USN
     10. get_archived_contest: Gets a list of archived contest for given USN
 
-    11. get_questions_by_prof: Gets all the questions whose creator is p_id
-    12. get_questions_by_contest: Gets a list of all questions in a contest
+    11. get_questions: Gets all the questions
+    12. get_questions_by_prof: Gets all the questions whose creator is p_id
+    13. get_questions_by_contest: Gets a list of all questions in a contest
 
-    13. get_testcases_by_question: Gets the test cases for a given question
-    14. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
-    15. get_submission_distribution: Gets distribution of test case status for pie chart
-    16. get_submissions_by_student: Gets all submissions made by a student for given question and contest
-    17. get_leaderboard: Gets the leaderboard of a given contest
-    18. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+    14. get_testcases_by_question: Gets the test cases for a given question
+    15. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
+    16. get_submission_distribution: Gets distribution of test case status for pie chart
+    17. get_submissions_by_student: Gets all submissions made by a student for given question and contest
+    18. get_leaderboard: Gets the leaderboard of a given contest
+    19. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
 
-    19. submit_code: Submits code, makes an entry in the submission table
-    20. set_evaluated_submission: Sets the test_case_status of given s_id
+    20. submit_code: Submits code, makes an entry in the submission table
+    21. set_evaluated_submission: Sets the test_case_status of given s_id
 
 """
 
@@ -231,6 +232,20 @@ def get_questions_by_prof(p_id):
     res = _execute_query(query, json_output=True)
     if res in none_list:
         logging.error('Could not get any questions for '+p_id)
+        return None
+    return res[0]
+
+
+def get_questions():
+    """
+    Gets all the questions in descending order of the time it was created
+    :param p_id: unique id of the professor
+    :return: list of dict where each question is a dict
+    """
+    query = """SELECT * from question ORDER BY create_time DESC"""
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        logging.error('Could not get any questions')
         return None
     return res[0]
 
