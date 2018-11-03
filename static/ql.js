@@ -64,12 +64,15 @@ function testcase()
 	button.value="Remove TestCase";
 	button.id=n_cases;
 	button.onclick=removecase;
+	button.style.visibility = "hidden";
+
 	n_cases+=1
 	cases=document.getElementById("testcases");
 	li=document.createElement("li");
 	li.style.border="2px solid grey";
 	li.id="case"+n_cases;
 	cases.appendChild(li);
+
 	lab=document.createElement("label");
 	lab.style.color="white";
 	lab.innerHTML="Input File";
@@ -80,6 +83,8 @@ function testcase()
 	inp.style.color="white";
 	li.appendChild(lab);
 	li.appendChild(inp);
+    li.appendChild(document.createElement("br"))
+
 	lab=document.createElement("label");
 	lab.style.color="white";
 	lab.innerHTML="Output File";
@@ -90,6 +95,20 @@ function testcase()
 	out.style.color="white";
 	li.appendChild(lab);
 	li.appendChild(out);
+	li.appendChild(document.createElement("br"))
+
+    lab=document.createElement("label");
+	lab.style.color="white";
+	lab.innerHTML="Points";
+	out=document.createElement("input");
+	out.id="point";
+	out.type="text";
+	out.name="point"+(n_cases);
+	out.style.color="white";
+	li.appendChild(lab);
+	li.appendChild(out);
+	li.appendChild(document.createElement("br"))
+
 	sub=document.createElement("input");
 	sub.id="editq";
 	sub.type="button";
