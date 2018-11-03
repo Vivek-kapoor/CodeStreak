@@ -67,7 +67,6 @@
 		</style>
 	</head>
 	<body class="single is-preload">
-
 		<!-- Wrapper -->
 			<div id="wrapper">
 
@@ -183,13 +182,13 @@
 									<!-- div where question details are hidden which is displayed when a question is clicked on -->
 									<div style="display: none; background-color:black; color:white; overflow:scroll;" id="qdisplay">
 										<form id="frm" method="POST" enctype="multipart/form-data" action="#">
-											<label style="color:white">Problem Name:</label>
-											<input type="text" name="name" placeholder="Problem name" style="color:white" />
+											<label style="color:white">Problem Name:</label></br>
+											<input type="text" name="name" placeholder="Problem name" style="color:white" /></br>
 
-											<label style="color:white">Problem Statement:</label>
-											<textarea id="froala-editor" type="text" name="statement" placeholder="Problem Statement" style="color:white">Initialize the Froala WYSIWYG HTML Editor on a textarea.</textarea>
+											<label style="color:white">Problem Statement:</label></br>
+											<textarea id="froala-editor" type="text" name="statement" placeholder="Problem Statement" style="color:white">Initialize the Froala WYSIWYG HTML Editor on a textarea.</textarea></br>
 
-											<label style="color:white">Difficulty Level</label>
+											<label style="color:white">Difficulty Level</label></br>
 											<select name="difficulty" style="color:white">
  													<option value="Easy" style="color:white">Easy</option>
  													<option value="Medium" style="color:white">Medium</option>
@@ -201,13 +200,16 @@
 												<li style="border:2px solid grey;" id="case1">
 													<label style="color:white">Input File</label>
 													<input id="input" type="file" name="input1" style="color:white"/>
-
+													</br>
 													<label style="color:white">Output File</label>
 													<input id="output" type="file" name="output1" style="color:white"/>
-
+													</br>
+													<label style="color:white">Points</label>
+                                                    <input id = "point" type="text" name = "point1" style="...">
+													</br>
 													<input id="editq" type="button" value="Add TestCase" onclick="testcase()"/>
-										</li>
-									</ul>
+												</li>
+											</ul>
 
 											<label style="color:white">Tags:</label>
 											<input type="text" name="tags" placeholder="Tag" style="color:white" />
@@ -250,6 +252,6 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/ql.js"></script>
+			<script src="../static/ql.js"></script>			
 	</body>
 </html>
