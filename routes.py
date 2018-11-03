@@ -1,5 +1,8 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request, session, flash
 from db_access import create_contest
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = '59d3ca27e6701d3fd06eb960ca5866a5'
 
 
 @app.route("/")
@@ -21,7 +24,6 @@ def student_login():
         else:
             return render_template('student_login.html')
     return render_template('student_login.html')
-
 
 @app.route("/create_assignment", methods=["GET", "POST"])
 def create_assignment():
@@ -45,6 +47,34 @@ def create_assignment():
         questions = questions_list()
         return render_template("UpdatedcreateLab.html",
                                questions=questions)
+
+@app.route("/add_questions", methods=["GET", "POST"])
+def add_questions():
+    data = request.form.to_dict(flat=False)
+    print(data)
+    if (data):
+        files = request.files
+        num_of_testcases = int(len(files) / 2)
+        testcases = []
+        request_data = {}
+        for i in range(1, num_of_testcases + 1):
+            testcases.append({
+                "input": files['input' + str(i)].read().decode("utf-8"),
+                "output": files['output' + str(i)].read().decode("utf-8"),
+                "point": float(data["point" + str(i)][0])
+            })
+        request_data['q_id'] = None
+        request_data['testcases'] = testcases
+        request_data['name'] = data['name']
+        request_data['problem'] = data['statement']
+        request_data['difficulty'] = data['difficulty']
+        request_data['tags'] = data['tags']
+        create_question(**request_data)
+        flash("Added successfully")
+        return render_template("ql.html")
+    else:
+        questions = questions_list()
+        return render_template("ql.html", questions = questions)
 
 
 if (__name__ == "__main__"):
