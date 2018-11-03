@@ -26,9 +26,12 @@ CONTENTS (not in order):
     13. get_testcases_by_question: Gets the test cases for a given question
     14. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
     15. get_submission_distribution: Gets distribution of test case status for pie chart
-    
-    16. submit_code: Submits code, makes an entry in the submission table
-    17. set_evaluated_submission: Sets the test_case_status of given s_id
+    16. get_submissions_by_student: Gets all submissions made by a student for given question and contest
+    17. get_leaderboard: Gets the leaderboard of a given contest
+    18. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+
+    19. submit_code: Submits code, makes an entry in the submission table
+    20. set_evaluated_submission: Sets the test_case_status of given s_id
 
 """
 
@@ -359,6 +362,49 @@ def create_question(p_id:str, name:str, problem:str, difficulty:str, editorial="
     return res
 
 
+def get_submissions_by_student(usn:str, q_id:str, c_id:str):
+    """
+    Gets the submissions made by a student for a particular question for a particular contest
+    :param usn: unique student id
+    :param q_id: question id
+    :param c_id: contest id
+    :return: A list of submissions where each submission is a dict
+    """
+
+    query = """SELECT * from submission WHERE usn = '{}' AND q_id = '{}' AND c_id = '{}'"""
+    query = query.format(usn, q_id, c_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        logging.error('Could not retrieve any submissons')
+        return None
+    return res
+
+
+def get_submissions_by_contest(c_id:str):
+    """
+    Gets all the submissions for a contest for the professor to see
+    :param c_id:
+    :return:
+    """
+    query = """SELECT * from submission where c_id = '{}'"""
+    query = query.format(c_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        logging.error('Could not retrieve any submissions for given contest')
+        return None
+    return res[0]
+
+
+def get_leaderboard(c_id:str):
+    """
+    Gets the leaderboard of a contest
+    :param c_id: contest id
+    :return: a list of dicts for the leaderboard
+    """
+    pass
+
+
+
 logging.basicConfig(level='INFO')
 
 
@@ -382,4 +428,7 @@ if __name__ == "__main__":
     print(type(temp), temp)
 
     temp = get_active_contest('01FB15ECS342')
+    print(type(temp), temp)
+
+    temp = get_submissions_by_contest('cwed')
     print(type(temp), temp)
