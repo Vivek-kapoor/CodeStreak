@@ -26,7 +26,7 @@ CONTENTS (not in order):
     14. get_questions_by_prof: Gets all the questions whose creator is p_id
     15. get_questions_by_contest: Gets a list of all questions in a contest
 
-    16. get_testcases_by_question: Gets the test cases for a given question
+    16. get_question_details: Gets the test cases for a given question
     17. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
     18. get_submission_distribution: Gets distribution of test case status for pie chart
     19. get_submissions_by_student: Gets all submissions made by a student for given question and contest
@@ -153,25 +153,19 @@ def validate_professor(p_id: str, password: str) -> bool:
     return False
 
 
-def get_testcases_by_question(q_id: str ="0"):
+def get_question_details(q_id: str = "0"):
     """
-    Gets the test cases for a given question
+    Gets all details for a given question
     :param q_id: the unique identifier for each question in db
     :return: A json object of test cases
     """
-    query1 = "SELECT COUNT(*) FROM question where q_id = '{}'".format(q_id)
-    query2 = "SELECT test_cases FROM question where q_id = '{}'".format(q_id)
-    res1 = _execute_query(query1)
-    if res1 in none_list or int(res1[0][0]) == 0:  # checks if q_id exists
-        logging.error('Could not find required question')
+    query = """SELECT * from question where q_id = \'{}\'"""
+    query = query.format(q_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        logging.error('Could not fetch details for ' + q_id)
         return None
-
-    res2 = _execute_query(query2)
-    if res2 in none_list:
-        logging.error('Could not retrieve test cases for ' + q_id)
-        return None
-
-    return res2[0][0]
+    return res[0][0]
 
 
 def submit_code(usn, q_id, c_id, code, language, test_case_status="{}"):
@@ -494,4 +488,7 @@ if __name__ == "__main__":
     print(type(temp), temp)
 
     temp = get_submissions_by_contest('cwed')
+    print(type(temp), temp)
+
+    temp = get_question_details("q_3423km23f")
     print(type(temp), temp)

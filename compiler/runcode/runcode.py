@@ -6,6 +6,8 @@ import subprocess
 import threading
 import socket
 import re
+import db_access as db
+
 app = Flask(__name__)
 test_case_output=""
 class RunCCode(object):
@@ -62,7 +64,8 @@ class RunCCode(object):
         # taking custom input
         # this is only if user says cutom input 
         # my_input = open("./running/input"+str(idx)+".txt","r")
-        
+        q_id = "q_3423km23f"
+
         '''
         TODO: Database fetch
         fetch the inputs from the database
@@ -71,10 +74,10 @@ class RunCCode(object):
         return the score, time , memory taken 
         to the user in the same format as stored in database
         '''
-        q_id = 1
-        my_input =  self.fetch_data(q_id)
-        memory_limit = 5024 #default value, TODO: fetch from the DB
-        time_limit = 2  #default TODO fetch from the DB
+        question_details = db.get_question_details(q_id)
+        my_input =  question_details["test_cases"]
+        memory_limit = question_details["memory_limit"]
+        time_limit = question_details["time_limit"]
 
 
         score = 0
