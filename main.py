@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, request
 from db_access import validate_student, validate_professor
-from contest_info import active_contest_list
+from contest_info import contest_list
 
 SESSION = dict()
 
@@ -25,7 +25,7 @@ def student_login():
 		password = request.form['password']
 
 		if validate_student(usn, password):
-			return active_contest_list(usn)
+			return contest_list(usn)
 		else:
 			return render_template("check.html")
 
