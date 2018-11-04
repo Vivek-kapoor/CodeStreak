@@ -17,22 +17,24 @@ CONTENTS (not in order):
 
     8. get_student_details: Gets a dict with all details of a student
 
-    9. get_active_contest: Gets a list of active contests for given USN
-    10. get_archived_contest: Gets a list of archived contest for given USN
+    9. get_active_contest_student: Gets a list of active contests for given USN
+    10. get_archived_contest_student: Gets a list of archived contest for given USN
+    11. get_active_contest_professor: Gets a list of active contests for given p_id
+    12. get_archived_contest_professor: Gets a list of archived contest for given p_id
 
-    11. get_questions: Gets all the questions
-    12. get_questions_by_prof: Gets all the questions whose creator is p_id
-    13. get_questions_by_contest: Gets a list of all questions in a contest
+    13. get_questions: Gets all the questions
+    14. get_questions_by_prof: Gets all the questions whose creator is p_id
+    15. get_questions_by_contest: Gets a list of all questions in a contest
 
-    14. get_testcases_by_question: Gets the test cases for a given question
-    15. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
-    16. get_submission_distribution: Gets distribution of test case status for pie chart
-    17. get_submissions_by_student: Gets all submissions made by a student for given question and contest
-    18. get_leaderboard: Gets the leaderboard of a given contest
-    19. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+    16. get_testcases_by_question: Gets the test cases for a given question
+    17. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
+    18. get_submission_distribution: Gets distribution of test case status for pie chart
+    19. get_submissions_by_student: Gets all submissions made by a student for given question and contest
+    20. get_leaderboard: Gets the leaderboard of a given contest
+    21. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
 
-    20. submit_code: Submits code, makes an entry in the submission table
-    21. set_evaluated_submission: Sets the test_case_status of given s_id
+    22. submit_code: Submits code, makes an entry in the submission table
+    23. set_evaluated_submission: Sets the test_case_status of given s_id
 
 """
 
@@ -268,7 +270,7 @@ def create_contest(p_id, name, start_time, end_time, questions, semester, sectio
     return res
 
 
-def get_active_contest(usn: str, semester=None, section=None):
+def get_active_contest_student(usn: str, semester=None, section=None):
     """
     Gets a list of active contests for the given student
     :param usn: usn of the student
@@ -292,7 +294,7 @@ def get_active_contest(usn: str, semester=None, section=None):
     return res[0]
 
 
-def get_archived_contest(usn: str, semester=None, section=None):
+def get_archived_contest_student(usn: str, semester=None, section=None):
     """
     Gets a list of active contests for the given student
     :param usn: usn of the student
@@ -310,6 +312,34 @@ def get_archived_contest(usn: str, semester=None, section=None):
 
     query = """SELECT * FROM contest WHERE semester = '{}' AND section  = '{}' AND end_time < NOW()"""
     query = query.format(semester, section)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        return None
+    return res[0]
+
+
+def get_archived_contest_professor(p_id: str):
+    """
+    Gets all the archived contest for given p_id
+    :param p_id: Professor id
+    :return: None if there are no contests, else json
+    """
+    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time < NOW()"""
+    query = query.format(p_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        return None
+    return res[0]
+
+
+def get_active_contest_professor(p_id: str):
+    """
+    Gets all the active contest for given p_id
+    :param p_id: Professor id
+    :return: None if there are no contests, else json
+    """
+    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time >= NOW()"""
+    query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
         return None
@@ -460,7 +490,7 @@ if __name__ == "__main__":
     temp = get_submission_distribution('01FB15ECS342')
     print(type(temp), temp)
 
-    temp = get_active_contest('01FB15ECS342')
+    temp = get_active_contest_student('01FB15ECS342')
     print(type(temp), temp)
 
     temp = get_submissions_by_contest('cwed')
