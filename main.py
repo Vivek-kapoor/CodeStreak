@@ -1,10 +1,12 @@
-import sys
+import os
 from flask import Flask, render_template, request
 from db_access import validate_student, validate_professor
+from contest_info import active_contest_list
+
 SESSION = dict()
 
 app = Flask(__name__)
-app._static_folder = "/home/t/CodeStreak/static"
+app._static_folder = os.path.join(os.getcwd(),"static")
 
 
 @app.route('/')
@@ -23,9 +25,9 @@ def student_login():
 		password = request.form['password']
 
 		if validate_student(usn, password):
-			return render_template("check.html")
+			return active_contest_list(usn)
 		else:
-			return render_template("login.html")
+			return render_template("check.html")
 
 
 
