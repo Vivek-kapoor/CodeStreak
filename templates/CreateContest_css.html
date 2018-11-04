@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<!--
+	Future Imperfect by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Create Contest</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../static/assets/css/main.css" />
+	</head>
+	<body class="is-preload" style="background-color:rgb(0,0,0)">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1>New Contest Creation Portal </h1>
+						
+						<nav class="main">
+							<ul>
+								<li class="search">
+									<a class="fa-search" href="#search">Search</a>
+									<form id="search" method="get" action="#">
+										<input type="text" name="query" placeholder="Search" />
+									</form>
+								</li>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<section id="menu">
+
+						<!-- Search -->
+							<section>
+								<form class="search" method="get" action="#">
+									<input type="text" name="query" placeholder="Search" />
+								</form>
+							</section>
+
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<li>
+										<a href="#">
+											<h3>QUESTION CREATION</h3>
+											<p>Add a new question to the existing database</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>DashBoard</h3>
+											<p>Active Contests</p>
+										</a>
+									</li>
+									
+								</ul>
+							</section>
+
+						<!-- Actions -->
+							<section>
+								<ul class="actions stacked">
+									<li><a href="#" class="button large fit">Log In</a></li>
+								</ul>
+							</section>
+
+					</section>
+
+				<!-- Main -->
+					<div id="main">
+
+						
+								<section>
+									<h3>Create a new contest</h3>
+									<br>
+									<form method="post" action="#">
+										<div class="row gtr-uniform" style="background-color:rgb(255, 229, 229)">
+										
+										<br><br>
+											<div class="col-6 col-12-xsmall">
+											<h4>Contest Name </h4><input type="text" name="demo-name" id="name" value=""  />
+											</div>
+											
+											<br><br>
+											<div class="col-6 col-12-xsmall">
+											<h4>Contest Begin </h4>	<input type="datetime-local" name="begin" id="begin" value="" placeholder="Begin-Time" />
+											</div>
+											<br><br>
+											<div class="col-6 col-12-xsmall">
+											<h4>Contest End </h4>	<input type="datetime-local" name="end" id="end" value="" placeholder="Begin-Time" />
+											</div>
+											<div class="col-2">
+											<h4>Select Semester	<select name="demo-category" id="demo-category">
+													<option value="">- Semester -</option>
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+												</select>
+											<h4>Enter Section</h4><input type="text" name="demo-name" id="name" value=""  />
+											</div>
+											
+											<div class="col-6 col-12-small">
+												<input type="checkbox" id="demo-copy" name="demo-copy">
+												<label for="demo-copy">Email me a copy</label>
+											</div>
+											<div class="col-6 col-12-small">
+												<input type="checkbox" id="demo-human" name="demo-human" checked>
+												<label for="demo-human">Not a robot</label>
+											</div>
+											<br><br>
+										</div>
+									</form>
+								</section>
+							
+								
+
+						<section>
+									<h3>QUESTION BANK</h3>
+									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
+										<table>
+												<tr>
+													<th>Question Name</th>
+													<th>Tags</th> 
+													<th>Created</th>
+													<th>Owner</th>
+													<th>Add to Contest</th>
+												</tr>
+												{% for question in questions %}
+													<tr>
+														<td id = "Q1"> {{question.problem}} </td>
+														<td  id = "tag_q1"> {{question.tags}} </td>
+														<td id = "time_q1"> {{question.time_limit}} </td>
+														<td id = "owner_q1"> {{ question.q_id }} </td>
+														<td id ="y/n"><div class="col-6 col-12-small"><input type="checkbox" id="demo-human" name="questions" value = "{{ question.q_id }}"><label for="demo-human">Add</label></div>
+														</td>
+													</tr>
+												{% endfor %}
+											</table>
+											<div class="col-12">
+												<ul class="actions">
+													<li><input type="submit" value="Create" /></li>
+													<li><input type="reset" value="Reset" /></li>
+												</ul>
+											</div>
+									</div>
+							</section>
+					</div>
+			</div>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+	</body>
+</html>

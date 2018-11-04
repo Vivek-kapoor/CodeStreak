@@ -1,0 +1,17 @@
+There are N people in city,who wants to visit Kingdom of Dreams. The road of reaching of Kingdom is not so safe.So, they go to kingdom only in a security vehicle which can accomodate atmost 2 people.(There is only one security vehicle available in the town as it is quite costly and unique).People started to hire this vehicle to reach safely by driving it by themselves.Every part of journey from town to kingdom or from kingdom to town has some cost associated with it which is given by an array A[] elements. Array A[] has n elements,where A(i) represents the cost ith person has to pay if they travel alone in the vehicle. If two people travel in vehicle,the cost of travel will be the maximum of cost of two people.Calculate the minimum total cost so that all N people can reach Kingdom safely.
+
+Input Format-
+
+The first line contains, T, denoting the number of test cases. Each test case contains 2 lines each. The first line has an integer N, denoting the number of persons. Next line contains N space separated distinct integers denoting the cost of ith person.
+
+Output Format-
+
+For each test case, print the minimum cost required so that all people can reach kingdom.
+
+Constraints-
+
+1 ≤ T ≤ 10
+
+1 ≤ N ≤ 100000
+
+1 ≤ A[i] ≤ 1000000

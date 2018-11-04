@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request
-from runcode import runcode
+from compiler.runcode import runcode
+from db_access import submit_code
+from main import SESSION
+
 import socket
 app = Flask(__name__)
 app._static_folder = "/home/sumanth/projects/flask_compiler/codelauncher/static/"
@@ -47,19 +50,15 @@ def runc():
     if request.method == 'POST':
         code = request.form['code']
         resinput = format(request.form['resinput'])
-        global Index
-        Index += 1
-        ID = Index
-        instr = "./running/input"+str(ID)+".txt"
-        f = open(instr,"w")
-        f.write(resinput)
-        f.close()  
-        run = runcode.RunCCode(code,Index)
-        rescompil, resrun, test_case_output = run.run_c_code()
-        print(test_case_output)
-       
-        if not resrun:
-            resrun = 'No result!'
+        submission = {
+            "usn": SESSION['usn'],
+            "q_id":SESSION['q_id'],
+            "c_id": SESSION['c_id'],
+            "code": code,
+            "language": "c"
+        }
+
+        submit_code(**submission)
     else:
         code = default_c_code
         resrun = 'No result!'

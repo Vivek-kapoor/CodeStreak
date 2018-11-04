@@ -1,0 +1,22 @@
+Sumit and Himanshu are playing a game in which Himanshu will give an index of a chocolate. Then, Sumit has to tell him the box number in which that chocolate is in. There are N such boxes and Ci chocolates are there in ith the box. Description of index is given below :
+
+Suppose there are A1, A2 … AN chocolates in 1st, 2nd… Nth boxes respectively. So, indexing of chocolates in 1st box will be from 1 to A1, similarly in 2nd box indexing will be A1 + 1 to A2 … and indexing in Nth box will be from AN-1 + 1 to AN.
+
+Sumit is blind folded so he can’t see the boxes. You are required to help him.
+
+Input :
+
+    First line will contain N (No. of boxes). Next line will contain N space separated integers denoting Ci, the number of chocolates in ith box.
+    Next line will contain Q (No. of times Himanshu will ask Sumit). Then each next Q lines will contain the asked index I.
+
+Output :
+
+    For every query, print in a new line : the box number in which that
+    index of chocolate is in.
+
+Constraints :
+
+    1 ≤ N, Q ≤ 10^5
+    1 ≤ Ci ≤ 10
+    1 ≤ ∑ Ci ≤ 10^6
+    1 ≤ I ≤ ∑ Ci

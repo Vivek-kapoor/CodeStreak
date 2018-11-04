@@ -1,0 +1,27 @@
+Given a 2D Grid A[i][j] consisiting of n rows and m columns. 
+
+You need to find a square submatrix of the matrix A such that the sum of its elements is at most x, and its area (the total number of elements) is the largest possible.
+
+Input
+
+The first line contains three integers n and m.
+
+Second line of input contains x maximum possible sum of elements.
+
+Next n lines contain m space separated integers.
+
+Output
+
+Print maximum area of a square submatrix with sum of elements less than equal to x.
+
+Constraints
+
+1 ≤n,m≤ 10^3
+
+
+
+1 ≤ x ≤ 10^18
+
+
+
+1 ≤ A[i][j] ≤ 10^9 
