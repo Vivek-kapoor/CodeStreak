@@ -6,7 +6,6 @@ import subprocess
 import threading
 import socket
 import re
-from db_access import get_testcases_by_question
 app = Flask(__name__)
 test_case_output=""
 class RunCCode(object):
@@ -32,14 +31,12 @@ class RunCCode(object):
         return result
 
 
-    def fetch_data(self):
+    def fetch_data(self,q_id):
         test_cases = {
             0:{"input":"2 1 2","output":"NO","points":100},
             1:{"input":"2 1 3","output":"YES","points":100},
             2:{"input":"2 7 8","output":"NO","points":100}
         }
-        q_id = -1
-        test_cases = get_testcases_by_question(q_id)
         return test_cases
 
 
@@ -65,16 +62,21 @@ class RunCCode(object):
         # taking custom input
         # this is only if user says cutom input 
         # my_input = open("./running/input"+str(idx)+".txt","r")
-        memory_limit = 5024 #default value, TODO: fetch from the DB
-        time_limit = 2 #default TODO fetch from the DB
+        
         '''
+        TODO: Database fetch
         fetch the inputs from the database
         loop for the number of test cases
         compare he output and update the score, time and memory
         return the score, time , memory taken 
         to the user in the same format as stored in database
         '''
-        my_input =  self.fetch_data()
+        q_id = 1
+        my_input =  self.fetch_data(q_id)
+        memory_limit = 5024 #default value, TODO: fetch from the DB
+        time_limit = 2  #default TODO fetch from the DB
+
+
         score = 0
         correct_cases = 0
         test_case_output = {}
@@ -109,11 +111,7 @@ class RunCCode(object):
                 submission_correctness = False
             elif(arr[0] == "FINISHED"):
                 STATUS = "Running successful\n"
-            self.update_test_status(i ,score,time,memory,STATUS,test_case_output)
-        
-            '''
-                format the output in order to display the status
-            '''
+            self.update_test_status(i,score,time,memory,STATUS,test_case_output)
             i=0
             time_taken = 0
             memory_taken = 0
@@ -125,7 +123,19 @@ class RunCCode(object):
                 i += 1
             total_time += time_taken
             total_memory += memory_taken   
+        '''
+        UPDATE EVERYTHING ONCE
+        Fill the whole submission table
+        TODO: Database fetch
+        pass all variables required to populate submission table
+        and update the database
+        '''    
+        #self.update_submission(i,code,score,time,memory,STATUS,test_case_output)
 
+        '''
+            format the output in order to display the status
+        '''
+       
         if(submission_correctness):
             result = "Correct Answer"
         else:
@@ -183,7 +193,7 @@ class RunCCode(object):
 
 
 
-    def add_limits(self, code):
+    def add_limits(code):
         code = re.sub(r'main[\s \t \n a-z A-Z ( ) , \* ;\[\]]*', "main(int argc,char* argv[]){ setlimits(argc,argv);", code)
         return code
 

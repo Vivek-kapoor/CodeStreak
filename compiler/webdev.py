@@ -1,8 +1,5 @@
 from flask import Flask, render_template, request
-from compiler.runcode import runcode
-from db_access import submit_code
-from main import SESSION
-
+from runcode import runcode
 import socket
 app = Flask(__name__)
 app._static_folder = "/home/sumanth/projects/flask_compiler/codelauncher/static/"
@@ -41,55 +38,35 @@ default_cols = "60"
 Index = 0
 test_case_output="hello"
 
-def get_data(c_id):
-    return {
-        "name" : "Sherlock and Cost",
-        "problem" : "In this challenge, you will be given an array  and must determine an array . There is a special rule: For all , . That is,  can be any number you choose such that . Your task is to select a series of  given  such that the sum of the absolute difference of consecutive pairs of  is maximized. This will be the array's cost, and will be represented by the variable  below.",
-        "difficulty": "Medium",
-        "time" : "2s",
-        "memory" : "256kB",
-        "tags" : "Dynamic programming" 
-    }
-
-
-def get_question(contest_id):
-    output_dict = get_data(contest_id)
-    data = {}
-    data["name"] = output_dict['name']
-    data["question"] = output_dict['problem']
-    data["difficulty"] = output_dict['difficulty']
-    data["time"] = output_dict['time']
-    data["memory"] = output_dict['memory']
-    data["tags"] = output_dict['tags'] 
-    return data
 
 @app.route("/")
 @app.route("/runc", methods=['POST', 'GET'])
 def runc():
-    contest_id = 1
-    question =  get_question(contest_id)
+
+   
     if request.method == 'POST':
         code = request.form['code']
         resinput = format(request.form['resinput'])
-        submission = {
-            "usn": SESSION['usn'],
-            "q_id":SESSION['q_id'],
-            "c_id": SESSION['c_id'],
-            "code": code,
-            "language": "c"
-        }
-
-        submit_code(**submission)
+        global Index
+        Index += 1
+        ID = Index
+        instr = "./running/input"+str(ID)+".txt"
+        f = open(instr,"w")
+        f.write(resinput)
+        f.close()  
+        run = runcode.RunCCode(code,Index)
+        rescompil, resrun, test_case_output = run.run_c_code()
+        
+       
+        if not resrun:
+            resrun = 'No result!'
     else:
         code = default_c_code
         resrun = 'No result!'
         rescompil = ''
         test_case_output=""
-    
-    
     return render_template("main.html",
-                           question= question,
-                           code=code,    
+                           code=code,
                            target="runc",
                            resrun=resrun,
                            test_case_output=test_case_output,
@@ -149,4 +126,4 @@ def runpy():
                            rows=default_rows, cols=default_cols)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port="5000")
+    app.run(host='0.0.0.0',port="5002")
