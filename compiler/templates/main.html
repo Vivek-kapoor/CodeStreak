@@ -1,21 +1,43 @@
 {% extends "base.html" %}
+{%block question %}
+<div>{{question['name']}}</div>
+<div id="text-question" name="question">{{question['question']}}</div>
+<div>{{question['time']}}</div>
+<div>{{question['memory']}}</div>
+</div>{{question['tags']}}</div>
+{% endblock %}
+
+{%block que_name %}
+<div>{{question['name']}}</div>
+{% endblock %}
+
+{%block question_copy %}
+<div>{{question['name']}}</div>
+<div id="text-question" name="question">{{question['question']}}</div>
+<div>{{question['time']}}</div>
+<div>{{question['memory']}}</div>
+</div>{{question['tags']}}</div>
+{% endblock %}
+
+
 {% block code %}
 <textarea id="text-code" name="code" rows={{ rows }} cols={{ cols }}>
 {{ code }}
 </textarea><br/>
-<div id="text-code-ace" class="hidden">{{ code }}</div>
+<div style="width:50%" id="text-code-ace" class="hidden">{{ code }}</div>
 {% endblock %}
 
-{% block run %}
+<!--{% block run %}
 <textarea id="text-result" rows="18" cols="70" readonly>{{ resrun }}</textarea>
 
-{% endblock %}
+{% endblock %}-->
 
 {% block input%}
-<textarea id="text-input" name="resinput" rows="10" cols="70"></textarea>
+<textarea id="text-input" name="resinput" rows="7" cols="140"></textarea>
+
 
 {% endblock %}
 
 {% block comp %}
-<textarea id="text-compile" rows="7" cols="140" readonly>{{ rescomp }} {{test_case_output}}</textarea>
+<textarea id="text-compile" rows="7" cols="140" readonly>{{resrun}} {{ rescomp }}  {{test_case_output}}</textarea>
 {% endblock %}

@@ -6,8 +6,6 @@ import subprocess
 import threading
 import socket
 import re
-import db_access as db
-
 app = Flask(__name__)
 test_case_output=""
 class RunCCode(object):
@@ -33,7 +31,7 @@ class RunCCode(object):
         return result
 
 
-    def fetch_data(self,q_id):
+    def fetch_data(self):
         test_cases = {
             0:{"input":"2 1 2","output":"NO","points":100},
             1:{"input":"2 1 3","output":"YES","points":100},
@@ -64,22 +62,16 @@ class RunCCode(object):
         # taking custom input
         # this is only if user says cutom input 
         # my_input = open("./running/input"+str(idx)+".txt","r")
-        q_id = "q_3423km23f"
-
+        memory_limit = 5024 #default value, TODO: fetch from the DB
+        time_limit = 2 #default TODO fetch from the DB
         '''
-        TODO: Database fetch
         fetch the inputs from the database
         loop for the number of test cases
         compare he output and update the score, time and memory
         return the score, time , memory taken 
         to the user in the same format as stored in database
         '''
-        question_details = db.get_question_details(q_id)
-        my_input =  question_details["test_cases"]
-        memory_limit = question_details["memory_limit"]
-        time_limit = question_details["time_limit"]
-
-
+        my_input =  self.fetch_data()
         score = 0
         correct_cases = 0
         test_case_output = {}
@@ -114,7 +106,11 @@ class RunCCode(object):
                 submission_correctness = False
             elif(arr[0] == "FINISHED"):
                 STATUS = "Running successful\n"
-            self.update_test_status(i,score,time,memory,STATUS,test_case_output)
+            self.update_test_status(i ,score,time,memory,STATUS,test_case_output)
+        
+            '''
+                format the output in order to display the status
+            '''
             i=0
             time_taken = 0
             memory_taken = 0
@@ -126,19 +122,7 @@ class RunCCode(object):
                 i += 1
             total_time += time_taken
             total_memory += memory_taken   
-        '''
-        UPDATE EVERYTHING ONCE
-        Fill the whole submission table
-        TODO: Database fetch
-        pass all variables required to populate submission table
-        and update the database
-        '''    
-        #self.update_submission(i,code,score,time,memory,STATUS,test_case_output)
 
-        '''
-            format the output in order to display the status
-        '''
-       
         if(submission_correctness):
             result = "Correct Answer"
         else:
