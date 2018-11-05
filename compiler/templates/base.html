@@ -1,40 +1,103 @@
 <!DOCTYPE html>
 <html lang="fr">
+    
+    <head>
+            <meta name="viewport" content="user-scalable=no, width=device-width" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></head>
 <head>
+<<<<<<< HEAD
     <title>CodeStorm</title>
+=======
+ 
+    
+>>>>>>> cf1d2cf9dfc90718918b9ac766bde52a1ebffa96
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="/static/devc.css">
+    <title>CodeStreak</title>
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='devc.css') }}">
+
+    
 </head>
+<h2 style="font-size:170% ;color:black ; font-weight: bold" >Problem Statement :</h2>
+<h2 style="font-size:180% ;color:brown ; font-weight: bold" >
+        {% block que_name %}
+        {% endblock %} 
+        
+</h2>
+<div class="w3-container" style="float: right" >
+        
+        
+        <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Open Complete Question</button>
+      
+        <div id="id01"  class="w3-modal">
+          <div class="w3-modal-content">
+            <div class="w3-container">
+              <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+              {% block question %}
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
 <body id="index" class="home">
+<<<<<<< HEAD
 <div id="links">
+=======
+  <!--  <h3 style="font-size:120% ;color:brown ; font-weight: bold" >Problem Statement</h3>-->
+
+
+
+    
+
+
+
+
+
+
+<!--<div id="links" styl="position:relative">
+>>>>>>> cf1d2cf9dfc90718918b9ac766bde52a1ebffa96
 <ul>
 <li><a href="/">C Code</a></li>
 <li><a href="/cpp">C++ Code</a></li>
 <li><a href="/py">Python Code</a></li>
 </ul>
-</div>
+</div>-->
+<div style="font-size:120% ;color:brown ; font-weight: bold"  id="text-code-title">
+        Source Code
+      </div>
 <div id="content">
     <!-- ************  CODING ZONE  ************ -->
+<<<<<<< HEAD
     <div id="code">
+=======
+    <div style="width:70%" >
+>>>>>>> cf1d2cf9dfc90718918b9ac766bde52a1ebffa96
         <form method="post" action="{{ url_for(target) }}">
-            <div id="title-code" class="head-section">
-              Source Code
-            </div>
+           
 	        {% block code %}
             {% endblock %}
+
+
+
+            <div id="question-div" class="card" style="font-size:120%">
+
+                    {% block question_copy %}
+                    {% endblock %}
+            </div>
 	<div id="input">
 
-   			<div id="title-input" class="head-section">
+   			<div id="title-input" style="font-size:120% ;color:brown ; font-weight: bold"  class="head-section">
                         Input
-      			 </div>
+      		</div>
 	        {% block input %}
               {% endblock %}
-			
+    </div>
+    <div id= "text-code-title" >
 
-		</div>
+            <input id="launch-button"class="head-section" type="submit" value="Submit" />
+    </div>
 
-            <input id="launch-button" class="head-section" type="submit" value="Submit" />
-           
             
 	
 	
@@ -59,7 +122,7 @@
     <!-- ************ COMPILATION RESULTS ZONE ************ -->
     
     <div id="compile">
-        <div id="title-compile" class="head-section">
+        <div id="title-compile" style="font-size:120% ;color:brown ; font-weight: bold" class="head-section">
             Compilation / Output
         </div>
         {% block comp %}
@@ -67,11 +130,13 @@
     </div>
     
 </div>
+
 <form action="/submission" method="post">
-    <div  class ="submission" >
+    <div id="submission">
     <input id="submit-button" type="submit" class="thick" value="View Submissions"/>
     </div>
 </form>
+
 </body>
 
 <script src="{{ url_for('static', filename='ace/ace.js') }}"></script>

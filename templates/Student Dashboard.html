@@ -101,36 +101,40 @@
 										<h2 style="margin-left:10px"><font color="white">Active Contests </font></h2>
 
 										<!-- Jinja2 part -->
-										{% for contest in contests %}
+										
 
-										{% if contest.active == 1 %}
+										
 
 										<p id=1 >
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;background-color:rgb(255,255,255);margin:10px">
-											
-											<p>{{contest.name}} <time style="margin-left:650px">{{contest.time}}</time><button type ="button" style="float:right;">Enter Contest</button></p>
+											{% for contest in active_contests %}
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;background-color:rgb(255,255,255);margin:10px">											
+											<p>{{contest.name}} <time style="margin-left:650px">{{contest.time}}</time><button type ="button" style="float:right;">Enter Contest</button></p>											
 											</div>
+											{% endfor %}
 										</p>
+
+										
 										
 										
 										<br>
 								</div>
-								{% else %}
+								
 								<br><br>
 								<div class="title" style="background-color:rgb(0, 0, 0)" >
 										<h2 style="margin-left:10px"><font color="white">Archived Contests</font></h3>
 										<p>
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;background-color:rgb(255,255,255);margin:10px">
-											
-											<p>{{contest.name}}  <button type ="button" style="float:right;">View Details</button></p>
+											{% for contest in archived_contests %}
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;background-color:rgb(255,255,255);margin:10px">											
+											<p>{{contest.name}}  <button type ="button" style="float:right;">View Details</button></p>											
 											</div>
+											{% endfor %}
 										</p>
 										
 										<!-- end of Jinja2 part -->
 										<br>
 								</div>
-								{% endif %}
-								{% endfor %}
+								
+								
 								
 								
 							</article>

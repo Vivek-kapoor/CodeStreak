@@ -6,7 +6,6 @@ import subprocess
 import threading
 import socket
 import re
-from db_access import get_testcases_by_question
 app = Flask(__name__)
 test_case_output=""
 class RunCCode(object):
@@ -38,8 +37,6 @@ class RunCCode(object):
             1:{"input":"2 1 3","output":"YES","points":100},
             2:{"input":"2 7 8","output":"NO","points":100}
         }
-        q_id = -1
-        test_cases = get_testcases_by_question(q_id)
         return test_cases
 
 
@@ -183,7 +180,7 @@ class RunCCode(object):
 
 
 
-    def add_limits(self, code):
+    def add_limits(code):
         code = re.sub(r'main[\s \t \n a-z A-Z ( ) , \* ;\[\]]*', "main(int argc,char* argv[]){ setlimits(argc,argv);", code)
         return code
 

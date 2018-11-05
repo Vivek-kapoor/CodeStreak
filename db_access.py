@@ -17,22 +17,24 @@ CONTENTS (not in order):
 
     8. get_student_details: Gets a dict with all details of a student
 
-    9. get_active_contest: Gets a list of active contests for given USN
-    10. get_archived_contest: Gets a list of archived contest for given USN
+    9. get_active_contest_student: Gets a list of active contests for given USN
+    10. get_archived_contest_student: Gets a list of archived contest for given USN
+    11. get_active_contest_professor: Gets a list of active contests for given p_id
+    12. get_archived_contest_professor: Gets a list of archived contest for given p_id
 
-    11. get_questions: Gets all the questions
-    12. get_questions_by_prof: Gets all the questions whose creator is p_id
-    13. get_questions_by_contest: Gets a list of all questions in a contest
+    13. get_questions: Gets all the questions
+    14. get_questions_by_prof: Gets all the questions whose creator is p_id
+    15. get_questions_by_contest: Gets a list of all questions in a contest
 
-    14. get_testcases_by_question: Gets the test cases for a given question
-    15. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
-    16. get_submission_distribution: Gets distribution of test case status for pie chart
-    17. get_submissions_by_student: Gets all submissions made by a student for given question and contest
-    18. get_leaderboard: Gets the leaderboard of a given contest
-    19. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+    16. get_question_details: Gets the test cases for a given question
+    17. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
+    18. get_submission_distribution: Gets distribution of test case status for pie chart
+    19. get_submissions_by_student: Gets all submissions made by a student for given question and contest
+    20. get_leaderboard: Gets the leaderboard of a given contest
+    21. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
 
-    20. submit_code: Submits code, makes an entry in the submission table
-    21. set_evaluated_submission: Sets the test_case_status of given s_id
+    22. submit_code: Submits code, makes an entry in the submission table
+    23. set_evaluated_submission: Sets the test_case_status of given s_id
 
 """
 
@@ -56,18 +58,19 @@ codestreak=# \d
 
 """
 
-
 none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()]
 
 
-def random_alnum(prefix="", length=6):
+def random_alnum(prefix="", length=3):
     """
     Generates a random alphanumeric of given length with a prefix
     :param prefix: string to be prepended to the alphanumeric
     :param length: length of the random alphanumeric
     :return: a string of the alphanumeric
     """
-    x = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(length))
+    # x = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(length))
+    # TODO increase the length to 6 and uncomment the previous line, remove next line
+    x = ''.join(random.choice(string.digits) for _ in range(length))
     return prefix + x
 
 
@@ -105,14 +108,14 @@ def _execute_query(query: str, json_output: bool = False) -> any:
             json_query = """SELECT array_to_json(array_agg(row_to_json(t))) FROM ({}) t;"""
             query = json_query.format(query)
         cur.execute(query)
-        logging.info('Executed: '+query)
+        logging.info('Executed: ' + query)
         res = cur.rowcount
         if re.fullmatch(r"^SELECT.*", query, re.IGNORECASE):
             if json_output:
                 res = cur.fetchone()
             else:
                 res = cur.fetchall()
-        logging.info('Returned: '+str(res))
+        logging.info('Returned: ' + str(res))
         conn.commit()
         cur.close()
         conn.close()
@@ -151,28 +154,22 @@ def validate_professor(p_id: str, password: str) -> bool:
     return False
 
 
-def get_testcases_by_question(q_id: str ="0"):
+def get_question_details(q_id: str = "0"):
     """
-    Gets the test cases for a given question
+    Gets all details for a given question
     :param q_id: the unique identifier for each question in db
     :return: A json object of test cases
     """
-    query1 = "SELECT COUNT(*) FROM question where q_id = '{}'".format(q_id)
-    query2 = "SELECT test_cases FROM question where q_id = '{}'".format(q_id)
-    res1 = _execute_query(query1)
-    if res1 in none_list or int(res1[0][0]) == 0:  # checks if q_id exists
-        logging.error('Could not find required question')
+    query = """SELECT * from question where q_id = \'{}\'"""
+    query = query.format(q_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        logging.error('Could not fetch details for ' + q_id)
         return None
-
-    res2 = _execute_query(query2)
-    if res2 in none_list:
-        logging.error('Could not retrieve test cases for ' + q_id)
-        return None
-
-    return res2[0][0]
+    return res[0][0]
 
 
-def submit_code(usn, q_id, c_id, code, language, test_case_status="{}"):
+def submit_code(usn: str, q_id: str, c_id: str, code: str, language, test_case_status="{}"):
     """
     Submits the code, makes an entry in submission
     These entries will be evaluated by compiler
@@ -235,7 +232,7 @@ def get_questions_by_prof(p_id: str):
     query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
-        logging.error('Could not get any questions for '+p_id)
+        logging.error('Could not get any questions for ' + p_id)
         return None
     return res[0]
 
@@ -268,7 +265,7 @@ def create_contest(p_id, name, start_time, end_time, questions, semester, sectio
     return res
 
 
-def get_active_contest(usn: str, semester=None, section=None):
+def get_active_contest_student(usn: str, semester=None, section=None):
     """
     Gets a list of active contests for the given student
     :param usn: usn of the student
@@ -292,7 +289,7 @@ def get_active_contest(usn: str, semester=None, section=None):
     return res[0]
 
 
-def get_archived_contest(usn: str, semester=None, section=None):
+def get_archived_contest_student(usn: str, semester=None, section=None):
     """
     Gets a list of active contests for the given student
     :param usn: usn of the student
@@ -316,7 +313,35 @@ def get_archived_contest(usn: str, semester=None, section=None):
     return res[0]
 
 
-def get_student_details(usn: str, get_ranks: bool =True):
+def get_archived_contest_professor(p_id: str):
+    """
+    Gets all the archived contest for given p_id
+    :param p_id: Professor id
+    :return: None if there are no contests, else json
+    """
+    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time < NOW()"""
+    query = query.format(p_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        return None
+    return res[0]
+
+
+def get_active_contest_professor(p_id: str):
+    """
+    Gets all the active contest for given p_id
+    :param p_id: Professor id
+    :return: None if there are no contests, else json
+    """
+    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time >= NOW()"""
+    query = query.format(p_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        return None
+    return res[0]
+
+
+def get_student_details(usn: str, get_ranks: bool = True):
     """
     Gets all student details including
     rating, best rating, rank, batch rank, class rank from database
@@ -337,7 +362,8 @@ def get_student_details(usn: str, get_ranks: bool =True):
     if get_ranks:
         sem_clause = "semester = " + str(student_details['semester'])
         sec_clause = "section = '" + str(student_details['section']) + "'"
-        for attr, clause1, clause2 in [('rank', 'true', 'true'), ('batch_rank', sem_clause, 'true'), ('class_rank', sem_clause, sec_clause)]:
+        for attr, clause1, clause2 in [('rank', 'true', 'true'), ('batch_rank', sem_clause, 'true'),
+                                       ('class_rank', sem_clause, sec_clause)]:
             query = """SELECT rank from (SELECT usn, rank() over (order by rating desc) as rank from student where {} and {}) as a WHERE usn = '{}'"""
             query = query.format(clause1, clause2, usn)
             res = _execute_query(query)
@@ -371,19 +397,22 @@ def get_questions_by_contest(c_id):
     query = query.format(c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
-        logging.error('Could not retrieve any questions for contest '+c_id)
+        logging.error('Could not retrieve any questions for contest ' + c_id)
         return None
     return res[0]
 
 
-def create_question(p_id: str, name: str, problem: str, difficulty: str, editorial: str="N/A", time_limit: float=1, memory_limit: float=1024, test_cases="{}", score: int=0, languages='{"c"}', tags='{}'):
+def create_question(p_id: str, name: str, problem: str, difficulty: str, editorial: str = "N/A", time_limit: float = 1,
+                    memory_limit: float = 1024, test_cases="{}", score: int = 0, languages='{"c"}', tags='{}'):
     """
     Adds a question to the database with a random question id
     :return: 1 if successful else None
     """
-    query = """INSERT INTO question (p_id, name, problem, difficulty, editorial, time_limit, memory_limit, test_cases, score, languages, tags)
-            VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')"""
-    query = query.format(p_id, name, problem, difficulty, editorial, time_limit, memory_limit, test_cases, score, languages, tags)
+    q_id = random_alnum(prefix="q_")
+    query = """INSERT INTO question (q_id, p_id, name, problem, difficulty, editorial, time_limit, memory_limit, test_cases, score, languages, tags)
+            VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')"""
+    query = query.format(q_id, p_id, name, problem, difficulty, editorial, time_limit, memory_limit, test_cases, score,
+                         languages, tags)
     res = _execute_query(query)
     if res in none_list:
         logging.error('Could not create question')
@@ -424,17 +453,53 @@ def get_submissions_by_contest(c_id: str):
     return res[0]
 
 
-def get_leaderboard(c_id: str):
+def get_leaderboard(c_id: str) -> list:
     """
     Gets the leaderboard of a contest
     :param c_id: contest id
     :return: a list of dicts for the leaderboard
     """
-    return [c_id]
+    res = get_plagiarism_code(c_id)
+    if res in none_list:
+        return []
+
+    leaderboard = dict()
+    for submission in res:
+        usn = submission["usn"]
+        if usn not in leaderboard:
+            leaderboard[usn] = {"score": 0, "penalty": "0"}
+        leaderboard[usn]["score"] += submission["score"]
+        leaderboard[usn]["penalty"] = max(leaderboard[usn]["penalty"], submission["submit_time"])
+
+    leaderboard = [{"usn": usn, "score": leaderboard["score"], "penalty": leaderboard["penalty"]} for usn in leaderboard]
+    leaderboard.sort(key=lambda x: x["penalty"])
+    leaderboard.sort(key=lambda x: x["score"], reverse=True)
+    return leaderboard
+
+
+def get_plagiarism_code(c_id: str):
+    """
+    Gets the candidate submissions to be detected for plagiarism
+    :param c_id: contest id
+    :return: None, if the query returns nothing, else a list of dicts
+    """
+    query = """SELECT q_id, usn, score, submit_time, code FROM submission WHERE c_id = \'{}\' ORDER BY score DESC, submit_time"""
+    query = query.format(c_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list or res[0] in none_list:
+        logging.info('Failed to retrieved submissions for ' + c_id)
+        return None
+
+    submissions_to_check = {}
+    for submission in res[0]:
+        tup = (submission["q_id"], submission["usn"])
+        if tup not in submissions_to_check and int(submission["score"]):  # no point checking 0 score for plagiarism
+            submissions_to_check[tup] = submission
+
+    return list(submissions_to_check.values())
 
 
 logging.basicConfig(level='INFO')
-
 
 if __name__ == "__main__":
     # temp = (create_contest(
@@ -448,6 +513,47 @@ if __name__ == "__main__":
     #     }
     # ))
     # print(type(temp), temp)
+
+    temp = get_plagiarism_code("c_dOHYbn")
+    print(type(temp), temp)
+    quit()
+
+    temp = get_plagiarism_code("c_dOHYbn")
+    print(type(temp), temp)
+    quit()
+
+    temp = submit_code(
+        **{
+            "usn": "01FB15ECS342",
+            "q_id": "q_3423km23f",
+            "c_id": "c_dOHYbn",
+            "code": "print(int(input()))",
+            "language": '{"python"}'
+        }
+    )
+
+    print(type(temp), temp)
+    quit()
+
+    temp = create_question(
+        **{"p_id": "01FB15ECS342",
+           "name": "Square the number",
+           "problem": "Given an integer, find its square. Input: Single line with integer. Output: Single line with the square",
+           "difficulty": "Cakewalk",
+           "editorial": "Take the number as input, and multiply it with itself.",
+           "time_limit": 0.5,
+           "memory_limit": 128.0,
+           "test_cases": '[{"id":1, "input":0, "output":0, "score":3}, {"id":2, "input":4, "output":16, "score":3}, {"id":1, "input":-2, "output":4, "score":4}]',
+           "score": 10,
+           "languages": '{"c", "python"}',
+           "tags": '{"arithmetic", "math"}'
+           })
+
+    print(type(temp), temp)
+
+    temp = get_questions()
+    print(type(temp), temp)
+
     temp = validate_professor("01FB15ECS342", "01FB15ECS342")
     print(type(temp), temp)
 
@@ -460,8 +566,11 @@ if __name__ == "__main__":
     temp = get_submission_distribution('01FB15ECS342')
     print(type(temp), temp)
 
-    temp = get_active_contest('01FB15ECS342')
+    temp = get_active_contest_student('01FB15ECS342')
     print(type(temp), temp)
 
     temp = get_submissions_by_contest('cwed')
+    print(type(temp), temp)
+
+    temp = get_question_details("q_3423km23f")
     print(type(temp), temp)
