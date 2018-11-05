@@ -471,7 +471,7 @@ def get_leaderboard(c_id: str) -> list:
         leaderboard[usn]["score"] += submission["score"]
         leaderboard[usn]["penalty"] = max(leaderboard[usn]["penalty"], submission["submit_time"])
 
-    leaderboard = [{"usn": usn, "score": leaderboard["score"], "penalty": leaderboard["penalty"]} for usn in leaderboard]
+    leaderboard = [{"usn": usn, "score": leaderboard[usn]["score"], "penalty": leaderboard[usn]["penalty"]} for usn in leaderboard]
     leaderboard.sort(key=lambda x: x["penalty"])
     leaderboard.sort(key=lambda x: x["score"], reverse=True)
     return leaderboard
