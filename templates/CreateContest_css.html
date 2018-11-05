@@ -9,7 +9,7 @@
 		<title>Create Contest</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../static/assets/css/main.css" />
+		<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/main.css') }}" />
 	</head>
 	<body class="is-preload" style="background-color:rgb(0,0,0)">
 
@@ -80,12 +80,12 @@
 								<section>
 									<h3>Create a new contest</h3>
 									<br>
-									<form method="post" action="#">
+									<form method="post" action="{{ url_for('create_assignment') }}">
 										<div class="row gtr-uniform" style="background-color:rgb(255, 229, 229)">
 										
 										<br><br>
 											<div class="col-6 col-12-xsmall">
-											<h4>Contest Name </h4><input type="text" name="demo-name" id="name" value=""  />
+											<h4>Contest Name </h4><input type="text" name="contest name" id="name" value=""  />
 											</div>
 											
 											<br><br>
@@ -97,7 +97,7 @@
 											<h4>Contest End </h4>	<input type="datetime-local" name="end" id="end" value="" placeholder="Begin-Time" />
 											</div>
 											<div class="col-2">
-											<h4>Select Semester	<select name="demo-category" id="demo-category">
+											<h4>Select Semester	<select name="sem" id="demo-category">
 													<option value="">- Semester -</option>
 													<option value="1">1</option>
 													<option value="2">2</option>
@@ -108,7 +108,7 @@
 													<option value="7">7</option>
 													<option value="8">8</option>
 												</select>
-											<h4>Enter Section</h4><input type="text" name="demo-name" id="name" value=""  />
+											<h4>Enter Section</h4><input type="text" name="sec" id="name" value=""  />
 											</div>
 											
 											<div class="col-6 col-12-small">
@@ -121,12 +121,11 @@
 											</div>
 											<br><br>
 										</div>
-									</form>
 								</section>
 							
 								
 
-						<section>
+								<section>
 									<h3>QUESTION BANK</h3>
 									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
 										<table>
@@ -155,14 +154,15 @@
 												</ul>
 											</div>
 									</div>
-							</section>
+								</section>
+							</form>
 					</div>
 			</div>
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static',filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static',filename='assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static',filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static',filename='assets/js/main.js') }}"></script>
 	</body>
 </html>
