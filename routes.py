@@ -1,32 +1,46 @@
-from flask import Flask, render_template, redirect, url_for, request, session, flash
-from db_access import create_contest
+from flask import render_template, redirect, url_for, request, session, flash
+from db_access import validate_student, validate_professor, create_contest, get_questions, create_question
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '59d3ca27e6701d3fd06eb960ca5866a5'
+def route_codestreak():
+    return render_template("login.html")
 
+def contest_list(usn):
 
-@app.route("/")
-@app.route("/home", methods=["POST", "GET"])
-def home():
-    return render_template('front_login.html')
+    #active_contests = get_active_contest(usn)
+    #archivef_contests = get_archived_contest(usn)
+    active_contests = [{'name': "kys", 'time': "now", 'active': 1},{'name': "gabe", 'time': "now", 'active': 1}]
+    archived_contests = [{'name': "kys1", 'time': "now", 'active': 0},{'name': "gabe1", 'time': "now", 'active': 0}]
+    #contests = active_contests + archived_contests    
+    return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests)
 
 
 # called when user is student
-@app.route("/student_login", methods=["GET", "POST"])
-def student_login():
+def route_student_login():
     data = request.form.to_dict(flat=False)
     # verify the credentail of users
     if (data):
-        response = validate_student(data)
+        response = validate_student(**data)
         if (response):
             session['id'] = data['usn']
-            return "successfully loggedin"
+            return contest_list(usn)
         else:
-            return render_template('student_login.html')
-    return render_template('student_login.html')
+            return render_template('login.html')
+    return render_template('login.html')
 
-@app.route("/create_assignment", methods=["GET", "POST"])
-def create_assignment():
+
+def route_prof_login():
+    data = request.form.to_dict(flat=False)
+    # verify the credentail of users
+    if (data):
+        response = validate_professor(**data)
+        if (response):
+            session['id'] = data['usn']
+            return "successfully logged-in"
+        else:
+            return render_template('login.html')
+    return render_template('login.html')
+
+def route_create_assignment():
     data = request.form.to_dict(flat=False)
     if (data):
         request_data = {}
@@ -44,12 +58,11 @@ def create_assignment():
     else:
         # return value of the functions should be list
         # of dicts where each dict is a row of question table
-        questions = questions_list()
+        questions = get_questions()
         return render_template("UpdatedcreateLab.html",
                                questions=questions)
 
-@app.route("/add_questions", methods=["GET", "POST"])
-def add_questions():
+def route_add_questions():
     data = request.form.to_dict(flat=False)
     print(data)
     if (data):
@@ -73,9 +86,5 @@ def add_questions():
         flash("Added successfully")
         return render_template("ql.html")
     else:
-        questions = questions_list()
+        questions = get_questions()
         return render_template("ql.html", questions = questions)
-
-
-if (__name__ == "__main__"):
-    app.run(debug=True)
