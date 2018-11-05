@@ -19,10 +19,14 @@ def route_student_login():
     data = request.form.to_dict(flat=False)
     # verify the credentail of users
     if (data):
+        
+        data['usn'] = ''.join(data['usn'])
+        data['password'] = ''.join(data['usn'])
+
         response = validate_student(**data)
         if (response):
             session['id'] = data['usn']
-            return contest_list(usn)
+            return contest_list(data['usn'])
         else:
             return render_template('login.html')
     return render_template('login.html')
@@ -32,6 +36,10 @@ def route_prof_login():
     data = request.form.to_dict(flat=False)
     # verify the credentail of users
     if (data):
+        
+        data['usn'] = ''.join(data['usn'])
+        data['password'] = ''.join(data['usn'])
+        
         response = validate_professor(**data)
         if (response):
             session['id'] = data['usn']
@@ -45,10 +53,18 @@ def route_create_assignment():
     if (data):
         request_data = {}
         # request_data['c_id'] = NULL # this will be created by database
+
+        data['contest name'] = ''.join(data['contest name'])
+        data['sem'] = ''.join(data['sem'])
+        data['sec'] = ''.join(data['sec'])
+        data['begin'] = ''.join(data['begin'])
+        data['end'] = ''.join(data['begin'])
+
+
         request_data['p_id'] = session['id']
-        request_data['name'] = data['name']
-        request_data['start_time'] = data['Contest Begin']
-        request_data['end_time'] = data['Contest End']
+        request_data['name'] = data['contest name']
+        request_data['start_time'] = data['begin']
+        request_data['end_time'] = data['end']
         request_data['questions'] = data['questions']
         request_data['semester'] = data['sem']
         request_data['section'] = data['sec']
@@ -59,7 +75,7 @@ def route_create_assignment():
         # return value of the functions should be list
         # of dicts where each dict is a row of question table
         questions = get_questions()
-        return render_template("UpdatedcreateLab.html",
+        return render_template("CreateContest_css.html",
                                questions=questions)
 
 def route_add_questions():
@@ -67,6 +83,12 @@ def route_add_questions():
     print(data)
     if (data):
         files = request.files
+
+        data['name'] = ''.join(data['name'])
+        data['statement'] = ''.join(data['statement'])
+        data['difficulty'] = ''.join(data['difficulty'])
+        data['tags'] = ''.join(data['tags'])
+
         num_of_testcases = int(len(files) / 2)
         testcases = []
         request_data = {}
@@ -82,6 +104,7 @@ def route_add_questions():
         request_data['problem'] = data['statement']
         request_data['difficulty'] = data['difficulty']
         request_data['tags'] = data['tags']
+
         create_question(**request_data)
         flash("Added successfully")
         return render_template("ql.html")
