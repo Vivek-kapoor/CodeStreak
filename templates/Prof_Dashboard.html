@@ -10,50 +10,10 @@
 		<title>Admin Dashboard</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-<<<<<<< HEAD
-		<link rel="stylesheet" href="../static/assets/css/main.css" />
-		<style>
-		/*lab*/
-		.lab {
-			-moz-appearance: none;
-			-webkit-appearance: none;
-			-ms-appearance: none;
-			appearance: none;
-			-moz-transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-			-webkit-transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-			-ms-transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-			transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-
-			border: 0;
-			box-shadow: inset 0 0 0 1px rgba(160, 160, 160, 0.3);
-			color: #3c3b3b !important;
-			cursor: pointer;
-			font-family: "Raleway", Helvetica, sans-serif;
-			font-size: 0.7em;
-			font-weight: 800;
-			padding: 1.0em 2.5em;
-			text-decoration: none;
-			text-transform: uppercase;
-		}
-
-		.lab:focus {
-			box-shadow: inset 0 0 0 1px #2ebaae;
-			background-color: #2ebaae !important;
-		}
-
-		.lab:hover {
-			box-shadow: inset 0 0 0 1px #2ebaae;
-			color: #2ebaae !important;
-		}
-
-			.lab:hover:active {
-				background-color: rgba(46, 186, 174, 0.05);
-=======
 		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
 		<style type="text/css">
 		body {
     background-image: url("{{ url_for('static', filename='back.jpg') }}");
->>>>>>> 56f6d9642c8880d3984a4ba4d8c49e6ad4b47ba8
 			}
 	</style>
 	</head>
@@ -131,89 +91,24 @@
 					<div id="main">
 
 						<!-- Post -->
-							<article class="post" >
-								<header >
+							<article class="post" style="background-color:#D4EEFC">
+								<header style="background-color:#ADD1E5">
 									<div class="title">
-<<<<<<< HEAD
-										<h2><a href="#">DashBoard</a></h2>
-									</div>
-								</header>
-								<!--<div style="display:flex; height:65vh;">-->
-									<div style="display:block; width:100%; height:100%;">
-										<!-- Placeholder Labs -->
-										<h1> Current Labs: </h1>
-										<div  class="lab" style="text-align:center; font-size:20px; color:green; box-shadow: inset 0 0 0 5px rgba(160, 160, 160, 0.3); ;">ADD lab</div>
-										<div style="display:block; overflow:scroll; width:100%; height:400px;" id="Qs">
-										<div class="lab">AMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >BMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >CMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >DMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >EMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >FMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >GMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >HMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >IMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >JMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >KMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >LMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >NMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >OMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-=======
 										<h2><a href="#"><font color="black">Contest Portfolio</font></a></h2>
 										<p></p>
->>>>>>> 56f6d9642c8880d3984a4ba4d8c49e6ad4b47ba8
 									</div>
 									<div class="meta">
 										
 										<a href="#" class="author"><span class="name">Admin Name</span><img src="images/avatar.jpg" alt="" /></a>
 									</div>
-<<<<<<< HEAD
-
-									</br>
-									<div style="display:block; width:100%; height:100%;">
-										<!-- Placeholder Labs -->
-										<hr>
-										<h1> Previous Labs: </h1>
-										
-										<div style="display:block; overflow:scroll; width:100%; height:400px;" id="Qs">
-										<div class="lab">AMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >BMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >CMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >DMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >EMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >FMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >GMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >HMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >IMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >JMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >KMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >LMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >NMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-										<div class="lab"  >OMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
-									</div>
-									</div>
-
-								<!--</div>-->
-
-
-								<!--<footer>
-									<ul class="stats">
-										<li><a href="#">General</a></li>
-										<li><a href="#" class="icon fa-heart">28</a></li>
-										<li><a href="#" class="icon fa-comment">128</a></li>
-									</ul>
-								</footer>-->
-=======
 								</header>
 								
-								<div class="title" style="order-radius:15px" id="Lab">
-										<h2 style="margin-left:10px"><font >Contests Published</font></h2>
+								<div class="title" style="background-color:rgb(0,0,0);border-radius:15px" id="Lab">
+										<h2 style="margin-left:10px"><font color="white">Contests Published</font></h2>
 										<p id=1 >
 											<!-- JINJA2 START -->
 											{% for contest in active_contests %}
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;margin:10px">
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
 											
 
 											<p>{{contest.name}} <time style="margin-left:650px">{{contest.time}}</time><font color="green">Active</font></p>
@@ -223,7 +118,7 @@
 										</p>
 										<p id=2 >
 											{% for contest in archived_contests %}
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;;margin:10px">
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
 											
 											<p>{{contest.name}}<time style="margin-left:650px">{{contest.time}}</time><font color="red">Finished</font><button type ="button" style="float:right;">Report</button></p>
 											
@@ -238,7 +133,6 @@
 								
 								
 								
->>>>>>> 56f6d9642c8880d3984a4ba4d8c49e6ad4b47ba8
 							</article>
 
 					</div>
@@ -258,11 +152,11 @@
 		<!-- Scripts -->
 
 				
-			<script src="../static/assets/js/jquery.min.js"></script>
-			<script src="../static/assets/js/browser.min.js"></script>
-			<script src="../static/assets/js/breakpoints.min.js"></script>
-			<script src="../static/assets/js/util.js"></script>
-			<script src="../static/assets/js/main.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 
 	</body>
 </html>
