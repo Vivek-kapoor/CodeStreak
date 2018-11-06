@@ -39,10 +39,12 @@ CONTENTS (not in order):
 """
 
 import psycopg2
+import psycopg2.pool
 import logging
 import random
 import string
 import re
+import atexit
 
 """
 codestreak=# \d
@@ -59,6 +61,8 @@ codestreak=# \d
 """
 
 none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()]
+pool = None
+atexit.register(lambda: pool.closeall() if pool else None)
 
 
 def random_alnum(prefix="", length=3):
@@ -79,10 +83,15 @@ def connect_db():
     Connects to the postgres database
     :return: postgres connection object
     """
+
     connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' " \
                   "password='Student123' port='5432' "
+    global pool
+    if not pool:
+        pool = psycopg2.pool.SimpleConnectionPool(1, 6, connect_str)
+
     try:
-        conn = psycopg2.connect(connect_str)
+        conn = pool.getconn()
         logging.info('Connection successful')
         return conn
 
@@ -118,7 +127,7 @@ def _execute_query(query: str, json_output: bool = False) -> any:
         logging.info('Returned: ' + str(res))
         conn.commit()
         cur.close()
-        conn.close()
+        pool.putconn(conn)
         return res
     return None
 
@@ -516,40 +525,34 @@ if __name__ == "__main__":
 
     temp = get_plagiarism_code("c_dOHYbn")
     print(type(temp), temp)
-    quit()
-
-    temp = get_plagiarism_code("c_dOHYbn")
-    print(type(temp), temp)
-    quit()
 
     temp = submit_code(
         **{
             "usn": "01FB15ECS342",
             "q_id": "q_3423km23f",
             "c_id": "c_dOHYbn",
-            "code": "print(int(input()))",
+            "code": "input()",
             "language": '{"python"}'
         }
     )
 
     print(type(temp), temp)
-    quit()
 
-    temp = create_question(
-        **{"p_id": "01FB15ECS342",
-           "name": "Square the number",
-           "problem": "Given an integer, find its square. Input: Single line with integer. Output: Single line with the square",
-           "difficulty": "Cakewalk",
-           "editorial": "Take the number as input, and multiply it with itself.",
-           "time_limit": 0.5,
-           "memory_limit": 128.0,
-           "test_cases": '[{"id":1, "input":0, "output":0, "score":3}, {"id":2, "input":4, "output":16, "score":3}, {"id":1, "input":-2, "output":4, "score":4}]',
-           "score": 10,
-           "languages": '{"c", "python"}',
-           "tags": '{"arithmetic", "math"}'
-           })
-
-    print(type(temp), temp)
+    # temp = create_question(
+    #     **{"p_id": "01FB15ECS342",
+    #        "name": "Square the number",
+    #        "problem": "Given an integer, find its square. Input: Single line with integer. Output: Single line with the square",
+    #        "difficulty": "Cakewalk",
+    #        "editorial": "Take the number as input, and multiply it with itself.",
+    #        "time_limit": 0.5,
+    #        "memory_limit": 128.0,
+    #        "test_cases": '[{"id":1, "input":0, "output":0, "score":3}, {"id":2, "input":4, "output":16, "score":3}, {"id":1, "input":-2, "output":4, "score":4}]',
+    #        "score": 10,
+    #        "languages": '{"c", "python"}',
+    #        "tags": '{"arithmetic", "math"}'
+    #        })
+    #
+    # print(type(temp), temp)
 
     temp = get_questions()
     print(type(temp), temp)
