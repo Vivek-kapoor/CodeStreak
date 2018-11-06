@@ -131,8 +131,8 @@
 					<div id="main">
 
 						<!-- Post -->
-							<article class="post" style="background-color:#D4EEFC">
-								<header style="background-color:#ADD1E5">
+							<article class="post" >
+								<header >
 									<div class="title">
 <<<<<<< HEAD
 										<h2><a href="#">DashBoard</a></h2>
@@ -142,7 +142,7 @@
 									<div style="display:block; width:100%; height:100%;">
 										<!-- Placeholder Labs -->
 										<h1> Current Labs: </h1>
-										<div  class="lab" style="text-align:center; font-size:20px; color:green; box-shadow: inset 0 0 0 5px rgba(160, 160, 160, 0.3);">ADD lab</div>
+										<div  class="lab" style="text-align:center; font-size:20px; color:green; box-shadow: inset 0 0 0 5px rgba(160, 160, 160, 0.3); ;">ADD lab</div>
 										<div style="display:block; overflow:scroll; width:100%; height:400px;" id="Qs">
 										<div class="lab">AMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
 										<div class="lab"  >BMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
@@ -208,12 +208,12 @@
 =======
 								</header>
 								
-								<div class="title" style="background-color:rgb(0,0,0);border-radius:15px" id="Lab">
-										<h2 style="margin-left:10px"><font color="white">Contests Published</font></h2>
+								<div class="title" style="order-radius:15px" id="Lab">
+										<h2 style="margin-left:10px"><font >Contests Published</font></h2>
 										<p id=1 >
 											<!-- JINJA2 START -->
 											{% for contest in active_contests %}
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;margin:10px">
 											
 
 											<p>{{contest.name}} <time style="margin-left:650px">{{contest.time}}</time><font color="green">Active</font></p>
@@ -223,7 +223,7 @@
 										</p>
 										<p id=2 >
 											{% for contest in archived_contests %}
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;;margin:10px">
 											
 											<p>{{contest.name}}<time style="margin-left:650px">{{contest.time}}</time><font color="red">Finished</font><button type ="button" style="float:right;">Report</button></p>
 											
@@ -258,11 +258,11 @@
 		<!-- Scripts -->
 
 				
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="../static/assets/js/jquery.min.js"></script>
+			<script src="../static/assets/js/browser.min.js"></script>
+			<script src="../static/assets/js/breakpoints.min.js"></script>
+			<script src="../static/assets/js/util.js"></script>
+			<script src="../static/assets/js/main.js"></script>
 
 	</body>
 </html>

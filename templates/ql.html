@@ -9,7 +9,7 @@
 		<title>Single - Future Imperfect by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/main.css') }}" />
+		<link rel="stylesheet" href="../static/assets/css/main.css" />
 		<style>
 		/*Question*/
 		.question {
@@ -168,7 +168,7 @@
                                     </div>
 
 									<!-- div where question details are hidden which is displayed when a question is clicked on -->
-									<div style="display: none; background-color:black; color:white; overflow:scroll;" id="qdisplay">
+									<div style="display: none; background-color:#746767; color:white; overflow:scroll;" id="qdisplay">
 										<form id="frm" method="POST" enctype="multipart/form-data" action = "{{ url_for('add_questions') }}">
 											<label style="color:white">Problem Name:</label></br>
 											<input type="text" name="name" placeholder="Problem name" style="color:white" /></br>
@@ -335,11 +335,11 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
-			<script src="{{ url_for('static',filename='assets/js/browser.min.js') }}"></script>
-			<script src="{{ url_for('static',filename='assets/js/breakpoints.min.js') }}"></script>
-			<script src="{{ url_for('static',filename='assets/js/util.js') }}"></script>
-			<script src="{{ url_for('static',filename='assets/js/main.js') }}"></script>
-			<script src="{{ url_for('static',filename='ql.js') }}"></script>			
+			<script src="../static/assets/js/jquery.min.js"></script>
+			<script src="../static/assets/js/browser.min.js"></script>
+			<script src="../static/assets/js/breakpoints.min.js"></script>
+			<script src="../static/assets/js/util.js"></script>
+			<script src="../static/assets/js/main.js"></script>
+			<script src="../static/ql.js"></script>			
 	</body>
 </html>

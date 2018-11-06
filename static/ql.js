@@ -22,6 +22,18 @@ function qdetails(event)
 	e=event;
 	//submit.onclick=addq(tar);
 }
+
+//hide question editor
+function qhide(event)
+{
+	if(event.target.id !== "qdisplay")
+    	{
+		var dets=document.getElementById("qdisplay");
+		dets.style.display="none";
+		dets.style.width="0px";
+	}
+}
+
 //script to add questions(To be completed)
 function addq()
 {
