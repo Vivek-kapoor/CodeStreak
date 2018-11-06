@@ -10,9 +10,14 @@
 		<title>Admin Dashboard</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
+		<style type="text/css">
+		body {
+    background-image: url("{{ url_for('static', filename='back.jpg') }}");
+			}
+	</style>
 	</head>
-	<body class="single is-preload"  style="background-image:url(back.jpg)">
+	<body class="single is-preload">
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -23,8 +28,8 @@
 						<nav class="links">
 							<ul>
 								
-								<li><a href="#">Question Bank</a></li>
-								<li><a href="#">Create Contest</a></li>
+								<li><a href="ql.html">Question Bank</a></li>
+								<li><a href="CreateContest.html">Create Contest</a></li>
 							
 							</ul>
 						</nav>
@@ -101,17 +106,26 @@
 								<div class="title" style="background-color:rgb(0,0,0);border-radius:15px" id="Lab">
 										<h2 style="margin-left:10px"><font color="white">Contests Published</font></h2>
 										<p id=1 >
+											<!-- JINJA2 START -->
+											{% for contest in active_contests %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
-											<h4><font color="black">Contest One</font>  </h4>
-											<p>Contest-Preview <time style="margin-left:650px">Contest_End Time</time><a href='#' style="margin-left:90px"><font color="blue">View Details</font></a> <button type ="button" style="float:right;">Questions</button></p>
+											
+
+											<p>{{contest.name}} <time style="margin-left:650px">{{contest.time}}</time><font color="green">Active</font></p>
 											</div>
+											{% endfor %}
+											
 										</p>
 										<p id=2 >
+											{% for contest in archived_contests %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
-											<h4><font color="black">Contest Two</font>  </h4>
-											<p>Contest-Preview <time style="margin-left:650px">Contest_End Time</time><a style="margin-left:90px" href='#'><font color="blue">View Details</font></a> <button type ="button" style="float:right;">Questions</button></p>
+											
+											<p>{{contest.name}}<time style="margin-left:650px">{{contest.time}}</time><font color="red">Finished</font><button type ="button" style="float:right;">Report</button></p>
 											
 											</div>
+											{% endfor %}
+
+											<!-- END -->
 										</p>
 										<br>
 								</div>
