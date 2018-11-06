@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from runcode import runcode
 import socket
 app = Flask(__name__)
-app._static_folder = "/home/sumanth/projects/flask_compiler/codelauncher/static/"
+app._static_folder = "../compiler/templates/static"
 import code
 import random
 temp=""
@@ -56,7 +56,7 @@ def runc():
         f.close()  
         run = runcode.RunCCode(code,Index)
         rescompil, resrun, test_case_output = run.run_c_code()
-        
+        print(test_case_output)
        
         if not resrun:
             resrun = 'No result!'

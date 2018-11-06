@@ -166,7 +166,7 @@ body {
 			
                 <div class="col-md-6 login-form-1">
               
-					<form name="Student Login" action = "http://127.0.0.1:5000/student_login" method="POST">
+					<form name="Student Login" action = "{{ url_for('student_login') }}" method="POST">
                     <h3>Student Login</h3>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="USN" id="usn" name="usn" value="" />
@@ -183,20 +183,18 @@ body {
 				
 				
                 <div class="col-md-6 login-form-2">
-                    <form name="Professor Login">
+                    <form name="Professor Login" action = "{{ url_for('prof_login') }}">
 					<h3>Professor Login</h3>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="USN" id="usn" name="usn" value="" />
+                            <input type="text" class="form-control" placeholder="USN" id="p_usn" name="p_usn" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password" id="pwd" name="pwd" value="" />
+                            <input type="password" class="form-control" placeholder="Password" id="p_password" name="p_password" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="button" class="btnSubmit" onclick="check(this.form)" value="Login" />
-							
+                            <input type="submit" class="btnSubmit"  value="Login" />
                         </div>
                     </form>
-					
                 </div>
             </div>
         </div>

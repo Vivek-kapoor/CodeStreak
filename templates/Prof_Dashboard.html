@@ -4,11 +4,13 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
+
 <html>
 	<head>
-		<title>Single - Future Imperfect by HTML5 UP</title>
+		<title>Admin Dashboard</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<<<<<<< HEAD
 		<link rel="stylesheet" href="../static/assets/css/main.css" />
 		<style>
 		/*lab*/
@@ -46,25 +48,14 @@
 
 			.lab:hover:active {
 				background-color: rgba(46, 186, 174, 0.05);
+=======
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
+		<style type="text/css">
+		body {
+    background-image: url("{{ url_for('static', filename='back.jpg') }}");
+>>>>>>> 56f6d9642c8880d3984a4ba4d8c49e6ad4b47ba8
 			}
-
-		.lab:before,
-		.lab:after {
-			color: #aaaaaa;
-			position: relative;
-		}
-
-		.lab:before {
-			left: -1em;
-			padding: 0 0 0 0.75em;
-		}
-
-		.lab:after {
-			left: 1em;
-			padding: 0 0.75em 0 0;
-		}
-
-		</style>
+	</style>
 	</head>
 	<body class="single is-preload">
 
@@ -73,21 +64,18 @@
 
 				<!-- Header -->
 					<header id="header">
-						<h1><a href="index.html">Future Imperfect</a></h1>
+						<h1><a href="index.html">My dashboard</a></h1>
 						<nav class="links">
 							<ul>
-								<li><a href="ql.html">Question Bank</a></li>
-								<li><a href="CreateContest_css.html">Create Contest</a></li>
+								
+								<li><a href="{{ url_for('add_questions') }}">Question Bank</a></li>
+								<li><a href="{{ url_for('create_assignment') }}">Create Contest</a></li>
+							
 							</ul>
 						</nav>
 						<nav class="main">
 							<ul>
-								<li class="search">
-									<a class="fa-search" href="#search">Search</a>
-									<form id="search" method="get" action="#">
-										<input type="text" name="query" placeholder="Search" />
-									</form>
-								</li>
+								
 								<li class="menu">
 									<a class="fa-bars" href="#menu">Menu</a>
 								</li>
@@ -109,36 +97,31 @@
 							<section>
 								<ul class="links">
 									<li>
-										<a href="#">
-											<h3>Lorem ipsum</h3>
-											<p>Feugiat tempus veroeros dolor</p>
+										<a href="">
+											<h3>Homepage</h3>
+											<p>About us : Why use CodeStreak</p>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<h3>Dolor sit amet</h3>
-											<p>Sed vitae justo condimentum</p>
+											<h3>Student Performance</h3>
+											<p>Statistical Analytics</p>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<h3>Feugiat veroeros</h3>
-											<p>Phasellus sed ultricies mi congue</p>
+											<h3>Edit Profile Settings</h3>
 										</a>
 									</li>
-									<li>
-										<a href="#">
-											<h3>Etiam sed consequat</h3>
-											<p>Porta lectus amet ultricies</p>
-										</a>
-									</li>
+									
+									
 								</ul>
 							</section>
 
 						<!-- Actions -->
 							<section>
 								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Log In</a></li>
+									<li><a href="#" class="button large fit">Log Out</a></li>
 								</ul>
 							</section>
 
@@ -148,9 +131,10 @@
 					<div id="main">
 
 						<!-- Post -->
-							<article class="post">
-								<header>
+							<article class="post" style="background-color:#D4EEFC">
+								<header style="background-color:#ADD1E5">
 									<div class="title">
+<<<<<<< HEAD
 										<h2><a href="#">DashBoard</a></h2>
 									</div>
 								</header>
@@ -175,8 +159,16 @@
 										<div class="lab"  >Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
 										<div class="lab"  >NMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
 										<div class="lab"  >OMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</div>
+=======
+										<h2><a href="#"><font color="black">Contest Portfolio</font></a></h2>
+										<p></p>
+>>>>>>> 56f6d9642c8880d3984a4ba4d8c49e6ad4b47ba8
 									</div>
+									<div class="meta">
+										
+										<a href="#" class="author"><span class="name">Admin Name</span><img src="images/avatar.jpg" alt="" /></a>
 									</div>
+<<<<<<< HEAD
 
 									</br>
 									<div style="display:block; width:100%; height:100%;">
@@ -213,6 +205,40 @@
 										<li><a href="#" class="icon fa-comment">128</a></li>
 									</ul>
 								</footer>-->
+=======
+								</header>
+								
+								<div class="title" style="background-color:rgb(0,0,0);border-radius:15px" id="Lab">
+										<h2 style="margin-left:10px"><font color="white">Contests Published</font></h2>
+										<p id=1 >
+											<!-- JINJA2 START -->
+											{% for contest in active_contests %}
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
+											
+
+											<p>{{contest.name}} <time style="margin-left:650px">{{contest.time}}</time><font color="green">Active</font></p>
+											</div>
+											{% endfor %}
+											
+										</p>
+										<p id=2 >
+											{% for contest in archived_contests %}
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
+											
+											<p>{{contest.name}}<time style="margin-left:650px">{{contest.time}}</time><font color="red">Finished</font><button type ="button" style="float:right;">Report</button></p>
+											
+											</div>
+											{% endfor %}
+
+											<!-- END -->
+										</p>
+										<br>
+								</div>
+								<br><br>
+								
+								
+								
+>>>>>>> 56f6d9642c8880d3984a4ba4d8c49e6ad4b47ba8
 							</article>
 
 					</div>
@@ -220,23 +246,23 @@
 				<!-- Footer -->
 					<section id="footer">
 						<ul class="icons">
-							<li><a href="#" class="fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="fa-facebook"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="fa-rss"><span class="label">RSS</span></a></li>
+							<li><a href="#" class="fa-github"><span class="label">GitHub</span></a></li>
+							<li><a href="#" class="fa-linkedin"><span class="label">LinkedIn</span></a></li>
 							<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
 						</ul>
-						<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
+						<!--<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>-->
 					</section>
 
 			</div>
 
 		<!-- Scripts -->
-			<script src="../static/assets/js/jquery.min.js"></script>
-			<script src="../static/assets/js/browser.min.js"></script>
-			<script src="../static/assets/js/breakpoints.min.js"></script>
-			<script src="../static/assets/js/util.js"></script>
-			<script src="../static/assets/js/main.js"></script>
-			
+
+				
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
 	</body>
 </html>
