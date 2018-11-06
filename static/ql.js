@@ -9,6 +9,7 @@ function qdetails(event)
 	var dets=document.getElementById("qdisplay");
 	dets.style.display="inline-block";
 	dets.style.width="5000px";
+	dets.scrollTop=0;
 	var statement=document.getElementById("froala-editor");
 	if(event.target.innerHTML !="ADD QUESTION")
 	{
@@ -24,15 +25,16 @@ function qdetails(event)
 }
 
 //hide question editor
-function qhide(event)
+$(document).mouseup(function(e) 
 {
-	if(event.target.id !== "qdisplay")
-    	{
-		var dets=document.getElementById("qdisplay");
-		dets.style.display="none";
-		dets.style.width="0px";
-	}
-}
+    var container = $("#qdisplay");
+
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.hide();
+    }
+});
 
 //script to add questions(To be completed)
 function addq()
