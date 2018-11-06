@@ -3,7 +3,7 @@
 # from db_access import validate_student, validate_professor
 # from contest_info import contest_list
 import os
-from flask import Flask
+from flask import Flask, render_template
 from routes import *
 # SESSION = dict()
 
@@ -30,6 +30,9 @@ def create_assignment():
 @app.route("/add_questions", methods=["GET", "POST"])
 def add_questions():
 	return route_add_questions()
+
+
+
 
 if (__name__ == "__main__"):
     app.run(debug=True)
