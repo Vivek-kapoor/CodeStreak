@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Log In</title>
+  
+  
+  
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  
+</head>
+
+<body>
+
+  <div class="container">
+  <div class="split left">
+    <h1>Professor</h1>
+    <a href="{{ url_for('prof_page') }}" class="button">Log In</a>
+  </div>
+  <div class="split right">
+    <h1>Student</h1>
+    <a href="{{ url_for('student_page') }}" class="button">Log In</a>
+  </div>
+</div>
+  
+  
+
+    <script  src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+
+
+
+</body>
+
+</html>

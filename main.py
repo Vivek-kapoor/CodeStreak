@@ -15,6 +15,15 @@ app.config['SECRET_KEY'] = '59d3ca27e6701d3fd06eb960ca5866a5'
 def codestreak():
 	return route_codestreak()
 
+
+@app.route('/prof_page')
+def prof_page():
+	return render_template("login.html", name = "Professor")
+
+@app.route('/student_page')
+def student_page():
+	return render_template("login.html", name = "Student")
+
 @app.route("/student_login", methods=["GET", "POST"])
 def student_login():
 	return route_student_login()
