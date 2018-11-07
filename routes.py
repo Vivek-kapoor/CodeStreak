@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, session, flash
 #from db_access import validate_student, validate_professor, create_contest, get_questions, create_question, get_active_contest_student, get_archived_contest_student
 import db_access as db 
 def route_codestreak():
-    return render_template("login.html")
+    return render_template("index.html")
 
 def student_dashboard(usn):
 

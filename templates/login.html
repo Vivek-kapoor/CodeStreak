@@ -1,203 +1,142 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>CODESTREAK</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
-		
-    <meta charset="utf-8">
-    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <title>Bootstrap Two Login Form - Bootsnipp.com</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
-        .login-container{
-    margin-top: 5%;
-    margin-bottom: 5%;
-}
+	<title>Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icons/favicon.ico') }}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/animate/animate.css') }}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/select2/select2.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+<!--===============================================================================================-->
+
+<style type="text/css">
 body {
-    background-image: url("{{ url_for('static', filename='back.jpg') }}");
+
+	{% if name=="Student" %}
+
+    background-image: url("{{ url_for('static', filename='student.png') }}");
+
+    {% else %}
+
+    background-image: url("{{ url_for('static', filename='prof.jpg') }}");
+
+    {% endif %}
 }
-.login-logo{
-    position: relative;
-    margin-left: -41.5%;
-}
-.login-logo img{
-    position: absolute;
-    width: 20%;
-    margin-top: 19%;
-    background: #282726;
-    border-radius: 4.5rem;
-    padding: 5%;
-}
-.login-form-1{
-    padding: 9%;
-    background:#282726;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-}
-.login-form-1 h3{
-    text-align: center;
-    margin-bottom:12%;
-    color:#fff;
-}
-.login-form-2{
-    padding: 9%;
-    background: #0061c3;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-}
-.login-form-2 h3{
-    text-align: center;
-    margin-bottom:12%;
-    color: #fff;
-}
-.btnSubmit{
-    font-weight: 600;
-    width: 50%;
-    color: #282726;
-    background-color: #fff;
-    border: none;
-    border-radius: 1.5rem;
-    padding:2%;
-}
-.btnForgetPwd{
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
-}
-.btnForgetPwd:hover{
-    text-decoration:none;
-    color:#fff;
-}
-    </style>
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</style>
 </head>
-<link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
 
-<body class="single is-preload">
-<!-- Wrapper -->
-			<div   id="wrapper">
+					<img src="{{ url_for('static', filename='images/img-01.png') }}" alt="IMG">
 
-				<!-- Header -->
-					<header id="header">
-						<h2>Code the Future</h2>
-						<nav class="links">
-							<ul>
-								<li><a href="#">Guide</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="http://localhost/se_pro/aboutUs.html">About Us</a></li>
-							</ul>
-						</nav>
-						<nav class="main">
-							<ul>
-								<li class="search">
-									<a class="fa-search" href="#search">Search</a>
-									<form id="search" method="get" action="#">
-										<input type="text" name="query" placeholder="Search" />
-									</form>
-								</li>
-								<li class="menu">
-									<a class="fa-bars" href="#menu">Menu</a>
-								</li>
-							</ul>
-						</nav>
-					</header>
 
-				<!-- Menu -->
-					<section id="menu">
+				</div>
+				{% if name=="Student" %}
+				<form class="login100-form validate-form" name="Student Login" action = "{{ url_for('student_login') }}" method="POST">
+					<span class="login100-form-title">
+						{{ name }} Login
+					</span>
 
-						<!-- Search -->
-							<section>
-								<form class="search" method="get" action="#">
-									<input type="text" name="query" placeholder="Search" />
-								</form>
-							</section>
+					<div class="wrap-input100 validate-input" >
+						<input class="input100" type="text" name="usn" placeholder="USN">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
 
-						<!-- Links -->
-							<section>
-								<ul class="links">
-									<li>
-										<a href="#">
-											<h3>Homepage</h3>
-											<p>About us : Why use CodeStreak</p>
-										</a>
-									</li>
-									<li>
-										<a href="Student Dashboard.html">
-											<h3>My Dashboard</h3>
-											<p>Weekly Lab updates</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<h3>Edit Profile Settings</h3>
-											
-										</a>
-									</li>
-									
-								</ul>
-							</section>
-
-						<!-- Actions -->
-							<section>
-								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Log In</a></li>
-								</ul>
-							</section>
-
-					</section>
-
-				<!-- Main -->
-					<div id="main">
-
-						<!-- Post -->
-
-							<article class="post">
-								<header>
-									<div class="title">
-										<h2><a href="#">CodeStreak</a></h2>
-									</div>
-								</header>
-<div class="container login-container" background-color="red">
-            <div class="row">
-			
-                <div class="col-md-6 login-form-1">
-              
-					<form name="Student Login" action = "{{ url_for('student_login') }}" method="POST">
-                    <h3>Student Login</h3>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="USN" id="usn" name="usn" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password" id="password" name="password" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btnSubmit"  value="Login" />
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password"  placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<input type="submit" class="login100-form-btn">
 							
-                        </div>
-                        </form>
-                </div>
-				
-				
-                <div class="col-md-6 login-form-2">
-                    <form name="Professor Login" action = "{{ url_for('prof_login') }}">
-					<h3>Professor Login</h3>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="USN" id="p_usn" name="p_usn" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password" id="p_password" name="p_password" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btnSubmit"  value="Login" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-		
-		</body>
-		</html>
+						</input>
+					</div>
+
+					
+				</form>
+
+
+				{% else %}
+
+				<form class="login100-form validate-form" name="Professor Login" action = "{{ url_for('prof_login') }}" method="POST">
+					<span class="login100-form-title">
+						{{ name }} Login
+					</span>
+
+					<div class="wrap-input100 validate-input" >
+						<input class="input100" type="text" id = "p_usn"  name="p_usn" placeholder="USN">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" id = "p_password"  name="p_password" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<input type="submit" class="login100-form-btn">
+							
+						</input>
+					</div>
+
+					
+				</form>
+
+				{% endif %}
+
+
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="{{ url_for('static', filename='vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='vendor/bootstrap/js/popper.js') }}"></script>
+	<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='vendor/select2/select2.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='vendor/tilt/tilt.jquery.min.js') }}"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>
