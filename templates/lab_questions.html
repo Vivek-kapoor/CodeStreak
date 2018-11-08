@@ -85,7 +85,7 @@
 					<div id="main">
 
 						<!-- Post -->
-						{% for question in questions %}
+						
 							<article class="post" >
 								<header >
 									<div class="title">
@@ -105,11 +105,12 @@
 										<h2 style="margin-left:10px"><font>Challenges </font></h2>
 
 										<p id=1 >
-											
+											{% for question in questions %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
 											<p><b>{{question.name}}</b>
 											<button type ="button" style="float:right; margin-top:25px;">Enter Contest</button></p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
 											</div>
+											{% endfor %}	
 											
 										</p>
 										
@@ -124,7 +125,7 @@
 								
 								
 							</article>
-							{% endfor %}
+							
 
 					</div>
 
