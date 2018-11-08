@@ -128,3 +128,14 @@ def route_add_questions():
     else:
         questions = db.get_questions()
         return render_template("ql.html", questions = questions)
+
+def contest_questions():
+
+    data = request.form.to_dict(flat=False)
+    if(data):
+       c_id = ''.join(data['c_id'])
+       c_name = ''.join(data['c_name'])
+       s_time = ''.join(data['s_time'])
+       e_time = ''.join(data['e_time'])
+       questions = db.get_questions_by_contest(c_id)
+       return render_template("lab_questions.html", questions=questions, c_name=c_name, s_time=s_time, e_time=e_time)

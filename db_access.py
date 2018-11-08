@@ -565,13 +565,16 @@ if __name__ == "__main__":
     temp = get_questions()
     print(type(temp), temp)
 
+    
+
     temp = get_questions_by_contest('c_dOHYbn')
-    print(type(temp), temp)
+    #print(type(temp), temp)
+    
 
     temp = get_submission_distribution('01FB15ECS342')
     print(type(temp), temp)
-
-    temp = get_active_contest_student('01FB15ECS342')
+            
+    temp = get_archived_contest_student('01FB15ECS342')
     print(type(temp), temp)
 
     temp = get_submissions_by_contest('cwed')
@@ -579,3 +582,4 @@ if __name__ == "__main__":
 
     temp = get_question_details("q_3423km23f")
     print(type(temp), temp)
+            

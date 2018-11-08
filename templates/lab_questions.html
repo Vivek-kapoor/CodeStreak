@@ -10,7 +10,7 @@
 		<title>Student Dashboard</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../static/assets/css/main.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
 	</head>
 	<body class="single is-preload"  >
 
@@ -85,12 +85,13 @@
 					<div id="main">
 
 						<!-- Post -->
+						{% for question in questions %}
 							<article class="post" >
 								<header >
 									<div class="title">
-										<h2>Lab/Contest Name</h2>
-										<h1>Start Time:</h1>
-										<h1>End Time:</h1>
+										<h2>{{c_name}}</h2>
+										<h1>Start Time:</h1>{{s_time}}
+										<h1>End Time:</h1>{{e_time}}
 										<h1>Description: </h1>AMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. 
 										<p></p>
 									</div>
@@ -106,19 +107,12 @@
 										<p id=1 >
 											
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
-											<p><b>Video Conference</b>
-											<button type ="button" style="float:right; margin-top:25px;">Enter Contest</button></p>											<i>Success Rate:</i> 33.6%  <i>Max Score:</i> 15 <i>Difficulty:</i> Easy
+											<p><b>{{question.name}}</b>
+											<button type ="button" style="float:right; margin-top:25px;">Enter Contest</button></p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
 											</div>
 											
 										</p>
-										<p id=1 >
-											
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
-											<p><b>Video Conference</b>
-											<button type ="button" style="float:right; margin-top:25px;">Enter Contest</button></p>											<i>Success Rate:</i> 33.6%  <i>Max Score:</i> 15 <i>Difficulty:</i> Easy
-											</div>
-											
-										</p>
+										
 										
 										
 										
@@ -130,6 +124,7 @@
 								
 								
 							</article>
+							{% endfor %}
 
 					</div>
 
@@ -148,11 +143,11 @@
 		<!-- Scripts -->
 
 				
-			<script src="../static/assets/js/jquery.min.js"></script>
-			<script src="../static/assets/js/browser.min.js"></script>
-			<script src="../static/assets/js/breakpoints.min.js"></script>
-			<script src="../static/assets/js/util.js"></script>
-			<script src="../static/assets/js/main.js"></script>
+			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
 	</body>
 </html>

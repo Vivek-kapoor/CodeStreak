@@ -40,6 +40,10 @@ def create_assignment():
 def add_questions():
 	return route_add_questions()
 
+@app.route("/contest_page", methods=["GET", "POST"])
+def contest_page():
+	return contest_questions()
+
 
 
 
