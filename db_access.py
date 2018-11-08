@@ -415,13 +415,16 @@ def get_questions_by_contest(c_id):
     return res[0]
 
 
-def create_question(p_id: str, name: str, problem: str, difficulty: str, editorial: str = "N/A", time_limit: float = 1,
-                    memory_limit: float = 1024, test_cases="[]", score: int = 0, languages='{"c"}', tags='{}'):
+def create_question(p_id: str, name: str, problem: str, difficulty: str, languages: set, tags: set, editorial: str = "N/A", time_limit: float = 1,
+                    memory_limit: float = 1024, test_cases="[]", score: int = 0):
     """
     Adds a question to the database with a random question id
     :return: 1 if successful else None
     """
     q_id = random_alnum(prefix="q_")
+    languages = str(languages).replace("'", "")
+    tags = str(tags).replace("'", "")
+
     query = """INSERT INTO question (q_id, p_id, name, problem, difficulty, editorial, time_limit, memory_limit, test_cases, score, languages, tags)
             VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\')"""
     query = query.format(q_id, p_id, name, problem, difficulty, editorial, time_limit, memory_limit, test_cases, score,
