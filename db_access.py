@@ -114,7 +114,7 @@ def _execute_query(query: str, json_output: bool = False) -> any:
     if conn:
         cur = conn.cursor()
         if json_output:
-            json_query = """SELECT array_to_json(array_agg(row_to_json(t))) FROM ({}) t;"""
+            json_query = """SELECT array_to_json(array_agg(row_to_json(t))) FROM ({}) t"""
             query = json_query.format(query)
         cur.execute(query)
         logging.info('Executed: ' + query)
@@ -139,7 +139,7 @@ def validate_student(usn: str, password: str) -> bool:
     :param password: student's password, e.g. 01FB15ECS342
     :return: False if usn does not exist or password doesn't match. Else True
     """
-    query = """SELECT (SELECT \'{0}\' IN (SELECT usn FROM student)) AND (SELECT (SELECT password FROM student where usn = \'{1}\') = \'{2}\');""".format(
+    query = """SELECT (SELECT \'{0}\' IN (SELECT usn FROM student)) AND (SELECT (SELECT password FROM student where usn = \'{1}\') = \'{2}\')""".format(
         usn, usn, password)
     res = _execute_query(query)
     if res not in none_list:
@@ -155,7 +155,7 @@ def validate_professor(p_id: str, password: str) -> bool:
     :param password: professor's password, e.g. 01FB15ECS342
     :return: False if p_id does not exist or password doesn't match. Else True
     """
-    query = """SELECT (SELECT \'{0}\' IN (SELECT p_id FROM professor)) AND (SELECT (SELECT password FROM professor where p_id = \'{1}\') = \'{2}\');""".format(
+    query = """SELECT (SELECT \'{0}\' IN (SELECT p_id FROM professor)) AND (SELECT (SELECT password FROM professor where p_id = \'{1}\') = \'{2}\')""".format(
         p_id, p_id, password)
     res = _execute_query(query)
     if res not in none_list:
@@ -194,7 +194,7 @@ def submit_code(usn: str, q_id: str, c_id: str, code: str, language, score, stat
     """
 
     s_id = random_alnum(prefix="s_")
-    query = """INSERT INTO submission (s_id, usn, q_id, c_id, code, language, score, status, test_case_status) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');"""
+    query = """INSERT INTO submission (s_id, usn, q_id, c_id, code, language, score, status, test_case_status) VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\')"""
     query = query.format(s_id, usn, q_id, c_id, code, language, score, status, test_case_status)
     res = _execute_query(query)
     if res in none_list:
@@ -209,7 +209,7 @@ def get_unevaluated_submission():
     Gets the oldest unevaluated code
     :return: None if nothing to evaluate else a dict with s_id, code and language
     """
-    query = """SELECT s_id, code, language FROM submission where is_evaluated = false ORDER BY submit_time DESC LIMIT 1;"""
+    query = """SELECT s_id, code, language FROM submission where is_evaluated = false ORDER BY submit_time DESC LIMIT 1"""
     res = _execute_query(query, json_output=True)
     if res in none_list:  # error or nothing to evaluate
         return None
@@ -223,7 +223,7 @@ def set_evaluated_submission(s_id: str, test_case_status):
     :param test_case_status:
     :return:
     """
-    query = """UPDATE submission SET test_case_status = '{}' WHERE s_id = '{}'"""
+    query = """UPDATE submission SET test_case_status = \'{}\' WHERE s_id = \'{}\'"""
     query = query.format(s_id, test_case_status)
     res = _execute_query(query)
     if res in none_list:
@@ -239,7 +239,7 @@ def get_questions_by_prof(p_id: str):
     :param p_id: unique id of the professor
     :return: list of dict where each question is a dict
     """
-    query = """SELECT * from question where p_id = '{}' ORDER BY create_time DESC"""
+    query = """SELECT * from question where p_id = \'{}\' ORDER BY create_time DESC"""
     query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -261,12 +261,15 @@ def get_questions():
     return res[0]
 
 
-def create_contest(p_id, name, start_time, end_time, questions, semester, section):
+def create_contest(p_id: str, name: str, start_time: str, end_time: str, questions: set, semester: int, section: str):
     """
     Creates a contest with a random contest id
     :return: 1 if successful else None
     """
     c_id = random_alnum("c_")
+    start_time = start_time.replace("T", " ")
+    end_time = end_time.replace("T", " ")
+
     query = """INSERT INTO contest VALUES(\'{}\', \'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\', \'{}\')"""
     query = query.format(c_id, p_id, name, start_time, end_time, questions, semester, section)
     res = _execute_query(query)
@@ -292,7 +295,7 @@ def get_active_contest_student(usn: str, semester=None, section=None):
         else:
             return None
 
-    query = """SELECT * FROM contest WHERE semester = '{}' AND section  = '{}' AND start_time <= NOW() AND end_time >= NOW() """
+    query = """SELECT * FROM contest WHERE semester = \'{}\' AND section  = \'{}\' AND start_time <= NOW() AND end_time >= NOW() """
     query = query.format(semester, section)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -316,7 +319,7 @@ def get_archived_contest_student(usn: str, semester=None, section=None):
         else:
             return None
 
-    query = """SELECT * FROM contest WHERE semester = '{}' AND section  = '{}' AND end_time < NOW()"""
+    query = """SELECT * FROM contest WHERE semester = \'{}\' AND section  = \'{}\' AND end_time < NOW()"""
     query = query.format(semester, section)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -361,7 +364,7 @@ def get_student_details(usn: str, get_ranks: bool = True):
     :return: json with the all attributes of that student
     """
 
-    query = """SELECT * FROM student WHERE usn = '{}'"""
+    query = """SELECT * FROM student WHERE usn = \'{}\'"""
     query = query.format(usn)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -375,7 +378,7 @@ def get_student_details(usn: str, get_ranks: bool = True):
         sec_clause = "section = '" + str(student_details['section']) + "'"
         for attr, clause1, clause2 in [('rank', 'true', 'true'), ('batch_rank', sem_clause, 'true'),
                                        ('class_rank', sem_clause, sec_clause)]:
-            query = """SELECT rank from (SELECT usn, rank() over (order by rating desc) as rank from student where {} and {}) as a WHERE usn = '{}'"""
+            query = """SELECT rank from (SELECT usn, rank() over (order by rating desc) as rank from student where \'{}\' and \'{}\') as a WHERE usn = \'{}\'"""
             query = query.format(clause1, clause2, usn)
             res = _execute_query(query)
             student_details[attr] = int(res[0][0])
@@ -389,7 +392,7 @@ def get_submission_distribution(usn: str):
     :param usn: usn of the student
     :return: json with frequency of all verdicts
     """
-    query = """SELECT status, count(*) from submission where usn = '{}' GROUP BY status"""
+    query = """SELECT status, count(*) from submission where usn = \'{}\' GROUP BY status"""
     query = query.format(usn)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -404,7 +407,7 @@ def get_questions_by_contest(c_id):
     :param c_id: contest id
     :return: list of dicts. Each dict represents on question
     """
-    query = """SELECT * FROM question WHERE q_id = ANY ((SELECT questions FROM contest WHERE c_id = '{}')::varchar[])"""
+    query = """SELECT * FROM question WHERE q_id = ANY ((SELECT questions FROM contest WHERE c_id = \'{}\')::varchar[])"""
     query = query.format(c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -414,14 +417,14 @@ def get_questions_by_contest(c_id):
 
 
 def create_question(p_id: str, name: str, problem: str, difficulty: str, editorial: str = "N/A", time_limit: float = 1,
-                    memory_limit: float = 1024, test_cases="{}", score: int = 0, languages='{"c"}', tags='{}'):
+                    memory_limit: float = 1024, test_cases="[]", score: int = 0, languages='{"c"}', tags='{}'):
     """
     Adds a question to the database with a random question id
     :return: 1 if successful else None
     """
     q_id = random_alnum(prefix="q_")
     query = """INSERT INTO question (q_id, p_id, name, problem, difficulty, editorial, time_limit, memory_limit, test_cases, score, languages, tags)
-            VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')"""
+            VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\')"""
     query = query.format(q_id, p_id, name, problem, difficulty, editorial, time_limit, memory_limit, test_cases, score,
                          languages, tags)
     res = _execute_query(query)
@@ -440,7 +443,7 @@ def get_submissions_by_student(usn: str, q_id: str, c_id: str):
     :return: A list of submissions where each submission is a dict
     """
 
-    query = """SELECT * from submission WHERE usn = '{}' AND q_id = '{}' AND c_id = '{}'"""
+    query = """SELECT * from submission WHERE usn = \'{}\' AND q_id = \'{}\' AND c_id = \'{}\'"""
     query = query.format(usn, q_id, c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -455,7 +458,7 @@ def get_submissions_by_contest(c_id: str):
     :param c_id:
     :return:
     """
-    query = """SELECT * from submission where c_id = '{}'"""
+    query = """SELECT * from submission where c_id = \'{}\'"""
     query = query.format(c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
