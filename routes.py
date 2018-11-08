@@ -1,24 +1,25 @@
 from flask import render_template, redirect, url_for, request, session, flash
-#from db_access import validate_student, validate_professor, create_contest, get_questions, create_question, get_active_contest_student, get_archived_contest_student
-import db_access as db 
+
+import db_access as db
 def route_codestreak():
     return render_template("index.html")
 
+
 def student_dashboard(usn):
 
-    #active_contests = db.get_active_contest_student(usn)
+    active_contests = db.get_active_contest_student(usn)
     archived_contests = db.get_archived_contest_student(usn)
-    active_contests = [{'name': "kys", 'time': "now", 'active': 1},{'name': "gabe", 'time': "now", 'active': 1}]
+    #active_contests = [{'name': "kys", 'time': "now", 'active': 1},{'name': "gabe", 'time': "now", 'active': 1}]
     #archived_contests = [{'name': "kys1", 'time': "now", 'active': 0},{'name': "gabe1", 'time': "now", 'active': 0}]
     #contests = active_contests + archived_contests    
     return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests)
 
 def professor_dashboard(usn):
 
-    #active_contests = get_active_contest_professor(usn)
-    #archivef_contests = get_archived_contest_professor(usn)
-    active_contests = [{'name': "kys", 'time': "now"},{'name': "gabe", 'time': "now"}]
-    archived_contests = [{'name': "kys1", 'time': "now"},{'name': "gabe1", 'time': "now"}]
+    active_contests = db.get_active_contest_professor(usn)
+    archived_contests = db.get_archived_contest_professor(usn)
+    #active_contests = [{'name': "kys", 'time': "now"},{'name': "gabe", 'time': "now"}]
+    #archived_contests = [{'name': "kys1", 'time': "now"},{'name': "gabe1", 'time': "now"}]
 
     return render_template("Prof_Dashboard.html", active_contests = active_contests, archived_contests = archived_contests)
 
@@ -93,8 +94,8 @@ def route_create_assignment():
         print("Request Data -> ", request_data)
 
         db.create_contest(**request_data)
-        flash("Contest Created successfully")
-        return professor_dashboard(session['id'])
+
+        return professor_dashboard(request_data['p_id'])
     else:
         # return value of the functions should be list
         # of dicts where each dict is a row of question table
@@ -111,10 +112,7 @@ def route_add_questions():
         data['name'] = ''.join(data['name'])
         data['statement'] = ''.join(data['statement'])
         data['difficulty'] = ''.join(data['difficulty'])
-        # data['tags'] = ''.join(data['tags'])
-        data['memory_limit'] = float(''.join(data['memory_limit']))
-        data['time_limit'] = float(''.join(data['time_limit']))
-        data['languages'] = set(data['languages'])
+        data['tags'] = ''.join(data['tags'])
 
         num_of_testcases = int(len(files) / 2)
         testcases = []
@@ -125,19 +123,13 @@ def route_add_questions():
                 "output": files['output' + str(i)].read().decode("utf-8"),
                 "point": float(data["point" + str(i)][0])
             })
-
-        request_data['p_id'] = session['id']
-        request_data['test_cases'] = testcases
+        request_data['q_id'] = None
+        request_data['testcases'] = testcases
         request_data['name'] = data['name']
         request_data['problem'] = data['statement']
         request_data['difficulty'] = data['difficulty']
-        request_data['time_limit'] = data['time_limit']
-        request_data['memory_limit'] = data['memory_limit']
-        request_data['languages'] = data['languages']
-        # request_data['tags'] = data['tags']
+        request_data['tags'] = data['tags']
 
-        print("Request Data ->", request_data)
-        # return "Added successfully"
         db.create_question(**request_data)
         flash("Added successfully")
         return render_template("ql.html")
