@@ -44,6 +44,7 @@ import logging
 import random
 import string
 import re
+import json
 import atexit
 
 """
@@ -178,7 +179,7 @@ def get_question_details(q_id: str = "0"):
     return res[0][0]
 
 
-def submit_code(usn: str, q_id: str, c_id: str, code: str, language, score, status, test_case_status="[]"):
+def submit_code(usn: str, q_id: str, c_id: str, code: str, language: str, score: int, status: str, test_case_status: list):
     """
     Submits the code, makes an entry in submission
     These entries will be evaluated by compiler
@@ -415,15 +416,17 @@ def get_questions_by_contest(c_id):
     return res[0]
 
 
-def create_question(p_id: str, name: str, problem: str, difficulty: str, languages: set, tags: set, editorial: str = "N/A", time_limit: float = 1,
-                    memory_limit: float = 1024, test_cases="[]", score: int = 0):
+def create_question(p_id: str, name: str, problem: str, difficulty: str, languages: set, tags: set, test_cases: list, editorial: str = "N/A", time_limit: float = 1,
+                    memory_limit: float = 1024, score: int = 0):
     """
     Adds a question to the database with a random question id
     :return: 1 if successful else None
     """
     q_id = random_alnum(prefix="q_")
+
     languages = str(languages).replace("'", "")
     tags = str(tags).replace("'", "")
+    test_cases = json.dumps(test_cases)
 
     query = """INSERT INTO question (q_id, p_id, name, problem, difficulty, editorial, time_limit, memory_limit, test_cases, score, languages, tags)
             VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\')"""
@@ -518,6 +521,9 @@ def get_plagiarism_code(c_id: str):
 logging.basicConfig(level='INFO')
 
 if __name__ == "__main__":
+    temp = create_question(**{'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}], 'time_limit': 0.5, 'difficulty': 'Easy', 'problem': 'Reverse given string', 'languages': {'C'}, 'name': 'Reverse String', 'p_id': '01FB15ECS342', 'tags': {'Warmup'}, 'memory_limit': 1.0})
+    print(type(temp), temp)
+    quit()
     # temp = create_contest(**{'start_time': '2018-11-10T03:45', 'name': 'Sample', 'end_time': '2018-11-10T03:45', 'section': 'F', 'questions': str({'q_iBPSXw'}), 'p_id': '01FB15ECS342', 'semester': '7'})
     # print(type(temp), temp)
     # quit()
