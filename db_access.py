@@ -83,12 +83,12 @@ def connect_db():
     Connects to the postgres database
     :return: postgres connection object
     """
-
-    connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' " \
-                  "password='Student123' port='5432' "
     global pool
     if not pool:
+        connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' " \
+                      "password='Student123' port='5432' "
         pool = psycopg2.pool.SimpleConnectionPool(1, 6, connect_str)
+        logging.info('Successfully initiated connection pool')
 
     try:
         conn = pool.getconn()
@@ -178,7 +178,7 @@ def get_question_details(q_id: str = "0"):
     return res[0][0]
 
 
-def submit_code(usn: str, q_id: str, c_id: str, code: str, language, test_case_status="{}"):
+def submit_code(usn: str, q_id: str, c_id: str, code: str, language, score, status, test_case_status="[]"):
     """
     Submits the code, makes an entry in submission
     These entries will be evaluated by compiler
@@ -192,8 +192,8 @@ def submit_code(usn: str, q_id: str, c_id: str, code: str, language, test_case_s
     """
 
     s_id = random_alnum(prefix="s_")
-    query = """INSERT INTO submission (s_id, usn, q_id, c_id, code, language, test_case_status) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}');"""
-    query = query.format(s_id, usn, q_id, c_id, code, language, test_case_status)
+    query = """INSERT INTO submission (s_id, usn, q_id, c_id, code, language, score, status, test_case_status) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}');"""
+    query = query.format(s_id, usn, q_id, c_id, code, language, score, status, test_case_status)
     res = _execute_query(query)
     if res in none_list:
         logging.error('Failed to add submission to database')
@@ -528,11 +528,13 @@ if __name__ == "__main__":
 
     temp = submit_code(
         **{
-            "usn": "01FB15ECS342",
+            "usn": "01FB15ECS341",
             "q_id": "q_3423km23f",
             "c_id": "c_dOHYbn",
             "code": "input()",
-            "language": '{"python"}'
+            "language": "python",
+            "score": 0,
+            "status": "AC"
         }
     )
 

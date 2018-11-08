@@ -1,49 +1,70 @@
 {% extends "base.html" %}
-<<<<<<< HEAD
-=======
 {%block question %}
-<div>{{question['name']}}</div>
-<div id="text-question" name="question">{{question['question']}}</div>
-<div>{{question['time']}}</div>
-<div>{{question['memory']}}</div>
-</div>{{question['tags']}}</div>
+<h2 style="color: #2e6c80;">Laboratory assignment 1</h2>
+                <h1 style="color: #5e9ca0;">Your assignment question is <span style="color: #2b2301;">{{question['name']}}</span></h1>
+                <p> {{question['question']}} <br />Input will be of this format here&gt;</p>
+                <p><span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">Difficulty - Medium</span></p>
+                <h2 style="color: #2e6c80;">Constraints</h2>
+                <ol style="list-style: none; font-size: 14px; line-height: 32px; font-weight: bold;">
+                    <li style="clear: both;"><span style="color: #2e6c80;">Time Limit </span><strong>{{question['time']}}</strong></li>
+                    <li style="clear: both;"><span style="color: #2e6c80;">Memory Limit </span><strong>{{question['memory']}}</strong></li>
+                    <li style="clear: both;"><span style="color: #2e6c80;">Input </span><strong>10000 &lt;= n &lt;= 0</strong></li>
+                </ol>
+                <h2 style="color: #2e6c80;">Tags</h2>
+                <p><span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{question['tags'][0]}}</span>
+                <span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{question['tags'][1]}}</span></p>
+
 {% endblock %}
 
 {%block que_name %}
+
 <div>{{question['name']}}</div>
 {% endblock %}
 
 {%block question_copy %}
-<div>{{question['name']}}</div>
+<!--<div>{{question['name']}}</div>
 <div id="text-question" name="question">{{question['question']}}</div>
 <div>{{question['time']}}</div>
 <div>{{question['memory']}}</div>
-</div>{{question['tags']}}</div>
+</div>{{question['tags']}}</div>-->
+
+<h2 style="color: #2e6c80;">Laboratory assignment 1</h2>
+                <h1 style="color: #5e9ca0;">Your assignment question is <span style="color: #2b2301;">{{question['name']}}</span></h1>
+                <p style="font-size: 20px;"> {{question['question']}} <br />Input will be of this format here&gt;</p>
+                <p><span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">Difficulty - Medium</span></p>
+                <h2 style="color: #2e6c80;">Constraints</h2>
+                <ol style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;">
+                    <li style="clear: both;"><span style="color: #2e6c80;">Time Limit </span><strong>{{question['time']}}</strong></li>
+                    <li style="clear: both;"><span style="color: #2e6c80;">Memory Limit </span><strong>{{question['memory']}}</strong></li>
+                    <li style="clear: both;"><span style="color: #2e6c80;">Input </span><strong>10000 &lt;= n &lt;= 0</strong></li>
+                </ol>
+                <h2 style="color: #2e6c80;">Tags</h2>
+                <p><span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{question['tags'][0]}}</span>
+                <span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{question['tags'][1]}}</span></p>
+
+
+
 {% endblock %}
 
 
->>>>>>> cf1d2cf9dfc90718918b9ac766bde52a1ebffa96
 {% block code %}
 <textarea id="text-code" name="code" rows={{ rows }} cols={{ cols }}>
 {{ code }}
 </textarea><br/>
-<<<<<<< HEAD
-<div id="text-code-ace" class="hidden">{{ code }}</div>
-=======
 <div style="width:50%" id="text-code-ace" class="hidden">{{ code }}</div>
->>>>>>> cf1d2cf9dfc90718918b9ac766bde52a1ebffa96
 {% endblock %}
 
-{% block run %}
+<!--{% block run %}
 <textarea id="text-result" rows="18" cols="70" readonly>{{ resrun }}</textarea>
 
-{% endblock %}
+{% endblock %}-->
 
 {% block input%}
 <textarea id="text-input" name="resinput" rows="7" cols="140"></textarea>
 
+
 {% endblock %}
 
 {% block comp %}
-<textarea id="text-compile" rows="7" cols="140" readonly>{{ rescomp }} {{test_case_output}}</textarea>
+<textarea id="text-compile" rows="7" cols="140" readonly>{{resrun}} {{ rescomp }}  {{test_case_output}}</textarea>
 {% endblock %}
