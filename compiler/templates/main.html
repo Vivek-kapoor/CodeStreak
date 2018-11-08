@@ -1,10 +1,19 @@
 {% extends "base.html" %}
 {%block question %}
-<div>{{question['name']}}</div>
-<div id="text-question" name="question">{{question['question']}}</div>
-<div>{{question['time']}}</div>
-<div>{{question['memory']}}</div>
-</div>{{question['tags']}}</div>
+<h2 style="color: #2e6c80;">Laboratory assignment 1</h2>
+                <h1 style="color: #5e9ca0;">Your assignment question is <span style="color: #2b2301;">{{question['name']}}</span></h1>
+                <p> {{question['question']}} <br />Input will be of this format here&gt;</p>
+                <p><span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">Difficulty - Medium</span></p>
+                <h2 style="color: #2e6c80;">Constraints</h2>
+                <ol style="list-style: none; font-size: 14px; line-height: 32px; font-weight: bold;">
+                    <li style="clear: both;"><span style="color: #2e6c80;">Time Limit </span><strong>{{question['time']}}</strong></li>
+                    <li style="clear: both;"><span style="color: #2e6c80;">Memory Limit </span><strong>{{question['memory']}}</strong></li>
+                    <li style="clear: both;"><span style="color: #2e6c80;">Input </span><strong>10000 &lt;= n &lt;= 0</strong></li>
+                </ol>
+                <h2 style="color: #2e6c80;">Tags</h2>
+                <p><span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{question['tags'][0]}}</span>
+                <span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{question['tags'][1]}}</span></p>
+
 {% endblock %}
 
 {%block que_name %}
@@ -21,10 +30,10 @@
 
 <h2 style="color: #2e6c80;">Laboratory assignment 1</h2>
                 <h1 style="color: #5e9ca0;">Your assignment question is <span style="color: #2b2301;">{{question['name']}}</span></h1>
-                <p> {{question['question']}} <br />Input will be of this format here&gt;</p>
+                <p style="font-size: 20px;"> {{question['question']}} <br />Input will be of this format here&gt;</p>
                 <p><span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">Difficulty - Medium</span></p>
                 <h2 style="color: #2e6c80;">Constraints</h2>
-                <ol style="list-style: none; font-size: 14px; line-height: 32px; font-weight: bold;">
+                <ol style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;">
                     <li style="clear: both;"><span style="color: #2e6c80;">Time Limit </span><strong>{{question['time']}}</strong></li>
                     <li style="clear: both;"><span style="color: #2e6c80;">Memory Limit </span><strong>{{question['memory']}}</strong></li>
                     <li style="clear: both;"><span style="color: #2e6c80;">Input </span><strong>10000 &lt;= n &lt;= 0</strong></li>
