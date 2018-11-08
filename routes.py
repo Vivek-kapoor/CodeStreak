@@ -81,7 +81,7 @@ def route_create_assignment():
         data['sem'] = ''.join(data['sem'])
         data['sec'] = ''.join(data['sec'])
         data['begin'] = ''.join(data['begin'])
-        data['end'] = ''.join(data['begin'])
+        data['end'] = ''.join(data['end'])
 
 
         request_data['p_id'] = session['id']
