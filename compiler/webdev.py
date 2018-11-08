@@ -38,12 +38,40 @@ default_cols = "60"
 Index = 0
 test_case_output="hello"
 
+def get_data(c_id):
+    return {
+        "name" : "Sherlock and Cost",
+        "problem" : "In this challenge, you will be given an array  and must determine an array . There is a special rule: For all , . That is,  can be any number you choose such that . Your task is to select a series of  given  such that the sum of the absolute difference of consecutive pairs of  is maximized. This will be the array's cost, and will be represented by the variable  below.",
+        "difficulty": "Medium",
+        "time" : "2s",
+        "memory" : "256kB",
+        "tags" : ["Dynamic programming","Strings"]
+    }
+
+
+def get_question(contest_id):
+    #Get all questions in a contest
+    #return: list of dicts. Each dict represents on question
+    #output_dict=get_questions_by_contest(contest_id)
+    #check for the relevant question 
+    #output_dict['q_id']==session['q_id']
+    output_dict = get_data(contest_id)
+    data = {}
+    data["name"] = output_dict['name']
+    data["question"] = output_dict['problem']
+    data["difficulty"] = output_dict['difficulty']
+    data["time"] = output_dict['time']
+    data["memory"] = output_dict['memory']
+    data["tags"] = output_dict['tags'] 
+    return data
 
 @app.route("/")
 @app.route("/runc", methods=['POST', 'GET'])
 def runc():
-
-   
+    contest_id = 1
+    #Get c_id from session
+    #contest_id=session['c_id']
+    question =  get_question(contest_id)
     if request.method == 'POST':
         code = request.form['code']
         resinput = format(request.form['resinput'])
@@ -65,8 +93,11 @@ def runc():
         resrun = 'No result!'
         rescompil = ''
         test_case_output=""
+    
+    
     return render_template("main.html",
-                           code=code,
+                           question= question,
+                           code=code,    
                            target="runc",
                            resrun=resrun,
                            test_case_output=test_case_output,
@@ -126,4 +157,4 @@ def runpy():
                            rows=default_rows, cols=default_cols)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port="5002")
+    app.run(host='0.0.0.0',port="5000")
