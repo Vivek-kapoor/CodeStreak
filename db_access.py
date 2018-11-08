@@ -187,6 +187,8 @@ def submit_code(usn: str, q_id: str, c_id: str, code: str, language, score, stat
     :param c_id: contest id for which the code is submitted
     :param code: the code in the form of string
     :param language: language in which the code is submitted
+    :param score: sum of score of all test cases
+    :param status: final status of whole submission
     :param test_case_status: status of each test case with verdict and score
     :return: 1 if successfully inserted else None
     """
@@ -265,7 +267,7 @@ def create_contest(p_id, name, start_time, end_time, questions, semester, sectio
     :return: 1 if successful else None
     """
     c_id = random_alnum("c_")
-    query = """INSERT INTO contest VALUES('{}', '{}','{}','{}','{}','{}','{}', '{}')"""
+    query = """INSERT INTO contest VALUES(\'{}\', \'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\', \'{}\')"""
     query = query.format(c_id, p_id, name, start_time, end_time, questions, semester, section)
     res = _execute_query(query)
     if res in none_list:
@@ -565,12 +567,9 @@ if __name__ == "__main__":
     temp = get_questions()
     print(type(temp), temp)
 
-    
-
     temp = get_questions_by_contest('c_dOHYbn')
-    #print(type(temp), temp)
+    print(type(temp), temp)
     
-
     temp = get_submission_distribution('01FB15ECS342')
     print(type(temp), temp)
             
@@ -582,4 +581,3 @@ if __name__ == "__main__":
 
     temp = get_question_details("q_3423km23f")
     print(type(temp), temp)
-            
