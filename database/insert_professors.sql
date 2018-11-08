@@ -1,0 +1,1 @@
+INSERT INTO professor VALUES('01FB15ECS ');
