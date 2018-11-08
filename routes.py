@@ -40,30 +40,35 @@ def route_student_login():
             session['id'] = data['usn']
             return student_dashboard(data['usn'])
         else:
-            return render_template('login.html')
-    return render_template('login.html')
+            return render_template('login.html', name = "Student")
+    return render_template('login.html', name = "Student")
 
 
 def route_prof_login():
 
     data = request.form.to_dict(flat=False)
-    return professor_dashboard(111)
 
     # verify the credentail of users
-    '''if (data):
+    if (data):
                     
-                    data['usn'] = ''.join(data['p_usn'])
-                    data['password'] = ''.join(data['p_password'])
-                    
-                    response = db.validate_professor(**data)
-                    #if (response):
-                    if 1:
-                        print('here')
-                        session['id'] = data['usn']
-                        return professor_dashboard(data['usn'])
-                    else:
-                        return render_template('login.html')
-                return render_template('login.html')'''
+        data['p_id'] = ''.join(data['p_id'])
+        data['password'] = ''.join(data['password'])
+
+        # del data['usn']
+        # del data['p_password']
+        # del data['p_usn']
+
+        print("Data-> ", data)
+
+        response = db.validate_professor(**data)
+        #if (response):
+        if 1:
+            print('here')
+            session['id'] = data['p_id']
+            return professor_dashboard(data['p_id'])
+        else:
+            return render_template('login.html',name = "Professor")
+    return render_template('login.html',name = "Professor")
 
 def route_create_assignment():
     data = request.form.to_dict(flat=False)
@@ -82,9 +87,11 @@ def route_create_assignment():
         request_data['name'] = data['contest name']
         request_data['start_time'] = data['begin']
         request_data['end_time'] = data['end']
-        request_data['questions'] = data['questions']
+        request_data['questions'] = set(data['questions'])
         request_data['semester'] = data['sem']
         request_data['section'] = data['sec']
+        print("Request Data -> ", request_data)
+
         db.create_contest(**request_data)
         flash("Contest Created successfully")
         return "Contest Created successfully"
