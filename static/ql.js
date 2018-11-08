@@ -118,7 +118,7 @@ function testcase()
 	out.id="point";
 	out.type="text";
 	out.name="point"+(n_cases);
-	out.style.color="white";
+	out.style.color="black";
 	li.appendChild(lab);
 	li.appendChild(out);
 	li.appendChild(document.createElement("br"))
