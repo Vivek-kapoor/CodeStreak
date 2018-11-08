@@ -333,7 +333,7 @@ def get_archived_contest_professor(p_id: str):
     :param p_id: Professor id
     :return: None if there are no contests, else json
     """
-    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time < NOW()"""
+    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time > NOW()"""
     query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -347,7 +347,7 @@ def get_active_contest_professor(p_id: str):
     :param p_id: Professor id
     :return: None if there are no contests, else json
     """
-    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time >= NOW()"""
+    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time <= NOW()"""
     query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
