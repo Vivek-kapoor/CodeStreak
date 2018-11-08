@@ -267,8 +267,7 @@ def create_contest(p_id: str, name: str, start_time: str, end_time: str, questio
     :return: 1 if successful else None
     """
     c_id = random_alnum("c_")
-    start_time = start_time.replace("T", " ")
-    end_time = end_time.replace("T", " ")
+    questions = str(questions).replace("'", "")
 
     query = """INSERT INTO contest VALUES(\'{}\', \'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\', \'{}\')"""
     query = query.format(c_id, p_id, name, start_time, end_time, questions, semester, section)
@@ -516,6 +515,9 @@ def get_plagiarism_code(c_id: str):
 logging.basicConfig(level='INFO')
 
 if __name__ == "__main__":
+    # temp = create_contest(**{'start_time': '2018-11-10T03:45', 'name': 'Sample', 'end_time': '2018-11-10T03:45', 'section': 'F', 'questions': str({'q_iBPSXw'}), 'p_id': '01FB15ECS342', 'semester': '7'})
+    # print(type(temp), temp)
+    # quit()
     # temp = (create_contest(
     #     **{"p_id":"01FB15ECS342",
     #        "name": "Simple Trial 1",
