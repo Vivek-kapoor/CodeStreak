@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from runcode import runcode
 import socket
 app = Flask(__name__)
-app._static_folder = "../compiler/templates/static"
+app._static_folder = "../templates/static"
 import code
 import random
 from db_access import get_questions_by_contest
@@ -38,16 +38,6 @@ default_rows = "15"
 default_cols = "60"
 Index = 0
 test_case_output="hello"
-
-def get_data(c_id):
-    return {
-        "name" : "Sherlock and Cost",
-        "problem" : "In this challenge, you will be given an array  and must determine an array . There is a special rule: For all , . That is,  can be any number you choose such that . Your task is to select a series of  given  such that the sum of the absolute difference of consecutive pairs of  is maximized. This will be the array's cost, and will be represented by the variable  below.",
-        "difficulty": "Medium",
-        "time" : "2s",
-        "memory" : "256kB",
-        "tags" : ["Dynamic programming","Strings"]
-    }
 
 
 def get_question(contest_id):
@@ -118,11 +108,10 @@ def runc():
 @app.route("/submission", methods = ['POST'])
 
 def submission():
-        output=runcode.RunCCode()
+        output=runcode.RunCCode(question="")
         test_case_output=output.all_submissions()
-        l=test_case_output.split('\n')
-        print(l)
-        return render_template("Table/table.html",output=l)
+        #print(l)
+        return render_template("Table/table.html",output=test_case_output)
 
 
 @app.route("/cpp")
@@ -167,4 +156,4 @@ def runpy():
                            rows=default_rows, cols=default_cols)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port="5000")
+    app.run(host='0.0.0.0',port="5001")

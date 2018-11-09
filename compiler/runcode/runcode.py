@@ -6,7 +6,7 @@ import subprocess
 import threading
 import socket
 import re
-from db_access import submit_code
+from db_access import submit_code,get_submissions_by_student
 app = Flask(__name__)
 test_case_output=""
 class RunCCode(object):
@@ -95,6 +95,7 @@ class RunCCode(object):
             tle_check = self.stdout.split(":")
 
             #get time and memory
+            #ignore 0 here
             j=1
             time_taken = 0
             memory_taken = 0
@@ -195,10 +196,10 @@ class RunCCode(object):
 
     def all_submissions(self):
         '''fetch form db'''
-        
-        global test_case_output
-        print("in all submission",output)
-        return test_case_output
+        #get_submissions_by_student(session['s_id'],session['q_id'],session['c_id']):
+        submission_student=get_submissions_by_student('01FB15ECS341',"q_3423km23f","c_dOHYbn")
+        print("in all submission",submission_student)
+        return submission_student
 
 
     def add_limits(code):
