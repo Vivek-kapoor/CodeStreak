@@ -9,11 +9,11 @@ import re
 from db_access import submit_code
 app = Flask(__name__)
 test_case_output=""
+output = ""
 class RunCCode(object):
     
     def __init__(self,question,code=None,index=0):
-        self.code = code
-                                
+        self.code = code                        
         self.index =  index
         self.question = question                    
         self.compiler = "gcc"
@@ -54,15 +54,13 @@ class RunCCode(object):
         a, b = p.communicate(input = my_input.encode())
         return a , b
         
-    def update_test_status(self,test_id,score,time,memory,STATUS,test_case_output):
+    def update_test_status(self,time,memory,STATUS,test_case_output):
         '''
         fetch the submission for the question
         update the test status
         '''
         test_case_status={"status":STATUS ,"time":time,"memory":memory}
         test_case_output.append(test_case_status)
-        print(test_case_output)
-        #this is to be stored in submit_code as last  parameter
 
 
    
@@ -81,8 +79,11 @@ class RunCCode(object):
         memory_limit = self.question['memory']
         time_limit  = self.question['time']
         my_input = self.question['test_cases']
-        print("###TEST##")
-        print(my_input)
+        
+
+        global test_case_output
+        test_case_output = {}
+
 
         '''Fetching stuff from question'''
 
@@ -106,34 +107,38 @@ class RunCCode(object):
             #checking if memory exceeded
             arr = self.stderr.split()
             tle_check = self.stdout.split(":")
-            STATUS = "Running Successful"
-            time = "Ok"
-            memory = "Ok"
+
+            #get time and memory
+            j=1
+            time_taken = 0
+            memory_taken = 0
+            print(arr)
+            while(j < len(arr)):
+                if(arr[j]=="CPU"):
+                    time_taken = float(arr[j+1])
+                elif(arr[j]=="MEM"):
+                    memory_taken = float(arr[j+1])
+                j += 1
+
+
+
+            status = "Running Successful"
             if(tle_check[0]=="TLE"):
-                time = "Not Ok"
-                STATUS = "TLE"+" "+str(time_limit)
+                status = "TLE"
                 submission_correctness = False
             elif(arr[0] == "MEM"):
-                #if the memory limit exceeded
-                STATUS = "MEMORY LIMIT EXCEEDED"
-                memory = "Not Ok"
+                status = "MEMORY LIMIT EXCEEDED"
                 submission_correctness = False
             elif(arr[0] == "FINISHED"):
-                STATUS = "Running successful"
-            self.update_test_status(i ,score,time,memory,STATUS,test_case_output)
+                status = "Running successful"
+
+            self.update_test_status(time_taken,memory_taken,status,test_case_output)
         
             '''
                 format the output in order to display the status
             '''
-            i=0
-            time_taken = 0
-            memory_taken = 0
-            while(i < len(arr)):
-                if(arr[i]=="CPU"):
-                    time_taken = float(arr[i+1])
-                elif(arr[i]=="MEM"):
-                    memory_taken = float(arr[i+1])
-                i += 1
+            
+
             total_time += time_taken
             total_memory += memory_taken   
 
@@ -141,9 +146,8 @@ class RunCCode(object):
             result = "Correct Answer"
         else:
             result = "Wrong Answer"
-        global output
         output ="Submission status: "+str(result)+"\n"+str(correct_cases)+"/"+str(total_cases)+" Test Cases Passed\nScore "+str(score)+"\nTime taken ="+str(total_time)+"s"+"\nMemory taken = "+str(total_memory)+"bytes\n"
-        return test_case_output,score,result
+        return output,test_case_output,score,result
     
 
     def run_c_code(self, code=None):
@@ -180,10 +184,12 @@ class RunCCode(object):
         res = self._compile_c_code(filename,prog_output)
         print("COMPILED")
         result_compilation = self.stdout + self.stderr
+        print(result_compilation)
+        display_output=''
         if res == 0:
             global test_case_output
             global output
-            output,score,status= self._run_c_prog(prog_output,idx)
+            display_output,output,score,status= self._run_c_prog(prog_output,idx)
             '''store into db'''
             print("Storing stuff from here")
             print(score)
@@ -194,12 +200,12 @@ class RunCCode(object):
             ####Storing Submissions in db   
             #submit_code(session['s_id'], session['q_id'],session['c_id'], code,"C", score, status, test_case_output)
             submit_code('01FB15ECS341',"q_3423km23f","c_dOHYbn", code,"C", score,status,output)
-            result_run = self.stdout + self.stderr
+            result_run = self.stdout + self.stderr + display_output
         
    
 
         cleanup_files(idx)
-        return result_compilation, result_run, test_case_output
+        return result_compilation, result_run
 
     def all_submissions(self):
         '''fetch form db'''

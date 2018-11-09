@@ -85,6 +85,7 @@ def runc():
     question =  get_question(contest_id)
     if request.method == 'POST':
         code = request.form['code']
+        print(code)
         resinput = format(request.form['resinput'])
         global Index
         Index += 1
@@ -94,8 +95,8 @@ def runc():
         f.write(resinput)
         f.close()  
         run = runcode.RunCCode(question,code,Index)
-        rescompil, resrun, test_case_output = run.run_c_code()
-        print(test_case_output)
+        rescompil, resrun = run.run_c_code()
+        
        
         if not resrun:
             resrun = 'No result!'
@@ -103,7 +104,6 @@ def runc():
         code = default_c_code
         resrun = 'No result!'
         rescompil = ''
-        test_case_output=""
     
     
     return render_template("main.html",
@@ -111,7 +111,6 @@ def runc():
                            code=code,    
                            target="runc",
                            resrun=resrun,
-                           test_case_output=test_case_output,
                            rescomp=rescompil,
                            rows=default_rows, cols=default_cols)
 
