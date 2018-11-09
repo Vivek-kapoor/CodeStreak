@@ -1,8 +1,16 @@
 import mosspy
 from scraper import *
+import sys
 userid = 881220386
+
 from db_access import get_plagiarism_code
 
+
+base_code = '''#include <stdio.h>
+int main(int argc, char **argv){
+    printf("Hello C World!!\\n");
+    return 0;
+}'''
 '''
 TODO: Database fetch
 RETURN : A dictionary of all the codes : 
@@ -11,6 +19,14 @@ RETURN : A dictionary of all the codes :
 
 '''
 # return value ( (q_id:USN) -> code)
+
+
+# adding a base file
+with open("submission/base.c", "w") as text_file:
+ 		text_file.write(base_code)
+
+
+
 c_id = "c_dOHYbn"
 submissions = get_plagiarism_code(c_id)
 print(submissions)
@@ -22,7 +38,7 @@ for usn in submissions.keys():
 
 m = mosspy.Moss(userid, "c")
 # can add a base file(skeleton code which need not be compared)
-#m.addBaseFile("submission/a01.py")
+m.addBaseFile("submission/base.c")
 
 # Submission Files
 m.addFilesByWildcard("submission/*.c")
