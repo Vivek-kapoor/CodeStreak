@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 from runcode import runcode
 import socket
-app = Flask(__name__)
-app._static_folder = "../templates/static"
+app = Flask(__name__,template_folder="../templates")
+app._static_folder = "../static/compiler/static"
 import code
 import random
 from db_access import get_questions_by_contest
@@ -156,4 +156,4 @@ def runpy():
                            rows=default_rows, cols=default_cols)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port="5001")
+    app.run(host='0.0.0.0',port="5002")
