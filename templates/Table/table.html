@@ -3,7 +3,7 @@
 		
 	<h2 align="center">All Submissions</h2>
 <head>
-	<title>Table V01</title>
+	<title> Your Submissions</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -46,78 +46,17 @@
 						</thead>
 						<tbody>
 							
-								<tr>
-									<td class="column1">{{output[0]['status']}}</td>
-									<td class="column2">{{output[0]['submit_time']}}</td>
-									<td class="column3">{{output[0]['score']}}</td>
-									<td class="column4">{{output[0]['test_case_status']}}</td>
-									<td class="column5">"NULL"</td>
-									
-								</tr>
-								<tr>
-									<td class="column1">Wrong</td>
-									<td class="column2">1.2s</td>
-									<td class="column3">7/11</td>
-									<td class="column4">64 kb</td>
-									<td class="column5">12/20</td>
-									
-								</tr>
-								<tr>
-									<td class="column1">Correct</td>
-									<td class="column2">4.2s</td>
-									<td class="column3">11/11</td>
-									<td class="column4">85 kb</td>
-									<td class="column5">20/20</td>
-									
-								</tr>
-								<tr>
-									<td class="column1">Correct</td>
-									<td class="column2">1.2s</td>
-									<td class="column3">5/11</td>
-									<td class="column4">56 kb</td>
-									<td class="column5">10/20</td>
-									
-								</tr>
-								<tr>
-									<td class="column1">Correct</td>
-									<td class="column2">1.2s</td>
-									<td class="column3">5/11</td>
-									<td class="column4">56 kb</td>
-									<td class="column5">10/20</td>
-									
-								</tr>
-								<tr>
-									<td class="column1">Correct</td>
-									<td class="column2">1.2s</td>
-									<td class="column3">5/11</td>
-									<td class="column4">56 kb</td>
-									<td class="column5">10/20</td>
-									
-								</tr>
-								<tr>
-										<td class="column1">Correct</td>
-										<td class="column2">1.2s</td>
-										<td class="column3">5/11</td>
-										<td class="column4">56 kb</td>
-										<td class="column5">10/20</td>
-										
-									</tr>
-									<tr>
-											<td class="column1">Correct</td>
-											<td class="column2">1.2s</td>
-											<td class="column3">5/11</td>
-											<td class="column4">56 kb</td>
-											<td class="column5">10/20</td>
-											
-										</tr>
-										<tr>
-												<td class="column1">Correct</td>
-												<td class="column2">1.2s</td>
-												<td class="column3">5/11</td>
-												<td class="column4">56 kb</td>
-												<td class="column5">10/20</td>
-												
-											</tr>
+								   {% for submission in output %}
+						        <tr>
+						            <td>{{submission['status']}}</td>
+						            <td>{{ submission['submit_time'] }}</td>
+						            <td>{{ submission['score']}}</td>
+
+						            <td>{{ submission['test_case_status']}}</td>
+						            
+						            <td>{{ submission['score']}}</td>
+						        </tr>
+        							{% endfor %}
 											
 								
 						</tbody>
