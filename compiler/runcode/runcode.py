@@ -9,7 +9,6 @@ import re
 from db_access import submit_code
 app = Flask(__name__)
 test_case_output=""
-output = ""
 class RunCCode(object):
     
     def __init__(self,question,code=None,index=0):
@@ -32,19 +31,6 @@ class RunCCode(object):
         a, b = p.communicate()
         self.stdout, self.stderr = a.decode("utf-8"), b.decode("utf-8")
         return result
-
-
-    def fetch_data(self):
-        time_limit = 2 
-        memory_limit = 100
-        #sample_test_case 
-        #'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}]
-        test_cases = {
-            0:{"input":"2 1 2","output":"NO","points":100},
-            1:{"input":"2 1 3","output":"YES","points":100},
-            2:{"input":"2 7 8","output":"NO","points":100}
-        }
-        return time_limit, memory_limit,test_cases
 
 
     def execute_testcase(self,my_input,memory_limit, time_limit,cmd):
