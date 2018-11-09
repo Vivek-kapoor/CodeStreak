@@ -13,7 +13,7 @@ CONTENTS (not in order):
     5. validate_professor: Validates login credential for professor
 
     6. create_question: Creates a question and enters in the database with random q_id
-    7. create_contest: Creates a contest with random id and enters in database
+    7. create_contest: Creates a contest and enters in database with random c_id
 
     8. get_student_details: Gets a dict with all details of a student
 
@@ -25,16 +25,17 @@ CONTENTS (not in order):
     13. get_questions: Gets all the questions
     14. get_questions_by_prof: Gets all the questions whose creator is p_id
     15. get_questions_by_contest: Gets a list of all questions in a contest
+    16. get_question_details: Gets all details for a given question
 
-    16. get_question_details: Gets the test cases for a given question
     17. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
     18. get_submission_distribution: Gets distribution of test case status for pie chart
     19. get_submissions_by_student: Gets all submissions made by a student for given question and contest
     20. get_leaderboard: Gets the leaderboard of a given contest
     21. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+    22. def get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
 
-    22. submit_code: Submits code, makes an entry in the submission table
-    23. set_evaluated_submission: Sets the test_case_status of given s_id
+    23. submit_code: Submits code, makes an entry in the submission table
+    24. set_evaluated_submission: Sets the test_case_status of given s_id
 
 """
 
@@ -62,20 +63,17 @@ codestreak=# \d
 """
 
 none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()]
-pool = None
-atexit.register(lambda: pool.closeall() if pool else None)
+# atexit.register(lambda: pool.closeall() if pool else None)
 
 
-def random_alnum(prefix="", length=3):
+def random_alnum(prefix="", length=4):
     """
     Generates a random alphanumeric of given length with a prefix
     :param prefix: string to be prepended to the alphanumeric
     :param length: length of the random alphanumeric
     :return: a string of the alphanumeric
     """
-    # x = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(length))
-    # TODO increase the length to 6 and uncomment the previous line, remove next line
-    x = ''.join(random.choice(string.digits) for _ in range(length))
+    x = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(length))
     return prefix + x
 
 
@@ -84,8 +82,8 @@ def connect_db():
     Connects to the postgres database
     :return: postgres connection object
     """
-    global pool
-    if not pool:
+    if "pool" not in globals():
+        global pool
         connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' " \
                       "password='Student123' port='5432' "
         pool = psycopg2.pool.SimpleConnectionPool(1, 6, connect_str)
@@ -168,7 +166,7 @@ def get_question_details(q_id: str = "0"):
     """
     Gets all details for a given question
     :param q_id: the unique identifier for each question in db
-    :return: A json object of test cases
+    :return: A json object with all question details
     """
     query = """SELECT * from question where q_id = \'{}\'"""
     query = query.format(q_id)
@@ -450,11 +448,11 @@ def get_submissions_by_student(usn: str, q_id: str, c_id: str):
     :return: A list of submissions where each submission is a dict
     """
 
-    query = """SELECT * from submission WHERE usn = \'{}\' AND q_id = \'{}\' AND c_id = \'{}\'"""
+    query = """SELECT * from submission WHERE usn = \'{}\' AND q_id = \'{}\' AND c_id = \'{}\' ORDER BY submit_time DESC"""
     query = query.format(usn, q_id, c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
-        logging.error('Could not retrieve any submissons')
+        logging.error('Could not retrieve any submissions')
         return None
     return res
 
