@@ -110,8 +110,9 @@ def runc():
 def submission():
         output=runcode.RunCCode(question="")
         test_case_output=output.all_submissions()
-        #print(l)
-        return render_template("Table/table.html",output=test_case_output)
+        print("######")
+        print((test_case_output[0]))
+        return render_template("Table/table.html",output=test_case_output[0])
 
 
 @app.route("/cpp")
