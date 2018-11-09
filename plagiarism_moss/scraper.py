@@ -9,7 +9,7 @@ def scrape_display(url):
 		
 	data = r.text
 
-	soup = BeautifulSoup(data)
+	soup = BeautifulSoup(data, "lxml")
 
 	for link in soup.find_all('tr'):
 		for heading in link.find_all('th'):

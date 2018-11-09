@@ -1,7 +1,7 @@
 import mosspy
 from scraper import *
 userid = 881220386
-from db_access import *
+from db_access import get_plagiarism_code
 
 '''
 TODO: Database fetch

@@ -476,10 +476,11 @@ def get_leaderboard(c_id: str) -> list:
     :param c_id: contest id
     :return: a list of dicts for the leaderboard
     """
-    res = get_plagiarism_code(c_id)
-    if res in none_list:
+    submissions_to_check = get_plagiarism_code(c_id)
+    if submissions_to_check in none_list:
         return []
 
+    res = list(submissions_to_check.values())
     leaderboard = dict()
     for submission in res:
         usn = submission["usn"]
@@ -513,7 +514,7 @@ def get_plagiarism_code(c_id: str):
         if tup not in submissions_to_check and int(submission["score"]):  # no point checking 0 score for plagiarism
             submissions_to_check[tup] = submission
 
-    return list(submissions_to_check.values())
+    return submissions_to_check
 
 
 if __name__ == "__main__":
