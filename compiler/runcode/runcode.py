@@ -53,7 +53,9 @@ class RunCCode(object):
         update the test status
         '''
         test_case_status={"status":STATUS ,"time":time,"memory":memory}
-        test_case_output[test_id] = test_case_status
+        test_case_output.append(test_case_status)
+        print(test_case_output)
+        #this is to be stored in submit_code as last  parameter
 
 
    
@@ -74,7 +76,7 @@ class RunCCode(object):
         my_input =  self.fetch_data()
         score = 0
         correct_cases = 0
-        test_case_output = {}
+        test_case_output = []
         submission_correctness = True
         total_cases = len(my_input)
         total_time = 0
