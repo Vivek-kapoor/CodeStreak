@@ -66,7 +66,7 @@ none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()
 # atexit.register(lambda: pool.closeall() if pool else None)
 
 
-def random_alnum(prefix="", length=4):
+def random_alnum(prefix: str="", length: int=4):
     """
     Generates a random alphanumeric of given length with a prefix
     :param prefix: string to be prepended to the alphanumeric
@@ -86,7 +86,7 @@ def connect_db():
         global pool
         connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' " \
                       "password='Student123' port='5432' "
-        pool = psycopg2.pool.SimpleConnectionPool(1, 6, connect_str)
+        pool = psycopg2.pool.SimpleConnectionPool(4, 8, connect_str)
         logging.info('Successfully initiated connection pool')
 
     try:
@@ -217,7 +217,7 @@ def get_unevaluated_submission():
     return res[0]
 
 
-def set_evaluated_submission(s_id: str, test_case_status):
+def set_evaluated_submission(s_id: str, test_case_status: list):
     """
     Saves the evaluated submission to the database
     :param s_id:
@@ -398,10 +398,10 @@ def get_submission_distribution(usn: str):
     if res in none_list:
         logging.error('Could not retrieve submission distribution')
         return None
-    return res
+    return res[0]
 
 
-def get_questions_by_contest(c_id):
+def get_questions_by_contest(c_id: str):
     """
     Fetches questions of a particular contest
     :param c_id: contest id
@@ -521,9 +521,9 @@ def get_plagiarism_code(c_id: str):
 logging.basicConfig(level='INFO')
 
 if __name__ == "__main__":
-    temp = create_question(**{'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}], 'time_limit': 0.5, 'difficulty': 'Easy', 'problem': 'Reverse given string', 'languages': {'C'}, 'name': 'Reverse String', 'p_id': '01FB15ECS342', 'tags': {'Warmup'}, 'memory_limit': 1.0})
-    print(type(temp), temp)
-    quit()
+    # temp = create_question(**{'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}], 'time_limit': 0.5, 'difficulty': 'Easy', 'problem': 'Reverse given string', 'languages': {'C'}, 'name': 'Reverse String', 'p_id': '01FB15ECS342', 'tags': {'Warmup'}, 'memory_limit': 1.0})
+    # print(type(temp), temp)
+    # quit()
     # temp = create_contest(**{'start_time': '2018-11-10T03:45', 'name': 'Sample', 'end_time': '2018-11-10T03:45', 'section': 'F', 'questions': str({'q_iBPSXw'}), 'p_id': '01FB15ECS342', 'semester': '7'})
     # print(type(temp), temp)
     # quit()
@@ -542,19 +542,19 @@ if __name__ == "__main__":
     temp = get_plagiarism_code("c_dOHYbn")
     print(type(temp), temp)
 
-    temp = submit_code(
-        **{
-            "usn": "01FB15ECS341",
-            "q_id": "q_3423km23f",
-            "c_id": "c_dOHYbn",
-            "code": "input()",
-            "language": "python",
-            "score": 0,
-            "status": "AC"
-        }
-    )
-
-    print(type(temp), temp)
+    # temp = submit_code(
+    #     **{
+    #         "usn": "01FB15ECS341",
+    #         "q_id": "q_3423km23f",
+    #         "c_id": "c_dOHYbn",
+    #         "code": "input()",
+    #         "language": "python",
+    #         "score": 0,
+    #         "status": "AC"
+    #     }
+    # )
+    #
+    # print(type(temp), temp)
 
     # temp = create_question(
     #     **{"p_id": "01FB15ECS342",
@@ -595,3 +595,7 @@ if __name__ == "__main__":
 
     temp = get_question_details("q_3423km23f")
     print(type(temp), temp)
+
+    temp = get_leaderboard("c_dOHYbn")
+    print(type(temp), temp)
+
