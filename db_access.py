@@ -47,6 +47,8 @@ import string
 import re
 import json
 import atexit
+from time import time
+
 
 """
 codestreak=# \d
@@ -63,6 +65,9 @@ codestreak=# \d
 """
 
 none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()]
+connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
+pool = psycopg2.pool.SimpleConnectionPool(4, 8, connect_str)
+logging.info('Successfully established connection pool')
 # atexit.register(lambda: pool.closeall() if pool else None)
 
 
@@ -82,13 +87,6 @@ def connect_db():
     Connects to the postgres database
     :return: postgres connection object
     """
-    if "pool" not in globals():
-        global pool
-        connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' " \
-                      "password='Student123' port='5432' "
-        pool = psycopg2.pool.SimpleConnectionPool(4, 8, connect_str)
-        logging.info('Successfully initiated connection pool')
-
     try:
         conn = pool.getconn()
         logging.info('Connection successful')
@@ -518,9 +516,8 @@ def get_plagiarism_code(c_id: str):
     return list(submissions_to_check.values())
 
 
-logging.basicConfig(level='INFO')
-
 if __name__ == "__main__":
+    start = time()
     # temp = create_question(**{'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}], 'time_limit': 0.5, 'difficulty': 'Easy', 'problem': 'Reverse given string', 'languages': {'C'}, 'name': 'Reverse String', 'p_id': '01FB15ECS342', 'tags': {'Warmup'}, 'memory_limit': 1.0})
     # print(type(temp), temp)
     # quit()
@@ -599,3 +596,5 @@ if __name__ == "__main__":
     temp = get_leaderboard("c_dOHYbn")
     print(type(temp), temp)
 
+    print(random_alnum())
+    print(time()-start)
