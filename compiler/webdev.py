@@ -5,6 +5,7 @@ app = Flask(__name__)
 app._static_folder = "../compiler/templates/static"
 import code
 import random
+from db_access import get_questions_by_contest
 temp=""
 default_c_code = """#include <stdio.h>
 
@@ -52,23 +53,33 @@ def get_data(c_id):
 def get_question(contest_id):
     #Get all questions in a contest
     #return: list of dicts. Each dict represents on question
-    #output_dict=get_questions_by_contest(contest_id)
     #check for the relevant question 
-    #output_dict['q_id']==session['q_id']
-    output_dict = get_data(contest_id)
+    # output_dict wil be a list of dicts, one dict for each question, 
+    output_dict = get_questions_by_contest(contest_id)
+    print(output_dict)
     data = {}
-    data["name"] = output_dict['name']
-    data["question"] = output_dict['problem']
-    data["difficulty"] = output_dict['difficulty']
-    data["time"] = output_dict['time']
-    data["memory"] = output_dict['memory']
-    data["tags"] = output_dict['tags'] 
+    # we only need one question , so we match the q_id with the session's q_id
+    #DUMMY variable for testing
+    session = {}
+ 
+
+    for each_question in output_dict:
+        #comment the next line after testing
+        session['q_id'] = each_question['q_id']
+        if(each_question['q_id']==session['q_id']):  
+            data["name"] = each_question['name']
+            data["question"] = each_question['problem']
+            data["difficulty"] = each_question['difficulty']
+            data["time"] = each_question['time_limit']
+            data["memory"] = each_question['memory_limit']
+            data["tags"] = each_question['tags'] 
+            data["test_cases"]=each_question['test_cases']
     return data
 
 @app.route("/")
 @app.route("/runc", methods=['POST', 'GET'])
 def runc():
-    contest_id = 1
+    contest_id = 'c_dOHYbn' 
     #Get c_id from session
     #contest_id=session['c_id']
     question =  get_question(contest_id)
@@ -82,7 +93,7 @@ def runc():
         f = open(instr,"w")
         f.write(resinput)
         f.close()  
-        run = runcode.RunCCode(code,Index)
+        run = runcode.RunCCode(question,code,Index)
         rescompil, resrun, test_case_output = run.run_c_code()
         print(test_case_output)
        

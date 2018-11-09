@@ -1,18 +1,21 @@
 import subprocess
 import sys
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,session
 import os
 import subprocess
 import threading
 import socket
 import re
+from db_access import submit_code
 app = Flask(__name__)
 test_case_output=""
 class RunCCode(object):
     
-    def __init__(self, code=None,index=0):
+    def __init__(self,question,code=None,index=0):
         self.code = code
+                                
         self.index =  index
+        self.question = question                    
         self.compiler = "gcc"
         if not os.path.exists('running'):
             os.mkdir('running')
@@ -32,12 +35,16 @@ class RunCCode(object):
 
 
     def fetch_data(self):
+        time_limit = 2 
+        memory_limit = 100
+        #sample_test_case 
+        #'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}]
         test_cases = {
             0:{"input":"2 1 2","output":"NO","points":100},
             1:{"input":"2 1 3","output":"YES","points":100},
             2:{"input":"2 7 8","output":"NO","points":100}
         }
-        return test_cases
+        return time_limit, memory_limit,test_cases
 
 
     def execute_testcase(self,my_input,memory_limit, time_limit,cmd):
@@ -64,8 +71,6 @@ class RunCCode(object):
         # taking custom input
         # this is only if user says cutom input 
         # my_input = open("./running/input"+str(idx)+".txt","r")
-        memory_limit = 5024 #default value, TODO: fetch from the DB
-        time_limit = 2 #default TODO fetch from the DB
         '''
         fetch the inputs from the database
         loop for the number of test cases
@@ -73,7 +78,14 @@ class RunCCode(object):
         return the score, time , memory taken 
         to the user in the same format as stored in database
         '''
-        my_input =  self.fetch_data()
+        memory_limit = self.question['memory']
+        time_limit  = self.question['time']
+        my_input = self.question['test_cases']
+        print("###TEST##")
+        print(my_input)
+
+        '''Fetching stuff from question'''
+
         score = 0
         correct_cases = 0
         test_case_output = []
@@ -87,7 +99,7 @@ class RunCCode(object):
             target_output=my_input[i]['output']
             print(self.stdout)
             if(target_output==self.stdout):
-                score += my_input[i]["points"]
+                score += my_input[i]["point"]
                 correct_cases += 1
             else:
                 submission_correctness = False    
@@ -103,11 +115,11 @@ class RunCCode(object):
                 submission_correctness = False
             elif(arr[0] == "MEM"):
                 #if the memory limit exceeded
-                STATUS = "MEMORY LIMIT EXCEEDED \n"
+                STATUS = "MEMORY LIMIT EXCEEDED"
                 memory = "Not Ok"
                 submission_correctness = False
             elif(arr[0] == "FINISHED"):
-                STATUS = "Running successful\n"
+                STATUS = "Running successful"
             self.update_test_status(i ,score,time,memory,STATUS,test_case_output)
         
             '''
@@ -129,9 +141,9 @@ class RunCCode(object):
             result = "Correct Answer"
         else:
             result = "Wrong Answer"
-        
+        global output
         output ="Submission status: "+str(result)+"\n"+str(correct_cases)+"/"+str(total_cases)+" Test Cases Passed\nScore "+str(score)+"\nTime taken ="+str(total_time)+"s"+"\nMemory taken = "+str(total_memory)+"bytes\n"
-        return output
+        return test_case_output,score,result
     
 
     def run_c_code(self, code=None):
@@ -148,6 +160,8 @@ class RunCCode(object):
             
             
         idx = self.index
+        score=-1
+        status="null"
         print(idx)
         prog_output = "./running/a"+str(idx)+".out"
         filename = "./running/test"+str(idx)+".c"
@@ -168,18 +182,31 @@ class RunCCode(object):
         result_compilation = self.stdout + self.stderr
         if res == 0:
             global test_case_output
-            test_case_output = self._run_c_prog(prog_output,idx)
+            global output
+            output,score,status= self._run_c_prog(prog_output,idx)
             '''store into db'''
+            print("Storing stuff from here")
+            print(score)
+            print(output)
+            print(status)
+            print(code)
+            print("Done storing")
+            ####Storing Submissions in db   
+            #submit_code(session['s_id'], session['q_id'],session['c_id'], code,"C", score, status, test_case_output)
+            submit_code('01FB15ECS341',"q_3423km23f","c_dOHYbn", code,"C", score,status,output)
             result_run = self.stdout + self.stderr
+        
+   
+
         cleanup_files(idx)
         return result_compilation, result_run, test_case_output
 
     def all_submissions(self):
         '''fetch form db'''
+        
         global test_case_output
-        print("in all submission",test_case_output)
+        print("in all submission",output)
         return test_case_output
-
 
 
     def add_limits(code):
