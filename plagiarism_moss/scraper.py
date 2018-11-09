@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 
 import requests
 
-def scrape_display(url):	
+def scrape_display(url):
+	# outputs a dictionary 	
 	r  = requests.get(url)
 		
 	data = r.text

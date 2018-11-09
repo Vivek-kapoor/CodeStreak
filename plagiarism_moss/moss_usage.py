@@ -1,12 +1,7 @@
 import mosspy
 from scraper import *
 userid = 881220386
-
-#dummy funciton
-def fetch_submissions_for_contest(c_id):
-	return {1:"heyyy\nh\nhn\n",2:"heyyheyyy\nh\nhn\n",3:"heyyyyheyyy\nh\nhn\n"}
-
-
+from db_access import *
 
 '''
 TODO: Database fetch
@@ -15,12 +10,14 @@ RETURN : A dictionary of all the codes :
 	value : code as a string
 
 '''
-c_id = 1
-submissions = fetch_submissions_for_contest(c_id)
+# return value ( (q_id:USN) -> code)
+c_id = "c_dOHYbn"
+submissions = get_plagiarism_code(c_id)
+print(submissions)
 
 for usn in submissions.keys():
- 	with open("submission/"+str(usn)+".c", "w") as text_file:
- 		text_file.write(submissions[usn])
+ 	with open("submission/"+str(usn[1])+".c", "w") as text_file:
+ 		text_file.write(submissions[usn]['code'])
 
 
 m = mosspy.Moss(userid, "c")
