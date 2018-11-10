@@ -228,7 +228,11 @@ def contest_questions():
 
 
 def route_runc(q_id):
-    contest_id = 'c_dOHYbn' 
+    #The q_id here is the question id which the student clicked on, I have verfied it and it is the right id.
+    #You can also access q_id with session['q_id']
+    #the control here is passed from show_question
+    contest_id = 'c_dOHYbn'
+    print(q_id)
     #Get c_id from session
     #contest_id=session['c_id']
     question =  get_question(contest_id)
