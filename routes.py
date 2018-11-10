@@ -112,7 +112,10 @@ def route_add_questions():
         data['name'] = ''.join(data['name'])
         data['statement'] = ''.join(data['statement'])
         data['difficulty'] = ''.join(data['difficulty'])
-        data['tags'] = ''.join(data['tags'])
+        # data['tags'] = ''.join(data['tags'])
+        data['memory_limit'] = float(''.join(data['memory_limit']))
+        data['time_limit'] = float(''.join(data['time_limit']))
+        data['languages'] = set(data['languages'])
 
         num_of_testcases = int(len(files) / 2)
         testcases = []
@@ -123,19 +126,23 @@ def route_add_questions():
                 "output": files['output' + str(i)].read().decode("utf-8"),
                 "point": float(data["point" + str(i)][0])
             })
+        request_data['p_id'] = session['id']
+        request_data['test_cases'] = testcases
         request_data['q_id'] = None
         request_data['testcases'] = testcases
         request_data['name'] = data['name']
         request_data['problem'] = data['statement']
         request_data['difficulty'] = data['difficulty']
-        request_data['tags'] = data['tags']
+        request_data['time_limit'] = data['time_limit']
+        request_data['memory_limit'] = data['memory_limit']
+        request_data['languages'] = data['languages']
+        # request_data['tags'] = data['tags']
+        request_data['tags'] = "warmup"
 
         db.create_question(**request_data)
         flash("Added successfully")
-        return render_template("ql.html")
-    else:
-        questions = db.get_questions()
-        return render_template("ql.html", questions = questions)
+    questions = db.get_questions()
+    return render_template("ql.html", questions = questions)
 
 def contest_questions():
 
