@@ -67,7 +67,7 @@ def get_question(contest_id):
     #return: list of dicts. Each dict represents on question
     #check for the relevant question 
     # output_dict wil be a list of dicts, one dict for each question, 
-    output_dict = get_questions_by_contest(contest_id)
+    output_dict = db.get_questions_by_contest(contest_id)
     print(output_dict)
     data = {}
     # we only need one question , so we match the q_id with the session's q_id
