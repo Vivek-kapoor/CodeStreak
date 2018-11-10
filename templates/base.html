@@ -9,7 +9,7 @@
     
     <meta charset="utf-8" />
     <title>CodeStreak</title>
-   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='devc.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='compiler/static/devc.css') }}">
 
     
 </head>
@@ -134,7 +134,7 @@
     
 
 
-<form action="/submission" method="post">
+<form action="{{ url_for('submission') }}" method="post">
     <div id="submission">
     <input id="submit-button" type="submit" class="thick" value="View Submissions"/>
     </div>
@@ -142,7 +142,7 @@
 
 </body>
 
-<script src="{{ url_for('static', filename='ace/ace.js') }}"></script>
+<script src="{{ url_for('static', filename='compiler/static/ace/ace.js') }}"></script>
 <script>
     // The Ace editor needs divs instead of textareas
     // So we hide the textarea and show a div instead
