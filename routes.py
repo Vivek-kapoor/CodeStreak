@@ -215,6 +215,7 @@ def contest_questions():
        s_time = ''.join(data['s_time'])
        e_time = ''.join(data['e_time'])
        questions = db.get_questions_by_contest(c_id)
+       session['c_id'] = c_id
        return render_template("lab_questions.html", questions=questions, c_name=c_name, s_time=s_time, e_time=e_time)
 
 
