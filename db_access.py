@@ -47,7 +47,7 @@ import string
 import re
 import json
 import atexit
-from time import time
+from time import time, sleep
 
 
 """
@@ -65,10 +65,18 @@ codestreak=# \d
 """
 
 none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()]
+logging.basicConfig(level="INFO")
+
 connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
-pool = psycopg2.pool.SimpleConnectionPool(4, 8, connect_str)
+pool = psycopg2.pool.SimpleConnectionPool(2, 4, connect_str)
 logging.info('Successfully established connection pool')
-# atexit.register(lambda: pool.closeall() if pool else None)
+
+
+@atexit.register
+def destroy_connections():
+    if pool:
+        pool.closeall()
+        logging.info('Closed all connections with database')
 
 
 def random_alnum(prefix: str="", length: int=4):
@@ -87,10 +95,17 @@ def connect_db():
     Connects to the postgres database
     :return: postgres connection object
     """
+    global pool
     try:
         conn = pool.getconn()
         logging.info('Connection successful')
         return conn
+
+    except psycopg2.OperationalError:
+        logging.error('Connection closed unexpectedly. Trying to reconnect')
+        pool = psycopg2.pool.SimpleConnectionPool(2, 4, connect_str)
+        logging.info('Successfully established connection pool')
+        return connect_db()
 
     except psycopg2.DatabaseError:
         logging.error('Failed to connect to database')
@@ -109,23 +124,39 @@ def _execute_query(query: str, json_output: bool = False) -> any:
     """
     conn = connect_db()
     if conn:
-        cur = conn.cursor()
-        if json_output:
-            json_query = """SELECT array_to_json(array_agg(row_to_json(t))) FROM ({}) t"""
-            query = json_query.format(query)
-        cur.execute(query)
-        logging.info('Executed: ' + query)
-        res = cur.rowcount
-        if re.fullmatch(r"^SELECT.*", query, re.IGNORECASE):
+        try:
+            cur = conn.cursor()
             if json_output:
-                res = cur.fetchone()
-            else:
-                res = cur.fetchall()
-        logging.info('Returned: ' + str(res))
-        conn.commit()
-        cur.close()
-        pool.putconn(conn)
-        return res
+                json_query = """SELECT array_to_json(array_agg(row_to_json(t))) FROM ({}) t"""
+                query = json_query.format(query)
+            cur.execute(query)
+            logging.info('Executed: ' + query)
+            res = cur.rowcount
+            if re.fullmatch(r"^SELECT.*", query, re.IGNORECASE):
+                if json_output:
+                    res = cur.fetchone()
+                else:
+                    res = cur.fetchall()
+            logging.info('Returned: ' + str(res))
+            conn.commit()
+            cur.close()
+            pool.putconn(conn)
+            return res
+
+        except psycopg2.ProgrammingError:
+            logging.error('Something went wrong with the query')
+            pool.closeall()
+            return None
+
+        except psycopg2.IntegrityError:
+            logging.error('Something went wrong with the query')
+            pool.closeall()
+            return None
+
+        except psycopg2.OperationalError:
+            sleep(1)
+            return _execute_query(query, json_output)
+
     return None
 
 
@@ -203,7 +234,7 @@ def submit_code(usn: str, q_id: str, c_id: str, code: str, language: str, score:
     return res
 
 
-def get_unevaluated_submission():
+def get_unevaluated_submission():  # todo remove if not needed
     """
     Gets the oldest unevaluated code
     :return: None if nothing to evaluate else a dict with s_id, code and language
@@ -215,7 +246,7 @@ def get_unevaluated_submission():
     return res[0]
 
 
-def set_evaluated_submission(s_id: str, test_case_status: list):
+def set_evaluated_submission(s_id: str, test_case_status: list):  # todo remove if not needed
     """
     Saves the evaluated submission to the database
     :param s_id:
@@ -231,7 +262,7 @@ def set_evaluated_submission(s_id: str, test_case_status: list):
     return res
 
 
-def get_questions_by_prof(p_id: str):
+def get_questions_by_prof(p_id: str):  # todo remove if not needed
     """
     Gets all the questions created by the given professor
     in descending order of the time it was created
@@ -511,7 +542,7 @@ def get_plagiarism_code(c_id: str):
     submissions_to_check = {}
     for submission in res[0]:
         tup = (submission["q_id"], submission["usn"])
-        if tup not in submissions_to_check and int(submission["score"]):  # no point checking 0 score for plagiarism
+        if tup not in submissions_to_check:
             submissions_to_check[tup] = submission
 
     return submissions_to_check
