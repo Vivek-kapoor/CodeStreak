@@ -44,8 +44,23 @@ def add_questions():
 def contest_page():
 	return contest_questions()
 
+@app.route("/runc", methods=['POST', 'GET'])
+def runc():
+	return route_runc()
 
+@app.route("/submission", methods = ['POST'])
+def submission():
+	return route_submission()
 
+@app.route("/cpp")
+@app.route("/runcpp", methods=['POST', 'GET'])
+def runcpp():
+	return route_runcpp()
+
+@app.route("/py")
+@app.route("/runpy", methods=['POST', 'GET'])
+def runpy():
+	return route_runpy()
 
 if (__name__ == "__main__"):
     app.run(debug=True)
