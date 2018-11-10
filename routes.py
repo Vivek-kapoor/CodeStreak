@@ -128,8 +128,8 @@ def route_add_questions():
             })
         request_data['p_id'] = session['id']
         request_data['test_cases'] = testcases
-        request_data['q_id'] = None
-        request_data['testcases'] = testcases
+        # request_data['q_id'] = None
+        request_data['test_cases'] = testcases
         request_data['name'] = data['name']
         request_data['problem'] = data['statement']
         request_data['difficulty'] = data['difficulty']
@@ -137,7 +137,7 @@ def route_add_questions():
         request_data['memory_limit'] = data['memory_limit']
         request_data['languages'] = data['languages']
         # request_data['tags'] = data['tags']
-        request_data['tags'] = "warmup"
+        request_data['tags'] = {"warmup"}
 
         db.create_question(**request_data)
         flash("Added successfully")
