@@ -206,6 +206,14 @@ def route_add_questions():
     questions = db.get_questions()
     return render_template("ql.html", questions = questions)
 
+def show_question():
+
+    data = request.form.to_dict(flat=False)
+    session['q_id'] = ''.join(data['q_id'])
+    q_id = session['q_id']
+    return route_runc(q_id)
+
+
 def contest_questions():
 
     data = request.form.to_dict(flat=False)
@@ -219,7 +227,7 @@ def contest_questions():
        return render_template("lab_questions.html", questions=questions, c_name=c_name, s_time=s_time, e_time=e_time)
 
 
-def route_runc():
+def route_runc(q_id):
     contest_id = 'c_dOHYbn' 
     #Get c_id from session
     #contest_id=session['c_id']
