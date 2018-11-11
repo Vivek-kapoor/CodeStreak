@@ -87,7 +87,7 @@ class RunCCode(object):
             target_output=my_input[i]['output']
             print(self.stdout)
             if(target_output==self.stdout):
-                score += my_input[i]["point"]
+                score += my_input[i]["points"]
                 correct_cases += 1
             else:
                 submission_correctness = False    
