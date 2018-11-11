@@ -206,12 +206,12 @@ def route_add_questions():
     questions = db.get_questions()
     return render_template("ql.html", questions = questions)
 
-def show_question():
+def show_question(qid):
 
-    data = request.form.to_dict(flat=False)
-    session['q_id'] = ''.join(data['q_id'])
-    q_id = session['q_id']
-    return route_runc(q_id)
+    #data = request.form.to_dict(flat=False)
+    session['q_id'] = qid
+    #q_id = session['q_id']
+    return route_runc(qid)
 
 
 def contest_questions():
