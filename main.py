@@ -48,9 +48,7 @@ def contest_page():
 def lab_question():
 	return show_question()
 
-@app.route("/runc", methods=['POST', 'GET'])
-def runc():
-	return route_runc()
+
 
 @app.route("/submission", methods = ['POST'])
 def submission():
