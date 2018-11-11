@@ -67,6 +67,7 @@ class RunCCode(object):
         time_limit  = self.question['time_limit']
         my_input = self.question['test_cases']
         
+        
 
         global test_case_output
         test_case_output = {}
@@ -152,6 +153,7 @@ class RunCCode(object):
             
             
         idx = self.index
+        q_id=self.question['q_id']
         score=-1
         status="null"
         print(idx)
@@ -186,8 +188,13 @@ class RunCCode(object):
             print(code)
             print("Done storing")
             ####Storing Submissions in db   
-            #submit_code(session['s_id'], session['q_id'],session['c_id'], code,"C", score, status, test_case_output)
-            submit_code('01FB15ECS341',"q_3423km23f","c_dOHYbn", code,"C", score,status,output)
+            print("#Test")
+            print(q_id)
+            print(session['c_id'])
+            c_id=session['c_id']
+            s_id=session['id']
+            submit_code(s_id, q_id,c_id, code,"C", score, status, test_case_output)
+            #submit_code('01FB15ECS341',"q_3423km23f","c_dOHYbn", code,"C", score,status,output)
             result_run = self.stdout + self.stderr + display_output
         
    
@@ -197,9 +204,11 @@ class RunCCode(object):
 
     def all_submissions(self):
         '''fetch form db'''
+        q_id=session['q_id']
+        print(q_id)
         #get_submissions_by_student(session['s_id'],session['q_id'],session['c_id']):
-        submission_student=get_submissions_by_student('01FB15ECS341',"q_3423km23f","c_dOHYbn")
-        print("in all submission",submission_student)
+        submission_student=get_submissions_by_student(session['id'],q_id,session['c_id'])
+        #print("in all submission",submission_student)
         return submission_student
 
 
