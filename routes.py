@@ -100,7 +100,7 @@ def route_student_login():
         response = db.validate_student(**data)
         if (response):
         
-            session['id'] = data['usn']
+            session['usn'] = data['usn']
             return student_dashboard(data['usn'])
         else:
             return render_template('login.html', name = "Student")
@@ -127,7 +127,7 @@ def route_prof_login():
         #if (response):
         if 1:
             print('here')
-            session['id'] = data['p_id']
+            session['p_id'] = data['p_id']
             return professor_dashboard(data['p_id'])
         else:
             return render_template('login.html',name = "Professor")
@@ -146,7 +146,7 @@ def route_create_assignment():
         data['end'] = ''.join(data['end'])
 
 
-        request_data['p_id'] = session['id']
+        request_data['p_id'] = session['p_id']
         request_data['name'] = data['contest name']
         request_data['start_time'] = data['begin']
         request_data['end_time'] = data['end']
@@ -186,9 +186,9 @@ def route_add_questions():
             testcases.append({
                 "input": files['input' + str(i)].read().decode("utf-8"),
                 "output": files['output' + str(i)].read().decode("utf-8"),
-                "point": float(data["point" + str(i)][0])
+                "points": float(data["point" + str(i)][0])
             })
-        request_data['p_id'] = session['id']
+        request_data['p_id'] = session['p_id']
         request_data['test_cases'] = testcases
         # request_data['q_id'] = None
         request_data['test_cases'] = testcases
