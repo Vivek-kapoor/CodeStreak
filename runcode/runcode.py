@@ -62,8 +62,9 @@ class RunCCode(object):
         return the score, time , memory taken 
         to the user in the same format as stored in database
         '''
-        memory_limit = self.question['memory']
-        time_limit  = self.question['time']
+        print(self.question)
+        memory_limit = self.question['memory_limit']
+        time_limit  = self.question['time_limit']
         my_input = self.question['test_cases']
         
 

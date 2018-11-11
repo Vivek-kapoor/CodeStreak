@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, request, session, flash
 
 import db_access as db
 from runcode import runcode
-
+qid=0
 temp=""
 default_c_code = """#include <stdio.h>
 
@@ -226,16 +226,20 @@ def contest_questions():
        session['c_id'] = c_id
        return render_template("lab_questions.html", questions=questions, c_name=c_name, s_time=s_time, e_time=e_time)
 
-
+qid=0
 def route_runc(q_id):
     #The q_id here is the question id which the student clicked on, I have verfied it and it is the right id.
     #You can also access q_id with session['q_id']
     #the control here is passed from show_question
     contest_id = 'c_dOHYbn'
     print(q_id)
+    global qid
+    if(qid == 0 or q_id !="1"):
+        qid=q_id
+    
     #Get c_id from session
     #contest_id=session['c_id']
-    question =  get_question(contest_id)
+    question =  db.get_question_details(qid)
     if request.method == 'POST':
         code = request.form['code']
         print(code)
