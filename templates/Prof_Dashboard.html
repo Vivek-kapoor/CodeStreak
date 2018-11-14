@@ -120,7 +120,7 @@
 											{% for contest in archived_contests %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
 											
-											<p>{{contest.name}}<time style="margin-left:650px">{{contest.time}}</time><font color="red">Finished</font><button type ="button" style="float:right;">Report</button></p>
+											<p>{{contest.name}}<time style="margin-left:650px">{{contest.time}}</time><font color="red">Finished</font><a href="{{ url_for('contest_report', cid=contest.c_id) }}"><button style="float:right;">Report</button></a></p>
 											
 											</div>
 											{% endfor %}
@@ -151,8 +151,8 @@
 
 		<!-- Scripts -->
 
-				
-			<script src="assets/js/jquery.min.js"></script>
+			</script>	
+			<script src="../assets/js/jquery.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>

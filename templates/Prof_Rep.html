@@ -122,22 +122,22 @@ function profstat(evt, attr) {
 											
 												<tr>
 													<th>Question Name</th>
-													<th>Tags</th> 
-													<th>Submissions</th>
-													<th>Accuracy</th>
+													<th>Description</th> 
+													<th>Tags</th>
+													<th>Difficulty</th>
 													
 													
 													
 												</tr>
 											
-											
+											{% for question in questions %}
 												<tr>
-													<td id = "Q1">Q1</td>
-													<td  id = "tag_q1">demo_tag</td>
-													<td id ="sub_q1">demo_submissions</td>
-													<td id ="acc_q1">91%</td>
-													
+													<td>{{question.name}}</td>
+													<td>{{question.problem}}</td>
+													<td>{{question.tags}}</td>
+													<td>{{question.difficulty}}</td>
 												</tr>
+											{% endfor %}
 											</table>
 											<div class="col-12">
 												<ul class="actions">

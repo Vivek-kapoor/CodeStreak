@@ -48,6 +48,10 @@ def contest_page():
 def lab_question(qid):
 	return show_question(qid)
 
+@app.route('/contest_report/<cid>', methods=['POST', 'GET'])
+def contest_report(cid):
+	return route_contest_report(cid)
+
 @app.route("/runc", methods=['POST', 'GET'])
 def runc():
 	return route_runc("1")

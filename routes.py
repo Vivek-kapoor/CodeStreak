@@ -206,6 +206,13 @@ def route_add_questions():
     questions = db.get_questions()
     return render_template("ql.html", questions = questions)
 
+def route_contest_report(cid):
+    questions_by_contest = db.get_questions_by_contest(cid)
+    submissions_by_contest = db.get_submissions_by_contest(cid)
+    leaderboard_by_contest = db.get_leaderboard(cid)
+    return render_template("prof_Rep.html", questions = questions_by_contest, submissions = submissions_by_contest, 
+        leaderboard = leaderboard_by_contest)
+
 def show_question(qid):
 
     #data = request.form.to_dict(flat=False)
