@@ -2,6 +2,7 @@
 This file contains the code that connects the backend to database
 Run this file to check if the connection to database works
 If it doesn't throw an error, it works!
+Connect from cmd: psql -h codestreak.postgres.database.azure.com -p 5432 -U codestreak@codestreak codestreak
 
 CONTENTS (not in order):
 
@@ -33,10 +34,12 @@ CONTENTS (not in order):
     19. get_submissions_by_student: Gets all submissions made by a student for given question and contest
     20. get_leaderboard: Gets the leaderboard of a given contest
     21. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
-    22. def get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
+    22. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
+    23. get_plagiarism_report: Returns the plagiarism report for a given contest
 
-    23. submit_code: Submits code, makes an entry in the submission table
-    24. set_evaluated_submission: Sets the test_case_status of given s_id
+    24. submit_code: Submits code, makes an entry in the submission table
+    25. set_evaluated_submission: Sets the test_case_status of given s_id
+    26: set_plagiarism_report: Saves the plagiarism report in the database
 
 """
 
@@ -490,8 +493,8 @@ def get_submissions_by_student(usn: str, q_id: str, c_id: str):
 def get_submissions_by_contest(c_id: str):
     """
     Gets all the submissions for a contest for the professor to see
-    :param c_id:
-    :return:
+    :param c_id: contest id
+    :return: a list of submissions if successful else None
     """
     query = """SELECT * from submission where c_id = \'{}\'"""
     query = query.format(c_id)
@@ -549,7 +552,21 @@ def get_plagiarism_code(c_id: str):
     return submissions_to_check
 
 
-def set_plagiarism(c_id: str, report: list):
+def get_plagiarism_report(c_id: str):
+    """
+    Returns the plagiarism report for a given contest
+    :param c_id: contest id
+    :return: report as a list else None
+    """
+    query = """SELECT plagiarism from contest where c_id=\'{}\'"""
+    query = query.format(c_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        return None
+    return res[0]
+
+
+def set_plagiarism_report(c_id: str, report: list):
     """
     Saves the plagiarism report in the database
     :param c_id: contest id
@@ -565,7 +582,7 @@ def set_plagiarism(c_id: str, report: list):
         return None
     return res
 
-    
+
 if __name__ == "__main__":
     start = time()
     # temp = create_question(**{'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}], 'time_limit': 0.5, 'difficulty': 'Easy', 'problem': 'Reverse given string', 'languages': {'C'}, 'name': 'Reverse String', 'p_id': '01FB15ECS342', 'tags': {'Warmup'}, 'memory_limit': 1.0})
