@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<!--
+	Future Imperfect by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<style>
+.tabcontent {
+    display: block;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;}
+	</style>
+<script>
+function profstat(evt, attr) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(attr).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+
+</script>
+<html>
+	<head>
+		<title>Professor Report</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../static/assets/css/main.css" />
+	</head>
+	<body class="is-preload" style="background-color:rgb(0,0,0)">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						
+					<div class="tab">
+						<button class="tablinks" onclick="profstat(event, 'quest')">Questions</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="tablinks" onclick="profstat(event, 'submis')">Submissions</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="tablinks"onclick="profstat(event, 'leader')" >LeaderBoard</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="tablinks">Plagiarism</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+						
+						<nav class="main">
+							<ul>
+								<li class="search">
+									<a class="fa-search" href="#search">Search</a>
+									<form id="search" method="get" action="#">
+										<input type="text" name="query" placeholder="Search" />
+									</form>
+								</li>
+								<li class="menu">
+									<a class="fa-bars" href="#menu">Menu</a>
+								</li>
+							</ul>
+						</nav>
+					</header>
+					
+
+				<!-- Menu -->
+					<section id="menu">
+
+						<!-- Search -->
+							<section>
+								<form class="search" method="get" action="#">
+									<input type="text" name="query" placeholder="Search" />
+								</form>
+							</section>
+
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<li>
+										<a href="#">
+											<h3>QUESTION CREATION</h3>
+											<p>Add a new question to the existing database</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>DashBoard</h3>
+											<p>Active Contests</p>
+										</a>
+									</li>
+									
+								</ul>
+							</section>
+
+						<!-- Actions -->
+							<section>
+								<ul class="actions stacked">
+									<li><a href="#" class="button large fit">Log In</a></li>
+								</ul>
+							</section>
+
+					</section>
+
+				<!-- Main -->
+				<body>
+				<div id="main" >
+				
+
+						
+							
+							
+								
+						<div id="quest" class="tabcontent">
+						<section>
+									<h3>QUESTION PORTFOLIO</h3>
+									
+									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
+										<table>
+											
+												<tr>
+													<th>Question Name</th>
+													<th>Tags</th> 
+													<th>Submissions</th>
+													<th>Accuracy</th>
+													
+													
+													
+												</tr>
+											
+											
+												<tr>
+													<td id = "Q1">Q1</td>
+													<td  id = "tag_q1">demo_tag</td>
+													<td id ="sub_q1">demo_submissions</td>
+													<td id ="acc_q1">91%</td>
+													
+												</tr>
+											</table>
+											<div class="col-12">
+												<ul class="actions">
+													<li><input type="submit" value="Create" /></li>
+													<li><input type="reset" value="Reset" /></li>
+												</ul>
+											</div>
+									</div>
+
+									
+								</section>
+
+						</div>
+						
+						<div id="submis" class="tabcontent" style="display: none;">
+						<section>
+									<h3>SUBMISSION PORTFOLIO</h3>
+									
+									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
+										<table>
+											
+												<tr>
+													<th>ID</th>
+													<th>NAME</th> 
+													<th>USN</th>
+													<th>QUESTION</th>
+													<th>VERDICT</th>
+													<th>SCORE</th>
+													<th>CODE</th>
+													<th>TIMESTAMP</th>
+													
+													
+													
+												</tr>
+											
+											
+												<tr>
+													<td id = "ID">1</td>
+													<td  id = "name">demo_name</td>
+													<td id ="usn">demo_usn</td>
+													<td id ="Question">91%</td>
+													<td id ="Verdict">91%</td>
+													<td id ="Score">91%</td>
+													<td id ="Code"><a href='#'>view</a></td>
+													<td id ="Time Stamp">time</td>
+													
+												</tr>
+											</table>
+											<div class="col-12">
+												<ul class="actions">
+													<li><input type="submit" value="Create" /></li>
+													<li><input type="reset" value="Reset" /></li>
+												</ul>
+											</div>
+									</div>
+
+									
+								</section>
+
+						</div>
+						<div id="leader" class="tabcontent" style="display: none;">
+						<section>
+									<h3>RANKING PORTFOLIO</h3>
+									
+									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
+										<table>
+											
+												<tr>
+													<th>RANK</th>
+													<th>USER</th> 
+													<th>USN</th>
+													<th>SCORE</th>
+													<th>TIME</th>
+												</tr>
+											
+											
+												<tr>
+													<td id = "rank">1</td>
+													<td  id = "name">demo_user</td>
+													<td id ="usn">demo_usn</td>
+													<td id ="score">91%</td>
+													<td id ="time">91%</td>
+													
+													
+												</tr>
+											</table>
+											<div class="col-12">
+												<ul class="actions">
+													<li><input type="submit" value="Create" /></li>
+													<li><input type="reset" value="Reset" /></li>
+												</ul>
+											</div>
+									</div>
+
+									
+								</section>
+
+						</div>
+						
+						
+
+								
+								
+
+					</div>
+					</body>
+
+				
+
+						
+	
+
+						
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../static/assets/js/jquery.min.js"></script>
+			<script src="../static/assets/js/browser.min.js"></script>
+			<script src="../static/assets/js/breakpoints.min.js"></script>
+			<script src="../static/assets/js/util.js"></script>
+			<script src="../static/assets/js/main.js"></script>
+
+	</body>
+</html>
