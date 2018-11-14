@@ -208,7 +208,7 @@ class RunCCode(object):
         print(q_id)
         #get_submissions_by_student(session['s_id'],session['q_id'],session['c_id']):
         submission_student=get_submissions_by_student(session['usn'],q_id,session['c_id'])
-        #print("in all submission",submission_student)
+        print("in all submission",submission_student)
         return submission_student
 
 

@@ -275,9 +275,9 @@ def route_runc(q_id):
 def route_submission():
         output=runcode.RunCCode(question="")
         test_case_output=output.all_submissions()
-        print("######")
-        print((test_case_output[0]))
-        return render_template("Table/table.html",output=test_case_output[0])
+        if(test_case_output == None):
+            return render_template("Table/table.html",output = [{"status":"No submissions to show", "score":"","test_case_status":"","submit_time":""}])
+        return render_template("Table/table.html",output=test_case_output)
 
 
 def route_runcpp():
