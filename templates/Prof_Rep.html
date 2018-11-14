@@ -35,7 +35,7 @@ function profstat(evt, attr) {
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../static/assets/css/main.css" />
 	</head>
-	<body class="is-preload" style="background-color:rgb(0,0,0)">
+	<body class="is-preload" style="background-color:rgb(255,255,255)">
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -117,7 +117,7 @@ function profstat(evt, attr) {
 						<section>
 									<h3>QUESTION PORTFOLIO</h3>
 									
-									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
+									<div class="table-wrapper" style="background-color:rgb(255, 255, 255)" >
 										<table>
 											
 												<tr>
@@ -125,13 +125,10 @@ function profstat(evt, attr) {
 													<th>Description</th> 
 													<th>Tags</th>
 													<th>Difficulty</th>
-													
-													
-													
 												</tr>
 											
 											{% for question in questions %}
-												<tr>
+												<tr {% if loop.index % 2 == 0 %} style="background-color: #f2f2f2" {% endif %}>
 													<td>{{question.name}}</td>
 													<td>{{question.problem}}</td>
 													<td>{{question.tags}}</td>
@@ -139,12 +136,6 @@ function profstat(evt, attr) {
 												</tr>
 											{% endfor %}
 											</table>
-											<div class="col-12">
-												<ul class="actions">
-													<li><input type="submit" value="Create" /></li>
-													<li><input type="reset" value="Reset" /></li>
-												</ul>
-											</div>
 									</div>
 
 									
@@ -186,12 +177,6 @@ function profstat(evt, attr) {
 													
 												</tr>
 											</table>
-											<div class="col-12">
-												<ul class="actions">
-													<li><input type="submit" value="Create" /></li>
-													<li><input type="reset" value="Reset" /></li>
-												</ul>
-											</div>
 									</div>
 
 									
@@ -202,34 +187,24 @@ function profstat(evt, attr) {
 						<section>
 									<h3>RANKING PORTFOLIO</h3>
 									
-									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
+									<div class="table-wrapper" style="background-color:rgb(255, 255, 255)" >
 										<table>
 											
 												<tr>
 													<th>RANK</th>
-													<th>USER</th> 
+													<th>Score</th> 
 													<th>USN</th>
-													<th>SCORE</th>
 													<th>TIME</th>
 												</tr>
-											
-											
-												<tr>
-													<td id = "rank">1</td>
-													<td  id = "name">demo_user</td>
-													<td id ="usn">demo_usn</td>
-													<td id ="score">91%</td>
-													<td id ="time">91%</td>
-													
-													
-												</tr>
+												{% for data in leaderboard %}
+													<tr {% if loop.index % 2 == 0 %} style="background-color: #f2f2f2" {% endif %}>
+														<td>{{loop.index}}</td>
+														<td>{{data.score}}</td>
+														<td>{{data.usn}}</td>
+														<td>{{data.penalty}}</td>
+													</tr>
+												{% endfor %}
 											</table>
-											<div class="col-12">
-												<ul class="actions">
-													<li><input type="submit" value="Create" /></li>
-													<li><input type="reset" value="Reset" /></li>
-												</ul>
-											</div>
 									</div>
 
 									

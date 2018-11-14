@@ -210,6 +210,10 @@ def route_contest_report(cid):
     questions_by_contest = db.get_questions_by_contest(cid)
     submissions_by_contest = db.get_submissions_by_contest(cid)
     leaderboard_by_contest = db.get_leaderboard(cid)
+    leaderboard_by_contest = sorted(leaderboard_by_contest, key=lambda k: (-k['score'], k['penalty']))
+    print("Submission ->", submissions_by_contest)
+    # if(len(submissions_by_contest) > 0):
+    #     print("Submission ->", submissions_by_contest[0])
     return render_template("prof_Rep.html", questions = questions_by_contest, submissions = submissions_by_contest, 
         leaderboard = leaderboard_by_contest)
 
