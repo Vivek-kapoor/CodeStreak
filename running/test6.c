@@ -2,6 +2,9 @@
 #include <stdio.h>
 
 int main(int argc,char* argv[]){ setlimits(argc,argv);
-    printf("Hello C World!!\n");
+    int n;
+    scanf("%d",&n);
+    printf("%d",n*n);
+    //printf("Hello C World!!\n");
     return 0;
 }    
