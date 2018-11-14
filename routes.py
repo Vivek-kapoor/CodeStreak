@@ -212,8 +212,7 @@ def route_contest_report(cid):
     leaderboard_by_contest = db.get_leaderboard(cid)
     leaderboard_by_contest = sorted(leaderboard_by_contest, key=lambda k: (-k['score'], k['penalty']))
     print("Submission ->", submissions_by_contest)
-    # if(len(submissions_by_contest) > 0):
-    #     print("Submission ->", submissions_by_contest[0])
+
     return render_template("prof_Rep.html", questions = questions_by_contest, submissions = submissions_by_contest, 
         leaderboard = leaderboard_by_contest)
 
@@ -255,6 +254,10 @@ def route_runc(q_id):
         code = request.form['code']
         print(code)
         resinput = format(request.form['resinput'])
+        custom_input = False
+        if(len(resinput)>=1):
+            print("custom_input is TRUE")
+            custom_input = True
         global Index
         Index += 1
         ID = Index
@@ -262,7 +265,7 @@ def route_runc(q_id):
         f = open(instr,"w")
         f.write(resinput)
         f.close()  
-        run = runcode.RunCCode(question,code,Index)
+        run = runcode.RunCCode(question,code,custom_input,Index)
         rescompil, resrun = run.run_c_code()
         
        
