@@ -100,10 +100,11 @@ class RunCCode(object):
                 result = "Successful"
             else:
                 result = "Unsuccessful"
-            output ="Submission Status: "+str(result)+"\n"+"\nTime taken ="+str(time_taken)+"s"+"\nMemory taken = "+str(memory_taken)+"bytes\n"
-            
+            output ={"Submission_status":str(result),
+                "time":str(time_taken),
+                "memory":str(memory_taken)}
             score = 0
-            return output,self.test_case_output,score,result
+            return output,score,result
     
         else:
             '''
@@ -184,12 +185,15 @@ class RunCCode(object):
                 result = "Correct Answer"
             else:
                 result = "Wrong Answer"
-            output ="Submission status: "+str(result)+"\n"+str(correct_cases)+"/"+str(total_cases)+" Test Cases Passed\nScore "+str(score)+"\nTime taken ="+str(total_time)+"s"+"\nMemory taken = "+str(total_memory)+"bytes\n"
-            return output,self.test_case_output,score,result
+            output ={"Submission_status":str(result),
+            "correct_cases":str(correct_cases),
+            "total_cases":str(total_cases),
+            "score":str(score),
+            "time":str(total_time),
+            "memory":str(total_memory)}
+            return output,score,result
         
-
-    def run_c_code(self, code=None):
-        def cleanup_files(index):
+    def cleanup_files(self,index):
             prog_output = "./running/a"+str(self.index)+".out"
             filename = "./running/test"+str(self.index)+".c"
             inputfile = "./running/input"+str(self.index)+".txt"
@@ -199,8 +203,8 @@ class RunCCode(object):
                 os.remove(filename)
             if os.path.exists(prog_output):
                 os.remove(prog_output)
-            
-            
+         
+    def run_c_code(self, code=None):    
         idx = self.index
         q_id=self.question['q_id']
         score=-1
@@ -220,22 +224,14 @@ class RunCCode(object):
         
         #self.line_prepender(filename,line_to_add)
         res = self._compile_c_code(filename,prog_output)
-        result_compilation = self.stdout + self.stderr
+        result_compilation = self.stdout
     
         display_output=''
         if res == 0:
-            
-    
-            global output
-            display_output,output,score,status= self._run_c_prog(prog_output,idx)
-            
+            display_output,score,status= self._run_c_prog(prog_output,idx)
             if(not(self.custom_input)):
                 '''store into db'''
                 print("Storing stuff from here")
-                print(score)
-                print(output)
-                print(status)
-                print(code)
                 print("Done storing")
                 ####Storing Submissions in db   
                 print("#Test")
@@ -245,10 +241,10 @@ class RunCCode(object):
                 s_id=session['usn']
                 submit_code(s_id, q_id,c_id, code,"C", score, status, self.test_case_output)
             
-            result_run = self.stdout + self.stderr + display_output
+            result_run = self.stdout 
            
-        cleanup_files(idx)
-        return result_compilation, result_run
+        self.cleanup_files(idx)
+        return result_compilation, result_run, display_output
 
     def all_submissions(self):
         '''fetch form db'''
