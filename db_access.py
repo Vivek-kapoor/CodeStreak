@@ -5,6 +5,7 @@ If it doesn't throw an error, it works!
 
 CONTENTS (not in order):
 
+    0. destroy_connections: Closes all the connections of the connection pool
     1. random_alnum: Generates a random alphanumeric of given length with a prefix
     2. connect_db: Connects to the postgres database
     3. _execute_query:  Helper function to execute any query. WARNING: Don't use directly
@@ -483,7 +484,7 @@ def get_submissions_by_student(usn: str, q_id: str, c_id: str):
     if res in none_list:
         logging.error('Could not retrieve any submissions')
         return None
-    return res
+    return res[0]
 
 
 def get_submissions_by_contest(c_id: str):
@@ -548,6 +549,23 @@ def get_plagiarism_code(c_id: str):
     return submissions_to_check
 
 
+def set_plagiarism(c_id: str, report: list):
+    """
+    Saves the plagiarism report in the database
+    :param c_id: contest id
+    :param report: list of lists of plagiarism
+    :return: 1 if success, else None
+    """
+
+    query = """UPDATE contest SET plagiarism = \'{}\' WHERE c_id = \'{}\'"""
+    report = json.dumps(report)
+    query = query.format(report, c_id)
+    res = _execute_query(query)
+    if res in none_list:
+        return None
+    return res
+
+    
 if __name__ == "__main__":
     start = time()
     # temp = create_question(**{'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}], 'time_limit': 0.5, 'difficulty': 'Easy', 'problem': 'Reverse given string', 'languages': {'C'}, 'name': 'Reverse String', 'p_id': '01FB15ECS342', 'tags': {'Warmup'}, 'memory_limit': 1.0})
