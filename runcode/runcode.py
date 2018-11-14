@@ -228,20 +228,23 @@ class RunCCode(object):
     
             global output
             display_output,output,score,status= self._run_c_prog(prog_output,idx)
-            '''store into db'''
-            print("Storing stuff from here")
-            print(score)
-            print(output)
-            print(status)
-            print(code)
-            print("Done storing")
-            ####Storing Submissions in db   
-            print("#Test")
-            print(q_id)
-            print(session['c_id'])
-            c_id=session['c_id']
-            s_id=session['usn']
-            submit_code(s_id, q_id,c_id, code,"C", score, status, self.test_case_output)
+            
+            if(not(self.custom_input)):
+                '''store into db'''
+                print("Storing stuff from here")
+                print(score)
+                print(output)
+                print(status)
+                print(code)
+                print("Done storing")
+                ####Storing Submissions in db   
+                print("#Test")
+                print(q_id)
+                print(session['c_id'])
+                c_id=session['c_id']
+                s_id=session['usn']
+                submit_code(s_id, q_id,c_id, code,"C", score, status, self.test_case_output)
+            
             result_run = self.stdout + self.stderr + display_output
            
         cleanup_files(idx)
