@@ -89,6 +89,17 @@ p.border{
 
 }
 
+#custom{
+    position:absolute;
+    right:10px;
+    width:5%;
+    top:1275px;
+    bottom:0px;
+	left:1600px;
+	font-weight: bold;
+    
+
+}
 
 
 #submit{

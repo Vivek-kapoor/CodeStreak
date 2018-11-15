@@ -84,7 +84,7 @@ def destroy_connections():
         logging.info('Closed all connections with database')
 
 
-def random_alnum(prefix: str="", length: int=4):
+def random_alnum(prefix: str="", length: int=4) -> str:
     """
     Generates a random alphanumeric of given length with a prefix
     :param prefix: string to be prepended to the alphanumeric
