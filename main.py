@@ -15,6 +15,10 @@ app.config['SECRET_KEY'] = '59d3ca27e6701d3fd06eb960ca5866a5'
 def codestreak():
 	return route_codestreak()
 
+@app.route('/profile_page')
+def profile_page():
+	return route_profile_page()
+
 
 @app.route('/prof_page')
 def prof_page():

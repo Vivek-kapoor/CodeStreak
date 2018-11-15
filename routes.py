@@ -2,6 +2,7 @@ import code
 import random
 
 from flask import render_template, redirect, url_for, request, session, flash
+from graph import draw_submission_chart
 
 import db_access as db
 from runcode import runcode
@@ -44,6 +45,26 @@ def route_codestreak():
     print("Session in route_codestreak ",session)
     print("------------------------------------")
     return render_template("index.html")
+
+def route_profile_page():
+
+    student_details = db.get_student_details(session['usn'], get_ranks=False)
+    rating = student_details['rating']
+    best_rating = student_details['best']
+    semester = student_details['semester']
+    section = student_details['section']
+    usn = session['usn']
+    name = session['name']
+    img_path = "plots/"+ usn + ".png"
+    
+    
+    
+
+
+    stats = db.get_submission_distribution(usn)
+    draw_submission_chart(stats, usn)
+
+    return render_template("Student_profile.html", rating=rating, best_rating=best_rating, semester=semester, section=section, usn=usn, name=name, img_path=img_path)
 
 
 def route_student_dashboard():
