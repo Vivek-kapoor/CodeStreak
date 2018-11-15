@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+		
+	<h2 align="center">Leaderboard</h2>
+<head>
+	<title>Leaderboard</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="compiler/static/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="compiler/static/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="compiler/static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="compiler/static/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="compiler/static/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="compiler/static/vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="compiler/static/css/util.css">
+	<link rel="stylesheet" type="text/css" href="compiler/static/css/main.css">
+<!--===============================================================================================-->
+<style>
+.css-serial{
+counter-reset:serial-number;
+}
+
+.css-serial tr:first-child:before{
+counter-increment:serial-number;
+counter: counter(serial-number);
+}
+</style>
+</head>
+<body>
+		
+		<input class="button button4" type="button" id="somebutton" value="Back">
+	<div class="limiter">
+			
+					
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100">
+					<table class="css-serial">
+						<thead>
+							<tr class="table100-head">
+								
+								<th class="column1">Rank</th>
+								<th class="column2">Score</th>
+								<th class="column3">USN</th>
+								<th class="column4">Time</th>
+								
+								
+							</tr>
+						</thead>
+						<tbody>
+							
+						       {% for data in leaderboard %}
+													<tr {% if loop.index % 2 == 0 %} style="background-color: #f2f2f2" {% endif %}>
+														<td>{{loop.index}}</td>
+														<td>{{data.score}}</td>
+														<td>{{data.usn}}</td>
+														<td>{{data.penalty}}</td>
+													</tr>
+												{% endfor %}
+											
+								
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+		
+
+		
+
+		
+
+	</div>
+
+
+	
+
+<!--===============================================================================================-->	
+	<script src="{{ url_for('static', filename='compiler/static/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='compiler/static/vendor/bootstrap/js/popper.js') }}"></script>
+	<script src="{{ url_for('static', filename='compiler/static/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='compiler/static/vendor/select2/select2.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for('static', filename='compiler/static/js/main.js') }}"></script>
+
+</body>
+</html>
