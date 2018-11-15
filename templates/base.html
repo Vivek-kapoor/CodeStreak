@@ -113,8 +113,13 @@
 
 <div style="font-size:120% ;color:#2e6c80 ; font-weight: bold"   id="text-code-title" >
 
-    <input id="submit" class="button buttonround" type="submit" value="Submit" />
+    <input id="submit" class="button buttonround" name ="submit" type="submit" value="Submit" />
 </div>
+
+<div id="custom">
+    <input id="cus" type="submit" class="button buttonround" name="submit" value="Run Code"/>
+ </div>
+
 	
 
  </form>
@@ -164,6 +169,10 @@
     // Make sure we copy the content of the editor to the textarea before posting
     // its content to the server
     document.getElementById("submit").addEventListener("click", function () {
+        editorElement.innerHTML = editor.getValue();
+	
+    });
+	 document.getElementById("cus").addEventListener("click", function () {
         editorElement.innerHTML = editor.getValue();
 	
     });
