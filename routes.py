@@ -241,14 +241,12 @@ def route_runc(q_id):
     #The q_id here is the question id which the student clicked on, I have verfied it and it is the right id.
     #You can also access q_id with session['q_id']
     #the control here is passed from show_question
-    contest_id = 'c_dOHYbn'
+    
     print(q_id)
     global qid
     if(qid == 0 or q_id !="1"):
         qid=q_id
     
-    #Get c_id from session
-    #contest_id=session['c_id']
     question =  db.get_question_details(qid)
     if request.method == 'POST':
         code = request.form['code']
@@ -266,16 +264,16 @@ def route_runc(q_id):
         f.write(resinput)
         f.close()  
         run = runcode.RunCCode(question,code,custom_input,Index)
-        rescompil, resrun = run.run_c_code()
+        rescompil, resrun , display_outputi = run.run_c_code()
         
        
         if not resrun:
-            resrun = 'No result!'
+            resrun = 'No result! no run yet.'
     else:
         code = default_c_code
-        resrun = 'No result!'
+        resrun = 'No result! no run yet.'
         rescompil = ''
-    
+        display_outputi={}
     
     return render_template("main.html",
                            question= question,
@@ -283,6 +281,7 @@ def route_runc(q_id):
                            target="runc",
                            resrun=resrun,
                            rescomp=rescompil,
+                           display_output = display_outputi,
                            rows=default_rows, cols=default_cols)
 
 

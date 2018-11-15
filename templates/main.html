@@ -29,13 +29,13 @@
 </div>{{question['tags']}}</div>-->
 
 <h2 style="color: #2e6c80;">Laboratory assignment 1</h2>
-                <h1 style="color: #5e9ca0;">Your assignment question is <span style="color: #2b2301;">{{question['name']}}</span></h1>
+                <h1 style="color: #5e9ca0;"><span style="color: #2b2301;">{{question['name']}}</span></h1>
                 <p style="font-size: 20px;"> {{question['problem']}} <br />Input will be of this format here&gt;</p>
                 <p><span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">Difficulty - Medium</span></p>
                 <h2 style="color: #2e6c80;">Constraints</h2>
                 <ol style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;">
-                    <li style="clear: both;"><span style="color: #2e6c80;">Time Limit </span><strong>{{question['time_limit']}}</strong></li>
-                    <li style="clear: both;"><span style="color: #2e6c80;">Memory Limit </span><strong>{{question['memory_limit']}}</strong></li>
+                    <li style="clear: both;"><span style="color: #2e6c80;">Time Limit </span><strong>{{question['time_limit']}}</strong></li><br>
+                    <li style="clear: both;"><span style="color: #2e6c80;">Memory Limit </span><strong>{{question['memory_limit']}}</strong></li><br>
                     <li style="clear: both;"><span style="color: #2e6c80;">Input </span><strong>10000 &lt;= n &lt;= 0</strong></li>
                 </ol>
                 <h2 style="color: #2e6c80;">Tags</h2>
@@ -64,7 +64,37 @@
 
 
 {% endblock %}
-
 {% block comp %}
-<textarea id="text-compile" rows="7" cols="140" readonly>Your Output : {{resrun}} {{ rescomp }}  {{test_case_output}}</textarea>
+<div   style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;" id="text-compile" rows="7" cols="140" readonly><span style="color: #2e6c80;">Your Output :</span>{{resrun}} {{ rescomp }}  {{test_case_output}}
+    {%if display_output | length == 6   %}
+    
+    <ol style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;">
+        
+        {% if display_output['Submission_status'] == "Correct Answer" %}
+       
+        <li style="clear: both;"><span style="color: #2e6c80;">Submission Status <img src="/static/green.jpg" width = "25px" height = "25px"></span><strong><span style="background-color: #228B22; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{display_output['Submission_status']}}</span></strong>
+        </li><br>
+        
+        {% else %}
+        <li style="clear: both;"><span style="color: #2e6c80;">Submission Status <img src="/static/red.jpeg" width = "25px" height = "25px"></span><strong><span style="background-color: #FF0000; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{display_output['Submission_status']}}</span></strong>
+        </li><br>
+        {%endif%}
+        <li style="clear: both;"><span style="color: #2e6c80;">Correct test cases </span><strong>{{display_output['correct_cases']}}  </strong>out of {{display_output['total_cases']}}</li><br>
+        <li style="clear: both;"><span style="color: #2e6c80;">Total Score</span><strong>{{display_output['score']}}</strong></li><br>
+        <li style="clear: both;"><span style="color: #2e6c80;">Time taken </span><strong>{{display_output['time']}}</strong></li><br>
+        <li style="clear: both;"><span style="color: #2e6c80;">Memory taken </span><strong>{{display_output['memory']}}</strong></li><br>
+
+    </ol>
+    {% elif display_output['Submission_status'] == "Successful" %}
+
+    <ol style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;">
+        {% if display_output['Submission_status'] == "Successful" %}<li style="clear: both;"><span style="color: #2e6c80;">Submission Status </span><strong> <img src="/static/green.jpg" width = "25px" height = "25px"><span style="background-color: #228B22; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{display_output['Submission_status']}}</span></strong></li><br>
+        {% else %}<li style="clear: both;"><span style="color: #2e6c80;">Submission Status </span><strong><span style="background-color: rgb(25, 109, 25); color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;"> <img src="/static/red.jpeg" width = "25px" height = "25px">{{display_output['Submission_status']}}</span></strong></li><br>
+        {%endif%}
+        <li style="clear: both;"><span style="color: #2e6c80;">Time taken </span><strong>{{display_output['time']}}</strong></li><br>
+        <li style="clear: both;"><span style="color: #2e6c80;">Memory taken </span><strong>{{display_output['memory']}}</strong></li><br>
+
+    </ol>
+    {% endif %}
+</div>
 {% endblock %}
