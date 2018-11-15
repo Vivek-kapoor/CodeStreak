@@ -106,7 +106,6 @@
 										<h2 style="margin-left:10px"><font>Challenges </font></h2>
 
 										<p id=1 >
-											{% if status == "active" %}
 											{% for question in questions %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
 											<p><b>{{question.name}}</b>
@@ -114,28 +113,8 @@
 											<button type ="submit" style="float:right; margin-top:25px;">Enter Contest</button></a></p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
 											</div>
 
-											{% endfor %}	<!-->COMMENTED TO FIX MERGE CONFLICT 
-											</form>
 											{% endfor %}
-
-											{% else %}
-											{% for question in questions %}
-											<form action = "{{ url_for('archive_lab_question',qid=question.q_id) }}" method="GET"> 
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
-											<p><b>{{question.name}}</b>
-											<input type = "hidden" id = "q_id" name = "q_id" value = {{ question.q_id }}>
-											<button type ="submit" style="float:right; margin-top:25px;">Show submissions</button></form></p>
-											<form action = "{{ url_for('contest_leaderboard')}}" method="GET"> 
-											<button type ="submit" style="float:right;">Leaderboard</button>
-											</form>
-											</p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
-											</div>
-											
-											{% endfor %}
-											{% endif %}
-
->>>>>>> ec4e2a65579974b1098a378c71e90477ee833da8. <-->
-											
+												
 										</p>
 										
 										
