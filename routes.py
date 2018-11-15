@@ -50,7 +50,7 @@ def student_dashboard(usn):
     #active_contests = [{'name': "kys", 'time': "now", 'active': 1},{'name': "gabe", 'time': "now", 'active': 1}]
     #archived_contests = [{'name': "kys1", 'time': "now", 'active': 0},{'name': "gabe1", 'time': "now", 'active': 0}]
     #contests = active_contests + archived_contests    
-    return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests)
+    return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests, name = session['name'])
 
 def professor_dashboard(usn):
 
@@ -101,6 +101,8 @@ def route_student_login():
         if (response):
         
             session['usn'] = data['usn']
+            student_details = db.get_student_details(data['usn'], get_ranks=False)
+            session['name'] = student_details['name']
             return student_dashboard(data['usn'])
         else:
             return render_template('login.html', name = "Student")
