@@ -107,17 +107,8 @@
 
 										<p id=1 >
 											{% for contest in active_contests %}
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
-<<<<<<< HEAD <!--which one? -->
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">							
 											<p>{{contest.name}} <time style="margin-left:650px"><a href="{{ url_for('contest_page', cid=contest.c_id) }}">{{contest.time}}</time><button style="float:right;">Enter Contest</button></a></p>
-=======
-											<p>{{contest.name}} <time style="margin-left:650px">{{contest.time}}</time><button type ="submit" style="float:right;">Enter Contest</button></p>
-											<input type = "hidden" id="c_id" name="c_id" value={{ contest.c_id }}>
-											<input type = "hidden" id="c_name" name="c_name" value={{ contest.name }}>
-											<input type = "hidden" id="s_time" name="s_time" value={{ contest.start_time }}>
-											<input type = "hidden" id="e_time" name="e_time" value={{ contest.end_time }}>
-											<input type = "hidden" id = "status" name = "status" value = "active">
->>>>>>> ec4e2a65579974b1098a378c71e90477ee833da8
 											</div>
 											{% endfor %}
 										</p>
