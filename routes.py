@@ -214,7 +214,7 @@ def route_contest_report(cid):
     print("Submission ->", submissions_by_contest)
 
     return render_template("prof_Rep.html", questions = questions_by_contest, submissions = submissions_by_contest, 
-        leaderboard = leaderboard_by_contest)
+        leaderboard = leaderboard_by_contest, tag="question")
 
 def show_question(qid):
 

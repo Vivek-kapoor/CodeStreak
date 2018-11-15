@@ -6,13 +6,14 @@
 -->
 <style>
 .tabcontent {
-    display: block;
+    display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;}
 	</style>
 <script>
 function profstat(evt, attr) {
+	console.log("Event " + evt)
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -23,7 +24,7 @@ function profstat(evt, attr) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(attr).style.display = "block";
-    evt.currentTarget.className += " active";
+    // evt.currentTarget.className += " active";
 }
 
 
@@ -42,11 +43,11 @@ function profstat(evt, attr) {
 
 				<!-- Header -->
 					<header id="header">
-						
+					<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 					<div class="tab">
-						<button class="tablinks" onclick="profstat(event, 'quest')">Questions</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button class="tablinks" onclick="profstat(event, 'submis')">Submissions</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button class="tablinks"onclick="profstat(event, 'leader')" >LeaderBoard</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id = "question" class="tablinks" onclick="profstat(event, 'quest')">Questions</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id = "submission" class="tablinks" onclick="profstat(event, 'submis')">Submissions</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button id = "leaderbord" class="tablinks"onclick="profstat(event, 'leader')" >LeaderBoard</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button class="tablinks">Plagiarism</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
 						
@@ -116,7 +117,6 @@ function profstat(evt, attr) {
 						<div id="quest" class="tabcontent">
 						<section>
 									<h3>QUESTION PORTFOLIO</h3>
-									
 									<div class="table-wrapper" style="background-color:rgb(255, 255, 255)" >
 										<table>
 											
@@ -143,7 +143,7 @@ function profstat(evt, attr) {
 
 						</div>
 						
-						<div id="submis" class="tabcontent" style="display: none;">
+						<div id="submis" class="tabcontent" >
 						<section>
 									<h3>SUBMISSION PORTFOLIO</h3>
 									
@@ -183,7 +183,7 @@ function profstat(evt, attr) {
 								</section>
 
 						</div>
-						<div id="leader" class="tabcontent" style="display: none;">
+						<div id="leader" class="tabcontent" >
 						<section>
 									<h3>RANKING PORTFOLIO</h3>
 									
@@ -235,6 +235,14 @@ function profstat(evt, attr) {
 			<script src="../static/assets/js/breakpoints.min.js"></script>
 			<script src="../static/assets/js/util.js"></script>
 			<script src="../static/assets/js/main.js"></script>
-
+			<script type="text/javascript">
+				{% if tag == "question" %}
+					$('#question').trigger('click');
+				{% elif tag == "submission" %}
+					$('#submission').trigger('click');
+				{% elif tag == "leaderBoard" %}
+					$('#leaderboard').trigger('click');
+				{% endif %}
+			</script>
 	</body>
 </html>
