@@ -55,7 +55,7 @@ def route_student_dashboard():
     #active_contests = [{'name': "kys", 'time': "now", 'active': 1},{'name': "gabe", 'time': "now", 'active': 1}]
     #archived_contests = [{'name': "kys1", 'time': "now", 'active': 0},{'name': "gabe1", 'time': "now", 'active': 0}]
     #contests = active_contests + archived_contests    
-    return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests)
+    return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests, name = session['name'])
 
 def route_professor_dashboard():
 
@@ -111,15 +111,17 @@ def route_student_login():
 
     data = request.form.to_dict(flat=False)
     # verify the credentail of users
-    if (data):
+    if (data): #why is it so 
         
         data['usn'] = ''.join(data['usn'])
         data['password'] = ''.join(data['usn'])
 
         response = db.validate_student(**data)
-        if (response):
-            session['usn'] = data['usn']
-            return redirect(url_for('student_dashboard'))
+        if (response): # this is required in order to validate the user in database. wait. i'll call on whatsapp
+            session['usn'] = data['usn'] # wait i will call if i shift my phone my internet goes ok
+            student_details = db.get_student_details(data['usn'], get_ranks=False)
+            session['name'] = student_details['name'] #i think this is correct.no i haven't added the above line. 
+            return redirect(url_for('student_dashboard')) 
         else:
             return render_template('login.html', name = "Student")
     return render_template('login.html', name = "Student")
@@ -231,6 +233,15 @@ def route_add_questions():
     questions = db.get_questions()
     return render_template("ql.html", questions = questions)
 
+
+def route_contest_leaderboard(cid):
+
+    leaderboard_by_contest = db.get_leaderboard(cid)
+    leaderboard_by_contest = sorted(leaderboard_by_contest, key=lambda k: (-k['score'], k['penalty']))
+    return render_template("leaderboard.html", leaderboard = leaderboard_by_contest)
+
+
+
 def route_contest_report(cid):
     print("------------------------------------")
     print("Session in route_contest_report ",session)
@@ -254,7 +265,6 @@ def show_question(qid):
     session['q_id'] = qid
     #q_id = session['q_id']
     return route_runc(qid)
-
 
 def contest_questions(cid):
     session['c_id'] = cid

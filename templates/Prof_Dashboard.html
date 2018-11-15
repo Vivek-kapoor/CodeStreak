@@ -7,15 +7,12 @@
 
 <html>
 	<head>
-		<title>Admin Dashboard</title>
+		<head>
+		<title>Student Dashboard</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
-		<style type="text/css">
-		body {
-    background-image: url("{{ url_for('static', filename='back.jpg') }}");
-			}
-	</style>
+		<link rel="stylesheet" href="../static/assets/css/main.css">
+	</head>
 	</head>
 	<body class="single is-preload">
 
@@ -91,10 +88,10 @@
 					<div id="main">
 
 						<!-- Post -->
-							<article class="post" style="background-color:#D4EEFC">
-								<header style="background-color:#ADD1E5">
+							<article class="post" >
+								<header>
 									<div class="title">
-										<h2><a href="#"><font color="black">Contest Portfolio</font></a></h2>
+										<h2><a href="#">Contest Portfolio</a></h2>
 										<p></p>
 									</div>
 									<div class="meta">
@@ -103,12 +100,12 @@
 									</div>
 								</header>
 								
-								<div class="title" style="background-color:rgb(0,0,0);border-radius:15px" id="Lab">
-										<h2 style="margin-left:10px"><font color="white">Contests Published</font></h2>
+								<div class="title"  id="Lab">
+										<h2 style="margin-left:10px"><font>Active Contests </font></h2>
 										<p id=1 >
 											<!-- JINJA2 START -->
 											{% for contest in active_contests %}
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">
 											
 
 											<p>{{contest.name}} <time style="margin-left:650px">{{contest.time}}</time><font color="green">Active</font></p>
@@ -116,9 +113,15 @@
 											{% endfor %}
 											
 										</p>
+							<br>
+								</div>
+								
+								<br><br>
+								<div class="title"  >
+									<h2 style="margin-left:10px"><font >Archived Contests</font></h3>
 										<p id=2 >
 											{% for contest in archived_contests %}
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:15px;background-color:rgb(255,255,255);margin:10px">
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;margin:10px">
 											
 											<p>{{contest.name}}<time style="margin-left:650px">{{contest.time}}</time><font color="red">Finished</font><a href="{{ url_for('contest_report', cid=contest.c_id) }}"><button style="float:right;">Report</button></a></p>
 											

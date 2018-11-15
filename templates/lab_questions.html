@@ -90,14 +90,15 @@
 								<header >
 									<div class="title">
 										<h2>{{c_name}}</h2>
-										<h1>Start Time:</h1>{{s_time}}
-										<h1>End Time:</h1>{{e_time}}
+										<h1>Start Time:</h1><span id="stime">{{s_time}}</span>
+										<h1>End Time:</h1><span id="etime">{{e_time}}</span>
+										<h1>Remaining Time:</h1><span id="rtime"></span>
 										<h1>Description: </h1>AMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. 
 										<p></p>
 									</div>
 									<div class="meta">
 										
-										<a href="#" class="author" style="margin-top:auto; margin-bottom:auto;"><span class="name" >Student Name</span><img src="images/avatar.jpg" alt="" /></a>
+										<a href="#" class="author" style="margin-top:auto; margin-bottom:auto;"><span class="name" >{{name}}</span><img src="images/avatar.jpg" alt="" /></a>
 									</div>
 								</header>
 								
@@ -105,13 +106,35 @@
 										<h2 style="margin-left:10px"><font>Challenges </font></h2>
 
 										<p id=1 >
+											{% if status == "active" %}
 											{% for question in questions %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
 											<p><b>{{question.name}}</b>
 											<a href="{{ url_for('lab_question',qid=question.q_id) }}">
 											<button type ="submit" style="float:right; margin-top:25px;">Enter Contest</button></a></p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
 											</div>
-											{% endfor %}	
+
+											{% endfor %}	<!-->COMMENTED TO FIX MERGE CONFLICT 
+											</form>
+											{% endfor %}
+
+											{% else %}
+											{% for question in questions %}
+											<form action = "{{ url_for('archive_lab_question',qid=question.q_id) }}" method="GET"> 
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
+											<p><b>{{question.name}}</b>
+											<input type = "hidden" id = "q_id" name = "q_id" value = {{ question.q_id }}>
+											<button type ="submit" style="float:right; margin-top:25px;">Show submissions</button></form></p>
+											<form action = "{{ url_for('contest_leaderboard')}}" method="GET"> 
+											<button type ="submit" style="float:right;">Leaderboard</button>
+											</form>
+											</p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
+											</div>
+											
+											{% endfor %}
+											{% endif %}
+
+>>>>>>> ec4e2a65579974b1098a378c71e90477ee833da8. <-->
 											
 										</p>
 										
@@ -150,6 +173,65 @@
 			<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
 			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
 			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+			<script>
+				function time(){
+					var stime=document.getElementById("stime");
+					var etime=document.getElementById("etime");
+					var rtime=document.getElementById("rtime");
+					var date=new Date();
+					var hour=date.getHours();
+					var mins=date.getMinutes();
+					var secs=date.getSeconds();
+					var stime=stime.innerHTML.split(":");
+					var etime=etime.innerHTML.split(":");
+					var diffhour=etime[0]-hour;
+					if(etime[1] < mins)
+					{
+						var diffmins=(60-(mins-etime[1]))%60;
+					
+					}
+					else
+					{
+						var diffmins=etime[1]-mins;
+					}
+					var secs=(60-secs)%60;
+					if(diffmins!=0)
+					{
+						diffhour=Math.max(0,diffhour-1);
+						if(secs!=0)
+						{
+							diffmins=Math.max(0,diffmins-1);
+						}
+					}
+					rtime.innerHTML=diffhour+":"+diffmins+":"+secs
+					//setInterval(time,1000);
+					bod[0].style.display="initial";
+					if(etime[0] <= hour && etime[1] <= mins){
+						page=document.getElementById("wrapper");
+						page.style.filter="blur(8px)";
+						page.style.display="none";
+						clearInterval(intv);
+						msgblock=document.createElement("div");
+						msgblock.innerHTML="Contest Complete";
+						msgblock.style.position="fixed";
+						msgblock.style.marginLeft="700px";
+						msgblock.style.marginTop="300px";
+						msgblock.style.height="250px";
+						msgblock.style.width="350px";
+						msgblock.style.border="2px solid black";
+						msgblock.style.textAlign="center";
+						msgblock.style.fontSize="50px";
+						bod[0].appendChild(msgblock);
 
+					}
+					if(diffmins <5 && diffhour==0)
+					{
+						rtime.style.color="red";
+					}
+				}
+				intv=setInterval(time,1000);
+				bod=document.getElementsByTagName("body");
+				bod[0].style.display="none";
+			</script>
 	</body>
 </html>

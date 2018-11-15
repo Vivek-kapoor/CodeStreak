@@ -23,23 +23,24 @@ CONTENTS (not in order):
     10. get_archived_contest_student: Gets a list of archived contest for given USN
     11. get_active_contest_professor: Gets a list of active contests for given p_id
     12. get_archived_contest_professor: Gets a list of archived contest for given p_id
+    13. get_contest_details: Gets all the details of a contest for given c_id
 
-    13. get_questions: Gets all the questions
-    14. get_questions_by_prof: Gets all the questions whose creator is p_id
-    15. get_questions_by_contest: Gets a list of all questions in a contest
-    16. get_question_details: Gets all details for a given question
+    14. get_questions: Gets all the questions
+    15. get_questions_by_prof: Gets all the questions whose creator is p_id
+    16. get_questions_by_contest: Gets a list of all questions in a contest
+    17. get_question_details: Gets all details for a given question
 
-    17. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
-    18. get_submission_distribution: Gets distribution of test case status for pie chart
-    19. get_submissions_by_student: Gets all submissions made by a student for given question and contest
-    20. get_leaderboard: Gets the leaderboard of a given contest
-    21. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
-    22. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
-    23. get_plagiarism_report: Returns the plagiarism report for a given contest
+    18. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
+    19. get_submission_distribution: Gets distribution of test case status for pie chart
+    20. get_submissions_by_student: Gets all submissions made by a student for given question and contest
+    21. get_leaderboard: Gets the leaderboard of a given contest
+    22. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+    23. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
+    24. get_plagiarism_report: Returns the plagiarism report for a given contest
 
-    24. submit_code: Submits code, makes an entry in the submission table
-    25. set_evaluated_submission: Sets the test_case_status of given s_id
-    26: set_plagiarism_report: Saves the plagiarism report in the database
+    25. submit_code: Submits code, makes an entry in the submission table
+    26. set_evaluated_submission: Sets the test_case_status of given s_id
+    27: set_plagiarism_report: Saves the plagiarism report in the database
 
 """
 
@@ -400,6 +401,20 @@ def get_contest_details(c_id: str):
         return None
     return res[0][0]
 
+def get_contest_details(c_id: str):
+    """
+    Get all the details of a contest
+    :param c_id: contest id
+    :return: a dictionary with all contest details if successful, else None
+    """
+    query = """SELECT * from contest WHERE c_id = \'{}\'"""
+    query = query.format(c_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list or res[0] in none_list == 0:
+        return None
+    return res[0][0]
+
+
 def get_student_details(usn: str, get_ranks: bool = True):
     """
     Gets all student details including
@@ -596,6 +611,10 @@ def set_plagiarism_report(c_id: str, report: list):
 
 
 if __name__ == "__main__":
+
+    temp = get_contest_details("c_dOHYbn")
+    print(type(temp), temp)
+    quit()
     start = time()
     # temp = create_question(**{'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}], 'time_limit': 0.5, 'difficulty': 'Easy', 'problem': 'Reverse given string', 'languages': {'C'}, 'name': 'Reverse String', 'p_id': '01FB15ECS342', 'tags': {'Warmup'}, 'memory_limit': 1.0})
     # print(type(temp), temp)
