@@ -114,6 +114,7 @@
 											<input type = "hidden" id="c_name" name="c_name" value={{ contest.name }}>
 											<input type = "hidden" id="s_time" name="s_time" value={{ contest.start_time }}>
 											<input type = "hidden" id="e_time" name="e_time" value={{ contest.end_time }}>
+											<input type = "hidden" id = "status" name = "status" value = "active">
 											</div>
 										</form>
 											{% endfor %}
@@ -136,7 +137,8 @@
 											<input type = "hidden" id="c_id" name="c_id" value={{ contest.c_id }}>
 											<input type = "hidden" id="c_name" name="c_name" value={{ contest.name }}>
 											<input type = "hidden" id="s_time" name="s_time" value={{ contest.start_time }}>
-											<input type = "hidden" id="e_time" name="e_time" value={{ contest.end_time }}>										
+											<input type = "hidden" id="e_time" name="e_time" value={{ contest.end_time }}>	
+											<input type = "hidden" id = "status" name = "status" value = "archive">									
 											</div>
 											</form>
 											{% endfor %}

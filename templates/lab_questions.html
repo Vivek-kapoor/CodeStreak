@@ -106,6 +106,7 @@
 										<h2 style="margin-left:10px"><font>Challenges </font></h2>
 
 										<p id=1 >
+											{% if status == "active" %}
 											{% for question in questions %}
 											<form action = "{{ url_for('lab_question',qid=question.q_id) }}" method="GET"> 
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
@@ -114,7 +115,20 @@
 											<button type ="submit" style="float:right; margin-top:25px;">Enter Contest</button></p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
 											</div>
 											</form>
-											{% endfor %}	
+											{% endfor %}
+
+											{% else %}
+											{% for question in questions %}
+											<form action = "{{ url_for('archive_lab_question',qid=question.q_id) }}" method="GET"> 
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
+											<p><b>{{question.name}}</b>
+											<input type = "hidden" id = "q_id" name = "q_id" value = {{ question.q_id }}>
+											<button type ="submit" style="float:right; margin-top:25px;">Show submissions</button></p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
+											</div>
+											</form>
+											{% endfor %}
+											{% endif %}
+
 											
 										</p>
 										

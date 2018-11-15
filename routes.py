@@ -232,9 +232,10 @@ def contest_questions():
        c_name = ''.join(data['c_name'])
        s_time = ''.join(data['s_time'])
        e_time = ''.join(data['e_time'])
+       status = ''.join(data['status'])
        questions = db.get_questions_by_contest(c_id)
        session['c_id'] = c_id
-       return render_template("lab_questions.html", questions=questions, c_name=c_name, s_time=s_time, e_time=e_time)
+       return render_template("lab_questions.html", questions=questions, c_name=c_name, s_time=s_time, e_time=e_time, status=status)
 
 qid=0
 def route_runc(q_id):

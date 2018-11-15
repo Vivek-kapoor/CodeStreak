@@ -44,9 +44,18 @@ def add_questions():
 def contest_page():
 	return contest_questions()
 
+
+@app.route("/archive_lab_question/<qid>", methods=["GET", "POST"])
+def archive_lab_question(qid):
+	session['q_id'] = qid
+	return route_submission()
+
+
 @app.route("/lab_question/<qid>", methods=["GET", "POST"])
 def lab_question(qid):
 	return show_question(qid)
+
+
 
 @app.route('/contest_report/<cid>', methods=['POST', 'GET'])
 def contest_report(cid):
