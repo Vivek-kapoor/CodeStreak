@@ -261,13 +261,15 @@ def route_runc(q_id):
     
     question =  db.get_question_details(qid)
     if request.method == 'POST':
-        code = request.form['code']
-        print(code)
-        resinput = format(request.form['resinput'])
         custom_input = False
-        if(len(resinput)>=1):
+        resinput = format(request.form['resinput'])
+        if request.form['submit']=="Run Code":
             print("custom_input is TRUE")
             custom_input = True
+            if(len(resinput)<1):
+                resinput="No input!!"
+        code = request.form['code']
+        print(code)
         global Index
         Index += 1
         ID = Index
