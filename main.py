@@ -55,6 +55,11 @@ def archive_lab_question(qid):
 def lab_question(qid):
 	return show_question(qid)
 
+@app.route("/contest_leaderboard", methods=['POST', 'GET'])
+def contest_leaderboard():
+	cid = session['c_id']
+	return route_contest_leaderboard(cid)
+
 
 
 @app.route('/contest_report/<cid>', methods=['POST', 'GET'])

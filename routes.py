@@ -206,6 +206,15 @@ def route_add_questions():
     questions = db.get_questions()
     return render_template("ql.html", questions = questions)
 
+
+def route_contest_leaderboard(cid):
+
+    leaderboard_by_contest = db.get_leaderboard(cid)
+    leaderboard_by_contest = sorted(leaderboard_by_contest, key=lambda k: (-k['score'], k['penalty']))
+    return render_template("leaderboard.html", leaderboard = leaderboard_by_contest)
+
+
+
 def route_contest_report(cid):
     questions_by_contest = db.get_questions_by_contest(cid)
     submissions_by_contest = db.get_submissions_by_contest(cid)

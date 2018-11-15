@@ -123,9 +123,13 @@
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
 											<p><b>{{question.name}}</b>
 											<input type = "hidden" id = "q_id" name = "q_id" value = {{ question.q_id }}>
-											<button type ="submit" style="float:right; margin-top:25px;">Show submissions</button></p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
-											</div>
+											<button type ="submit" style="float:right; margin-top:25px;">Show submissions</button></form></p>
+											<form action = "{{ url_for('contest_leaderboard')}}" method="GET"> 
+											<button type ="submit" style="float:right;">Leaderboard</button>
 											</form>
+											</p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
+											</div>
+											
 											{% endfor %}
 											{% endif %}
 
