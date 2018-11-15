@@ -40,22 +40,30 @@ Index = 0
 test_case_output="hello"
 
 def route_codestreak():
+    print("------------------------------------")
+    print("Session in route_codestreak ",session)
+    print("------------------------------------")
     return render_template("index.html")
 
 
-def student_dashboard(usn):
-
-    active_contests = db.get_active_contest_student(usn)
-    archived_contests = db.get_archived_contest_student(usn)
+def route_student_dashboard():
+    print("------------------------------------")
+    print("Session in Student ",session)
+    print("------------------------------------")
+    active_contests = db.get_active_contest_student(session['usn'])
+    archived_contests = db.get_archived_contest_student(session['usn'])
     #active_contests = [{'name': "kys", 'time': "now", 'active': 1},{'name': "gabe", 'time': "now", 'active': 1}]
     #archived_contests = [{'name': "kys1", 'time': "now", 'active': 0},{'name': "gabe1", 'time': "now", 'active': 0}]
     #contests = active_contests + archived_contests    
     return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests)
 
-def professor_dashboard(usn):
+def route_professor_dashboard():
 
-    active_contests = db.get_active_contest_professor(usn)
-    archived_contests = db.get_archived_contest_professor(usn)
+    print("------------------------------------")
+    print("Session in professor ",session)
+    print("------------------------------------")
+    active_contests = db.get_active_contest_professor(session['p_id'])
+    archived_contests = db.get_archived_contest_professor(session['p_id'])
     #active_contests = [{'name': "kys", 'time': "now"},{'name': "gabe", 'time': "now"}]
     #archived_contests = [{'name': "kys1", 'time': "now"},{'name': "gabe1", 'time': "now"}]
 
@@ -67,6 +75,9 @@ def get_question(contest_id):
     #return: list of dicts. Each dict represents on question
     #check for the relevant question 
     # output_dict wil be a list of dicts, one dict for each question, 
+    print("------------------------------------")
+    print("Session in get_question ",session)
+    print("------------------------------------")
     output_dict = db.get_questions_by_contest(contest_id)
     print(output_dict)
     data = {}
@@ -90,6 +101,14 @@ def get_question(contest_id):
 
 # called when user is student
 def route_student_login():
+
+    print("------------------------------------")
+    print("Session in route_student_login ",session)
+    print("------------------------------------")
+
+    if('usn' in session.keys()):
+        return redirect(url_for('student_dashboard'))
+
     data = request.form.to_dict(flat=False)
     # verify the credentail of users
     if (data):
@@ -99,9 +118,8 @@ def route_student_login():
 
         response = db.validate_student(**data)
         if (response):
-        
             session['usn'] = data['usn']
-            return student_dashboard(data['usn'])
+            return redirect(url_for('student_dashboard'))
         else:
             return render_template('login.html', name = "Student")
     return render_template('login.html', name = "Student")
@@ -109,6 +127,12 @@ def route_student_login():
 
 def route_prof_login():
 
+    print("------------------------------------")
+    print("Session in route_prof_login ",session)
+    print("------------------------------------")
+
+    if('p_id' in session.keys()):
+        return redirect(url_for('professor_dashboard'))
     data = request.form.to_dict(flat=False)
 
     # verify the credentail of users
@@ -116,24 +140,20 @@ def route_prof_login():
                     
         data['p_id'] = ''.join(data['p_id'])
         data['password'] = ''.join(data['password'])
-
-        # del data['usn']
-        # del data['p_password']
-        # del data['p_usn']
-
         print("Data-> ", data)
 
         response = db.validate_professor(**data)
-        #if (response):
-        if 1:
+
+        if (response):
             print('here')
             session['p_id'] = data['p_id']
-            return professor_dashboard(data['p_id'])
-        else:
-            return render_template('login.html',name = "Professor")
+            return redirect(url_for('professor_dashboard'))
     return render_template('login.html',name = "Professor")
 
 def route_create_assignment():
+    print("------------------------------------")
+    print("Session in route_create_assignment ",session)
+    print("------------------------------------")
     data = request.form.to_dict(flat=False)
     if (data):
         request_data = {}
@@ -157,7 +177,7 @@ def route_create_assignment():
 
         db.create_contest(**request_data)
 
-        return professor_dashboard(request_data['p_id'])
+        return redirect(url_for('professor_dashboard'))
     else:
         # return value of the functions should be list
         # of dicts where each dict is a row of question table
@@ -166,6 +186,11 @@ def route_create_assignment():
                                questions=questions)
 
 def route_add_questions():
+
+    print("------------------------------------")
+    print("Session in route_add_questions ",session)
+    print("------------------------------------")
+
     data = request.form.to_dict(flat=False)
     print(data)
     if (data):
@@ -207,6 +232,10 @@ def route_add_questions():
     return render_template("ql.html", questions = questions)
 
 def route_contest_report(cid):
+    print("------------------------------------")
+    print("Session in route_contest_report ",session)
+    print("------------------------------------")
+
     questions_by_contest = db.get_questions_by_contest(cid)
     submissions_by_contest = db.get_submissions_by_contest(cid)
     leaderboard_by_contest = db.get_leaderboard(cid)
@@ -217,6 +246,9 @@ def route_contest_report(cid):
         leaderboard = leaderboard_by_contest, tag="question")
 
 def show_question(qid):
+    print("------------------------------------")
+    print("Session in show_question ",session)
+    print("------------------------------------")
 
     #data = request.form.to_dict(flat=False)
     session['q_id'] = qid
@@ -224,23 +256,26 @@ def show_question(qid):
     return route_runc(qid)
 
 
-def contest_questions():
-
-    data = request.form.to_dict(flat=False)
-    if(data):
-       c_id = ''.join(data['c_id'])
-       c_name = ''.join(data['c_name'])
-       s_time = ''.join(data['s_time'])
-       e_time = ''.join(data['e_time'])
-       questions = db.get_questions_by_contest(c_id)
-       session['c_id'] = c_id
-       return render_template("lab_questions.html", questions=questions, c_name=c_name, s_time=s_time, e_time=e_time)
+def contest_questions(cid):
+    session['c_id'] = cid
+    print("------------------------------------")
+    print("Session in contest_questions ",session)
+    print("------------------------------------")
+    contest_info = db.get_contest_details(session['c_id'])
+    print("contest info ->", contest_info)
+    questions = db.get_questions_by_contest(session['c_id'])
+    return render_template("lab_questions.html", questions=questions, c_name=contest_info['name'], 
+        s_time=contest_info['start_time'], e_time=contest_info['end_time'])
 
 qid=0
 def route_runc(q_id):
     #The q_id here is the question id which the student clicked on, I have verfied it and it is the right id.
     #You can also access q_id with session['q_id']
     #the control here is passed from show_question
+
+    print("------------------------------------")
+    print("Session in route_runc ",session)
+    print("------------------------------------")
     
     print(q_id)
     global qid

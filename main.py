@@ -28,9 +28,17 @@ def student_page():
 def student_login():
 	return route_student_login()
 
+@app.route("/student_dashboard", methods=["GET", "POST"])
+def student_dashboard():
+	return route_student_dashboard()
+
 @app.route("/prof_login", methods=["GET", "POST"])
 def prof_login():
 	return route_prof_login()
+
+@app.route("/professor_dashboard", methods=["GET", "POST"])
+def professor_dashboard():
+	return route_professor_dashboard()
 
 @app.route("/create_assignment", methods=["GET", "POST"])
 def create_assignment():
@@ -40,9 +48,9 @@ def create_assignment():
 def add_questions():
 	return route_add_questions()
 
-@app.route("/contest_page", methods=["GET", "POST"])
-def contest_page():
-	return contest_questions()
+@app.route("/contest_page/<cid>", methods=["GET", "POST"])
+def contest_page(cid):
+	return contest_questions(cid)
 
 @app.route("/lab_question/<qid>", methods=["GET", "POST"])
 def lab_question(qid):

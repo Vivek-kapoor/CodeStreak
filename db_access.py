@@ -387,6 +387,18 @@ def get_active_contest_professor(p_id: str):
         return None
     return res[0]
 
+def get_contest_details(c_id: str):
+    """
+    Get all the details of a contest
+    :param c_id: contest id
+    :return: a dictionary with all contest details if successful, else None
+    """
+    query = """SELECT * from contest WHERE c_id = \'{}\'"""
+    query = query.format(c_id)
+    res = _execute_query(query, json_output=True)
+    if res in none_list or res[0] in none_list == 0:
+        return None
+    return res[0][0]
 
 def get_student_details(usn: str, get_ranks: bool = True):
     """
