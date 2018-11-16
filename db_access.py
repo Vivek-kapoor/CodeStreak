@@ -73,7 +73,7 @@ none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()
 logging.basicConfig(level="INFO")
 
 connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
-pool = psycopg2.pool.SimpleConnectionPool(2, 4, connect_str)
+pool = psycopg2.pool.SimpleConnectionPool(4, 8, connect_str)
 logging.info('Successfully established connection pool')
 
 
