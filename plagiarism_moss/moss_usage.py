@@ -4,6 +4,8 @@ import sys
 userid = 881220386
 
 import os
+import sys
+sys.path.append("/home/sumanth/projects/CodeStreak/CodeStreak")
 from db_access import *
 
 
