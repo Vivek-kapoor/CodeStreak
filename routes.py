@@ -332,7 +332,8 @@ def route_runc(q_id):
         f.write(resinput)
         f.close()  
         run = runcode.RunCCode(question,code,custom_input,Index)
-        rescompil, resrun , display_outputi = run.run_c_code()
+        rescompil, resrun , display_outputi,test_case_output= run.run_c_code()
+        print(test_case_output)
         
        
         if not resrun:
@@ -342,6 +343,7 @@ def route_runc(q_id):
         resrun = 'No result! no run yet.'
         rescompil = ''
         display_outputi={}
+        test_case_output="None"
     
     return render_template("main.html",
                            question= question,
@@ -349,6 +351,7 @@ def route_runc(q_id):
                            target="runc",
                            resrun=resrun,
                            rescomp=rescompil,
+                           test_case_output=test_case_output,
                            display_output = display_outputi,
                            rows=default_rows, cols=default_cols)
 
