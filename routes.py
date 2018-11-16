@@ -1,6 +1,7 @@
 import code
 import random
 import logging
+import re
 logging.basicConfig(level="CRITICAL")
 from flask import render_template, redirect, url_for, request, session, flash
 from graph import draw_submission_chart
@@ -288,7 +289,23 @@ def route_contest_report(cid):
     print("Submission ->", submissions_by_contest)
     #fetching the plagiarism report
     plag_report = db.get_plagiarism_report(cid)
-    print("#################",plag_report)
+
+
+    if((plag_report[0]['plagiarism'])==None):
+        plag_report[0]['plagiarism'] = "empty"
+    else:
+        for i in range(len(plag_report[0]['plagiarism'])):
+            plag_report[0]['plagiarism'][i]["q_id"] = plag_report[0]['plagiarism'][i]["q_id"].split('/')[-1]
+            for j in range(len(plag_report[0]['plagiarism'][i]['report'])):
+                if(len(plag_report[0]['plagiarism'][i]['report'][j])==3):
+                    plag_report[0]['plagiarism'][i]['report'][j][0] = plag_report[0]['plagiarism'][i]['report'][j][0].split('/')[-1]
+                    plag_report[0]['plagiarism'][i]['report'][j][1] = plag_report[0]['plagiarism'][i]['report'][j][1].split('/')[-1]
+                    print( plag_report[0]['plagiarism'][i]['report'][j][0])
+                    print(re.findall("[0-9]*%",plag_report[0]['plagiarism'][i]['report'][j][0]))
+                    plag_report[0]['plagiarism'][i]['report'][j].append(re.findall("[0-9]*%",plag_report[0]['plagiarism'][i]['report'][j][0])[0])
+                    plag_report[0]['plagiarism'][i]['report'][j][0] = re.sub('\([0-9%]*\)', '',plag_report[0]['plagiarism'][i]['report'][j][0] )
+                    plag_report[0]['plagiarism'][i]['report'][j][1] = re.sub('\([0-9%]*\)', '',plag_report[0]['plagiarism'][i]['report'][j][1] )
+
     return render_template("prof_Rep.html", plag_report = plag_report ,questions = questions_by_contest, submissions = submissions_by_contest, 
         leaderboard = leaderboard_by_contest, tag="question")
 

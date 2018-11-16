@@ -30,7 +30,7 @@ def check_plagiarism(c_id):
 
 
 
-	c_id = "c_dOHYbn"
+	c_id = "c_34r"
 	submissions = get_plagiarism_code(c_id)
 	print(submissions)
 
@@ -94,3 +94,6 @@ def check_plagiarism(c_id):
 	res = set_plagiarism_report(c_id,final_list)
 	if(res==1):
 		print("done checking")
+
+
+check_plagiarism("c_34r")
