@@ -298,10 +298,19 @@ def contest_questions(cid):
     print("Session in contest_questions ",session)
     print("------------------------------------")
     contest_info = db.get_contest_details(session['c_id'])
-    print("contest info ->", contest_info)
     questions = db.get_questions_by_contest(session['c_id'])
+    print("====================================")
+    start_time = contest_info['start_time'].split('T')[1].split(":")
+    start_time = start_time[0] + ":" + start_time[1]
+
+    end_time = contest_info['end_time'].split('T')[1].split(":")
+    end_time = end_time[0] + ":" + end_time[1]
+
+    print("====================================")
+    print("start_time ",start_time)
+    print("====================================")
     return render_template("lab_questions.html", questions=questions, c_name=contest_info['name'], 
-        s_time=contest_info['start_time'], e_time=contest_info['end_time'], status = contest_info['status'])
+        s_time=start_time, e_time=end_time, status = contest_info['status'])
 
 qid=0
 def route_runc(q_id):
