@@ -4,43 +4,37 @@ Run this file to check if the connection to database works
 If it doesn't throw an error, it works!
 Connect from cmd: psql -h codestreak.postgres.database.azure.com -p 5432 -U codestreak@codestreak codestreak
 
-CONTENTS (not in order):
+CONTENTS
 
-    0. destroy_connections: Closes all the connections of the connection pool
+    0. destroy_connections: Closes all connections from connection pool
     1. random_alnum: Generates a random alphanumeric of given length with a prefix
     2. connect_db: Connects to the postgres database
-    3. _execute_query:  Helper function to execute any query. WARNING: Don't use directly
-
+    3. _execute_query: Helper function to execute any query and fetches all rows
     4. validate_student: Validates login credential for student
     5. validate_professor: Validates login credential for professor
-
-    6. create_question: Creates a question and enters in the database with random q_id
-    7. create_contest: Creates a contest and enters in database with random c_id
-
-    8. get_student_details: Gets a dict with all details of a student
-
-    9. get_active_contest_student: Gets a list of active contests for given USN
-    10. get_archived_contest_student: Gets a list of archived contest for given USN
-    11. get_active_contest_professor: Gets a list of active contests for given p_id
-    12. get_archived_contest_professor: Gets a list of archived contest for given p_id
-    13. get_contest_details: Gets all the details of a contest for given c_id
-
-    14. get_questions: Gets all the questions
-    15. get_questions_by_prof: Gets all the questions whose creator is p_id
-    16. get_questions_by_contest: Gets a list of all questions in a contest
-    17. get_question_details: Gets all details for a given question
-
-    18. get_unevaluated_submission: Gets the oldest unevaluated code as a dict
-    19. get_submission_distribution: Gets distribution of test case status for pie chart
-    20. get_submissions_by_student: Gets all submissions made by a student for given question and contest
-    21. get_leaderboard: Gets the leaderboard of a given contest
-    22. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
-    23. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
-    24. get_plagiarism_report: Returns the plagiarism report for a given contest
-
-    25. submit_code: Submits code, makes an entry in the submission table
-    26. set_evaluated_submission: Sets the test_case_status of given s_id
-    27: set_plagiarism_report: Saves the plagiarism report in the database
+    6. get_question_details: Gets all details for a given question
+    7. submit_code: Submits the code, makes an entry in submission
+    8. get_unevaluated_submission: Gets the oldest unevaluated code
+    9. set_evaluated_submission: Saves the evaluated submission to the database
+    10. get_questions_by_prof: Gets all the questions created by the given professor
+    11. get_questions: Gets all the questions in descending order of the time it was created
+    12. create_contest: Creates a contest with a random contest id
+    13. get_future_contest_student: Gets a list of future contests for the given student
+    14. get_active_contest_student: Gets a list of active contests for the given student
+    15. get_archived_contest_student: Gets a list of archived contests for the given student
+    16. get_archived_contest_professor: Gets all the archived contest for given p_id
+    17. get_active_contest_professor: Gets all the active contest for given p_id
+    18. get_contest_details: Get all the details of a contest
+    19. get_student_details: Gets all student details including rating, best rating, rank, batch rank, class rank from database
+    20. get_submission_distribution: Distribution of all submissions to create pie chart
+    21. get_questions_by_contest: Fetches questions of a particular contest
+    22. create_question: Adds a question to the database with a random question id
+    23. get_submissions_by_student: Gets the submissions made by a student for a particular question for a particular contest
+    24. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+    25. get_leaderboard: Gets the leaderboard of a contest
+    26. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
+    27. get_plagiarism_report: Returns the plagiarism report for a given contest
+    28. set_plagiarism_report: Saves the plagiarism report in the database
 
 """
 
@@ -77,7 +71,11 @@ logging.info('Successfully established connection pool')
 
 
 @atexit.register
-def destroy_connections():
+def destroy_connections() -> None:
+    """
+    Closes all connections from connection pool
+    :return: None
+    """
     if pool:
         pool.closeall()
         logging.info('Closed all connections with database')
@@ -106,10 +104,8 @@ def connect_db():
         return conn
 
     except psycopg2.OperationalError:
-        logging.error('Connection closed unexpectedly. Trying to reconnect')
-        pool = psycopg2.pool.SimpleConnectionPool(2, 4, connect_str)
-        logging.info('Successfully established connection pool')
-        return connect_db()
+        logging.error('Check your connection')
+        return None
 
     except psycopg2.DatabaseError:
         logging.error('Failed to connect to database')
@@ -171,7 +167,7 @@ def validate_student(usn: str, password: str) -> bool:
     :param password: student's password, e.g. 01FB15ECS342
     :return: False if usn does not exist or password doesn't match. Else True
     """
-    query = """SELECT (SELECT \'{0}\' IN (SELECT usn FROM student)) AND (SELECT (SELECT password FROM student where usn = \'{1}\') = \'{2}\')""".format(
+    query = """SELECT (SELECT \'{0}\' IN (SELECT usn FROM student)) AND (SELECT (SELECT password FROM student WHERE usn = \'{1}\') = \'{2}\')""".format(
         usn, usn, password)
     res = _execute_query(query)
     if res not in none_list:
@@ -187,7 +183,7 @@ def validate_professor(p_id: str, password: str) -> bool:
     :param password: professor's password, e.g. 01FB15ECS342
     :return: False if p_id does not exist or password doesn't match. Else True
     """
-    query = """SELECT (SELECT \'{0}\' IN (SELECT p_id FROM professor)) AND (SELECT (SELECT password FROM professor where p_id = \'{1}\') = \'{2}\')""".format(
+    query = """SELECT (SELECT \'{0}\' IN (SELECT p_id FROM professor)) AND (SELECT (SELECT password FROM professor WHERE p_id = \'{1}\') = \'{2}\')""".format(
         p_id, p_id, password)
     res = _execute_query(query)
     if res not in none_list:
@@ -201,7 +197,7 @@ def get_question_details(q_id: str = "0"):
     :param q_id: the unique identifier for each question in db
     :return: A json object with all question details
     """
-    query = """SELECT * from question where q_id = \'{}\'"""
+    query = """SELECT * FROM question WHERE q_id = \'{}\'"""
     query = query.format(q_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -244,7 +240,7 @@ def get_unevaluated_submission():  # todo remove if not needed
     Gets the oldest unevaluated code
     :return: None if nothing to evaluate else a dict with s_id, code and language
     """
-    query = """SELECT s_id, code, language FROM submission where is_evaluated = false ORDER BY submit_time DESC LIMIT 1"""
+    query = """SELECT s_id, code, language FROM submission WHERE is_evaluated = false ORDER BY submit_time DESC LIMIT 1"""
     res = _execute_query(query, json_output=True)
     if res in none_list:  # error or nothing to evaluate
         return None
@@ -274,7 +270,7 @@ def get_questions_by_prof(p_id: str):  # todo remove if not needed
     :param p_id: unique id of the professor
     :return: list of dict where each question is a dict
     """
-    query = """SELECT * from question where p_id = \'{}\' ORDER BY create_time DESC"""
+    query = """SELECT * FROM question WHERE p_id = \'{}\' ORDER BY create_time DESC"""
     query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -288,7 +284,7 @@ def get_questions() -> list:
     Gets all the questions in descending order of the time it was created
     :return: list of dict where each question is a dict
     """
-    query = """SELECT * from question ORDER BY create_time DESC"""
+    query = """SELECT * FROM question ORDER BY create_time DESC"""
     res = _execute_query(query, json_output=True)
     if res in none_list:
         logging.error('Could not get any questions')
@@ -391,7 +387,7 @@ def get_archived_contest_professor(p_id: str) -> list:
     :param p_id: Professor id
     :return: None if there are no contests, else json
     """
-    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time <= NOW()"""
+    query = """SELECT * FROM contest WHERE p_id = \'{}\' AND end_time <= NOW()"""
     query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -405,7 +401,7 @@ def get_active_contest_professor(p_id: str) -> list:
     :param p_id: Professor id
     :return: None if there are no contests, else json
     """
-    query = """SELECT * from contest WHERE p_id = \'{}\' AND end_time >= NOW()"""
+    query = """SELECT * FROM contest WHERE p_id = \'{}\' AND end_time >= NOW()"""
     query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -419,12 +415,12 @@ def get_contest_details(c_id: str):
     :param c_id: contest id
     :return: a dictionary with all contest details if successful, else None
     """
-    query = """SELECT * from contest WHERE c_id = \'{}\'"""
+    query = """SELECT * FROM contest WHERE c_id = \'{}\'"""
     query = query.format(c_id)
     res1 = _execute_query(query, json_output=True)
     if res1 in none_list or res1[0] in none_list:
         return None
-    query = """SELECT end_time >= NOW() from contest WHERE c_id = \'{}\'"""
+    query = """SELECT end_time >= NOW() FROM contest WHERE c_id = \'{}\'"""
     query = query.format(c_id)
     res2 = _execute_query(query)
     if res2 in none_list:
@@ -436,8 +432,7 @@ def get_contest_details(c_id: str):
 
 def get_student_details(usn: str, get_ranks: bool = True):
     """
-    Gets all student details including
-    rating, best rating, rank, batch rank, class rank from database
+    Gets all student details including rating, best rating, rank, batch rank, class rank from database
     :param usn: usn of student
     :param get_ranks: If True, get students rank, batch rank and class rank also. else ignore
     :return: json with the all attributes of that student
@@ -457,7 +452,7 @@ def get_student_details(usn: str, get_ranks: bool = True):
         sec_clause = "section = '" + str(student_details['section']) + "'"
         for attr, clause1, clause2 in [('rank', 'true', 'true'), ('batch_rank', sem_clause, 'true'),
                                        ('class_rank', sem_clause, sec_clause)]:
-            query = """SELECT rank from (SELECT usn, rank() over (order by rating desc) as rank from student where \'{}\' and \'{}\') as a WHERE usn = \'{}\'"""
+            query = """SELECT rank FROM (SELECT usn, rank() over (order by rating desc) as rank FROM student WHERE \'{}\' and \'{}\') as a WHERE usn = \'{}\'"""
             query = query.format(clause1, clause2, usn)
             res = _execute_query(query)
             student_details[attr] = int(res[0][0])
@@ -471,7 +466,7 @@ def get_submission_distribution(usn: str):
     :param usn: usn of the student
     :return: json with frequency of all verdicts
     """
-    query = """SELECT status, count(*) from submission where usn = \'{}\' GROUP BY status"""
+    query = """SELECT status, count(*) FROM submission WHERE usn = \'{}\' GROUP BY status"""
     query = query.format(usn)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -528,7 +523,7 @@ def get_submissions_by_student(usn: str, q_id: str, c_id: str) -> list:
     :return: A list of submissions where each submission is a dict
     """
 
-    query = """SELECT * from submission WHERE usn = \'{}\' AND q_id = \'{}\' AND c_id = \'{}\' ORDER BY submit_time DESC"""
+    query = """SELECT * FROM submission WHERE usn = \'{}\' AND q_id = \'{}\' AND c_id = \'{}\' ORDER BY submit_time DESC"""
     query = query.format(usn, q_id, c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -543,7 +538,7 @@ def get_submissions_by_contest(c_id: str) -> list:
     :param c_id: contest id
     :return: a list of submissions if successful else None
     """
-    query = """SELECT * from submission where c_id = \'{}\'"""
+    query = """SELECT * FROM submission WHERE c_id = \'{}\'"""
     query = query.format(c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -606,7 +601,7 @@ def get_plagiarism_report(c_id: str) -> list:
     :param c_id: contest id
     :return: report as a list
     """
-    query = """SELECT plagiarism from contest where c_id=\'{}\'"""
+    query = """SELECT plagiarism FROM contest WHERE c_id=\'{}\'"""
     query = query.format(c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
@@ -637,7 +632,6 @@ if __name__ == "__main__":
 
     temp = get_contest_details("c_34r")
     print(type(temp), temp)
-    quit()
     start = time()
     # temp = create_question(**{'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}], 'time_limit': 0.5, 'difficulty': 'Easy', 'problem': 'Reverse given string', 'languages': {'C'}, 'name': 'Reverse String', 'p_id': '01FB15ECS342', 'tags': {'Warmup'}, 'memory_limit': 1.0})
     # print(type(temp), temp)
