@@ -22,7 +22,7 @@
 						<h1><a href="index.html">My dashboard</a></h1>
 						<nav class="links">
 							<ul>
-								<li><a href="#">Pending Submissions</a></li>
+								<li><a href="{{ url_for('about_us')}}">About Us</a></li>
 								<li><a href="#">Contest Participation History</a></li>
 							
 							</ul>
@@ -75,7 +75,7 @@
 						<!-- Actions -->
 							<section>
 								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Log Out</a></li>
+									<li><a href="{{ url_for('logout')}}" class="button large fit">Log Out</a></li>
 								</ul>
 							</section>
 

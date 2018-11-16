@@ -1,6 +1,7 @@
 import code
 import random
-
+import logging
+logging.basicConfig(level="CRITICAL")
 from flask import render_template, redirect, url_for, request, session, flash
 from graph import draw_submission_chart
 
@@ -65,6 +66,13 @@ def route_profile_page():
     draw_submission_chart(stats, usn)
 
     return render_template("Student_profile.html", rating=rating, best_rating=best_rating, semester=semester, section=section, usn=usn, name=name, img_path=img_path)
+
+def route_about_us():
+    return render_template("AboutUS.html")
+
+def route_logout():
+    session.clear()
+    return render_template("index.html")
 
 
 def route_student_dashboard():
@@ -139,11 +147,13 @@ def route_student_login():
         data['password'] = ''.join(data['password'])
         print("##############################################################################################################")
         print(data)
-
+        
         response = db.validate_student(**data)
+        print('########', response)
         if (response): # this is required in order to validate the user in database. wait. i'll call on whatsapp
             session['usn'] = data['usn'] # wait i will call if i shift my phone my internet goes ok
             student_details = db.get_student_details(data['usn'], get_ranks=False)
+            print("###################################")
             session['name'] = student_details['name'] #i think this is correct.no i haven't added the above line. 
             return redirect(url_for('student_dashboard')) 
         else:
@@ -278,7 +288,7 @@ def route_contest_report(cid):
     print("Submission ->", submissions_by_contest)
     #fetching the plagiarism report
     plag_report = db.get_plagiarism_report(cid)
-    print(plag_report)
+    print("#################",plag_report)
     return render_template("prof_Rep.html", plag_report = plag_report ,questions = questions_by_contest, submissions = submissions_by_contest, 
         leaderboard = leaderboard_by_contest, tag="question")
 

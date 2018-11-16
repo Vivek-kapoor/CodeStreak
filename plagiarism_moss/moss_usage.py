@@ -28,7 +28,7 @@ with open("submission/base.c", "w") as text_file:
 
 
 
-c_id = "c_34r"
+c_id = "c_dOHYbn"
 submissions = get_plagiarism_code(c_id)
 print(submissions)
 
