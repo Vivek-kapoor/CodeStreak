@@ -11,23 +11,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/main.css') }}" />
 	</head>
-	<body class="is-preload" style="background-color:rgb(0,0,0)">
+	<body class="is-preload" >
 
 		<!-- Wrapper -->
 			<div id="wrapper">
 
 				<!-- Header -->
 					<header id="header">
-						<h1>New Contest Creation Portal </h1>
-						
+						<h1><a href="index.html">My dashboard</a></h1>
+						<nav class="links">
+							<ul>
+								
+								<li><a href="{{ url_for('add_questions') }}">Question Bank</a></li>
+								<li><a href="{{ url_for('create_assignment') }}">Create Contest</a></li>
+							
+							</ul>
+						</nav>
 						<nav class="main">
 							<ul>
-								<li class="search">
-									<a class="fa-search" href="#search">Search</a>
-									<form id="search" method="get" action="#">
-										<input type="text" name="query" placeholder="Search" />
-									</form>
-								</li>
+								
 								<li class="menu">
 									<a class="fa-bars" href="#menu">Menu</a>
 								</li>
@@ -49,15 +51,24 @@
 							<section>
 								<ul class="links">
 									<li>
-										<a href="#">
-											<h3>QUESTION CREATION</h3>
-											<p>Add a new question to the existing database</p>
+										<a href="">
+											<h3>Homepage</h3>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<h3>DashBoard</h3>
-											<p>Active Contests</p>
+											<h3>Student Performance</h3>
+											<p>Statistical Analytics</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<h3>Edit Profile Settings</h3>
+										</a>
+									</li>
+									<li>
+										<a href="">
+											<h3>About Us</h3>
 										</a>
 									</li>
 									
@@ -67,7 +78,7 @@
 						<!-- Actions -->
 							<section>
 								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Log In</a></li>
+									<li><a href="#" class="button large fit">Log Out</a></li>
 								</ul>
 							</section>
 
@@ -76,27 +87,42 @@
 				<!-- Main -->
 					<div id="main">
 
-						
+								<article class="post" >
+								<header>
+									<div class="title">
+										<h2><a href="#">Contest Portfolio</a></h2>
+										<p></p>
+									</div>
+									<div class="meta">
+										
+										<a href="#" class="author"><span class="name">Admin Name</span><img src="images/avatar.jpg" alt="" /></a>
+									</div>
+								</header>
+
 								<section>
 									<h3>Create a new contest</h3>
 									<br>
 									<form method="post" action="{{ url_for('create_assignment') }}">
-										<div class="row gtr-uniform" style="background-color:rgb(255, 229, 229)">
+										<div class="row gtr-uniform"">
 										
 										<br><br>
-											<div class="col-6 col-12-xsmall">
+											<div class="col-6 col-12-xsmall" style="display:block;">
 											<h4>Contest Name </h4><input type="text" name="contest name" id="name" value=""  />
 											</div>
 											
-											<br><br>
+											</br></br>
+											<div style="display:flex;">			
+											<div style="display:block;">
 											<div class="col-6 col-12-xsmall">
 											<h4>Contest Begin </h4>	<input type="datetime-local" name="begin" id="begin" value="" placeholder="Begin-Time" />
 											</div>
 											<br><br>
 											<div class="col-6 col-12-xsmall">
-											<h4>Contest End </h4>	<input type="datetime-local" name="end" id="end" value="" placeholder="Begin-Time" />
+											<h4>Contest End </h4>	<input type="datetime-local" name="end" id="end" value="" placeholder="End-Time" />
 											</div>
-											<div class="col-2">
+											</div>
+											
+											<div class="col-2" style="dispaly:inline-block;">
 											<h4>Select Semester	<select name="sem" id="demo-category">
 													<option value="">- Semester -</option>
 													<option value="1">1</option>
@@ -110,6 +136,7 @@
 												</select>
 											<h4>Enter Section</h4><input type="text" name="sec" id="name" value=""  />
 											</div>
+											</div>
 											
 											
 											
@@ -118,10 +145,10 @@
 								</section>
 							
 								
-
+								<hr>
 								<section>
 									<h3>QUESTION BANK</h3>
-									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
+									<div class="table-wrapper" >
 										<table>
 												<tr>
 													<th>Question Name</th>
@@ -149,6 +176,7 @@
 									</div>
 								</section>
 							</form>
+						</article>
 					</div>
 			</div>
 		<!-- Scripts -->

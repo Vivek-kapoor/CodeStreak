@@ -78,7 +78,7 @@ function testcase()
 	button.value="Remove TestCase";
 	button.id=n_cases;
 	button.onclick=removecase;
-	button.style.visibility = "hidden";
+	//button.style.visibility = "hidden";
 
 	n_cases+=1
 	cases=document.getElementById("testcases");

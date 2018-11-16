@@ -288,9 +288,6 @@
 													-->
 											</select>
 										</br>
-											<label style="color:white">Time: </label>
-											<input id="time" type="text" name = "time_limit"/>
-										</br>
 											<label style="color:white">Memory: </label>
 											<input id="memory" type="numeric" name = "memory_limit" style="width:50px;">kb</input>
 										</br>
@@ -335,12 +332,12 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="../static/assets/js/jquery.min.js"></script>
-			<script src="../static/assets/js/browser.min.js"></script>
-			<script src="../static/assets/js/breakpoints.min.js"></script>
-			<script src="../static/assets/js/util.js"></script>
-			<script src="../static/assets/js/main.js"></script>
-			<script src="../static/ql.js"></script>		
+			<script src="{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static',filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static',filename='assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static',filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static',filename='assets/js/main.js') }}"></script>
+			<script src="{{ url_for('static',filename='ql.js') }}"></script>	
 			<script>
 			/*(function(window, location) {
     history.replaceState(null, document.title, location.pathname+"#!/stealingyourhistory");
