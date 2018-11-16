@@ -47,7 +47,8 @@ CREATE TABLE contest(
    questions varchar(50) ARRAY[50], -- contains q_ids
    semester integer,
    section varchar(1),
-   plagiarism json DEFAULT NULL
+   plagiarism json DEFAULT NULL,
+   location varchar(50) DEFAULT NULL
 );
 
 CREATE TABLE submission(

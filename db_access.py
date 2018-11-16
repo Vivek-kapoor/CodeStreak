@@ -54,7 +54,6 @@ import json
 import atexit
 from time import time, sleep
 
-
 """
 codestreak=# \d
            List of relations
@@ -84,7 +83,7 @@ def destroy_connections():
         logging.info('Closed all connections with database')
 
 
-def random_alnum(prefix: str="", length: int=4) -> str:
+def random_alnum(prefix: str = "", length: int = 4) -> str:
     """
     Generates a random alphanumeric of given length with a prefix
     :param prefix: string to be prepended to the alphanumeric
@@ -211,7 +210,8 @@ def get_question_details(q_id: str = "0"):
     return res[0][0]
 
 
-def submit_code(usn: str, q_id: str, c_id: str, code: str, language: str, score: int, status: str, test_case_status: list):
+def submit_code(usn: str, q_id: str, c_id: str, code: str, language: str, score: int, status: str,
+                test_case_status: list):
     """
     Submits the code, makes an entry in submission
     These entries will be evaluated by compiler
@@ -351,7 +351,7 @@ def get_archived_contest_student(usn: str, semester=None, section=None) -> list:
             semester = student_details['semester']
             section = student_details['section']
         else:
-            return None
+            return []
 
     query = """SELECT * FROM contest WHERE semester = \'{}\' AND section  = \'{}\' AND end_time < NOW()"""
     query = query.format(semester, section)
@@ -405,7 +405,7 @@ def get_contest_details(c_id: str):
     res2 = _execute_query(query)
     if res2 in none_list:
         return res1[0][0]
-    status = "active" if res2[0][0] == True else "archived"
+    status = "active" if res2[0][0] else "archived"
     res1[0][0]["status"] = status
     return res1[0][0]
 
@@ -471,7 +471,8 @@ def get_questions_by_contest(c_id: str) -> list:
     return res[0]
 
 
-def create_question(p_id: str, name: str, problem: str, difficulty: str, languages: set, tags: set, test_cases: list, editorial: str = "N/A", time_limit: float = 1,
+def create_question(p_id: str, name: str, problem: str, difficulty: str, languages: set, tags: set, test_cases: list,
+                    editorial: str = "N/A", time_limit: float = 1,
                     memory_limit: float = 1024, score: int = 0):
     """
     Adds a question to the database with a random question id
@@ -546,13 +547,14 @@ def get_leaderboard(c_id: str) -> list:
         leaderboard[usn]["score"] += submission["score"]
         leaderboard[usn]["penalty"] = max(leaderboard[usn]["penalty"], submission["submit_time"])
 
-    leaderboard = [{"usn": usn, "score": leaderboard[usn]["score"], "penalty": leaderboard[usn]["penalty"]} for usn in leaderboard]
+    leaderboard = [{"usn": usn, "score": leaderboard[usn]["score"], "penalty": leaderboard[usn]["penalty"]} for usn in
+                   leaderboard]
     leaderboard.sort(key=lambda x: x["penalty"])
     leaderboard.sort(key=lambda x: x["score"], reverse=True)
     return leaderboard
 
 
-def get_plagiarism_code(c_id: str) -> list:
+def get_plagiarism_code(c_id: str):
     """
     Gets the candidate submissions to be detected for plagiarism
     :param c_id: contest id
@@ -563,7 +565,7 @@ def get_plagiarism_code(c_id: str) -> list:
     res = _execute_query(query, json_output=True)
     if res in none_list or res[0] in none_list:
         logging.info('Failed to retrieved submissions for ' + c_id)
-        return []
+        return None
 
     submissions_to_check = {}
     for submission in res[0]:
@@ -606,7 +608,6 @@ def set_plagiarism_report(c_id: str, report: list):
 
 
 if __name__ == "__main__":
-
     temp = get_contest_details("c_34r")
     print(type(temp), temp)
     quit()
@@ -673,10 +674,10 @@ if __name__ == "__main__":
 
     temp = get_questions_by_contest('c_dOHYbn')
     print(type(temp), temp)
-    
+
     temp = get_submission_distribution('01FB15ECS342')
     print(type(temp), temp)
-          
+
     temp = get_archived_contest_student('01FB15ECS342')
     print(type(temp), temp)
 
@@ -690,5 +691,4 @@ if __name__ == "__main__":
     print(type(temp), temp)
 
     print(random_alnum())
-    print(time()-start)
-    
+    print(time() - start)
