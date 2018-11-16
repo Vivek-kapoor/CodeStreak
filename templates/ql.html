@@ -171,13 +171,13 @@
 									<div style="display: none; background-color:#746767; color:white; overflow:scroll;" id="qdisplay">
 										<form id="frm" method="POST" enctype="multipart/form-data" action = "{{ url_for('add_questions') }}">
 											<label style="color:white">Problem Name:</label></br>
-											<input type="text" name="name" placeholder="Problem name" style="color:white" /></br>
+											<input type="text" name="name" placeholder="Problem name" style="color:white" required/></br>
 
 											<label style="color:white">Problem Statement:</label></br>
-											<textarea id="froala-editor" type="text" name="statement" placeholder="Problem Statement" style="color:white">Initialize the Froala WYSIWYG HTML Editor on a textarea.</textarea></br>
+											<textarea id="froala-editor" type="text" name="statement" placeholder="Problem Statement" style="color:white" required>Initialize the Froala WYSIWYG HTML Editor on a textarea.</textarea></br>
 
 											<label style="color:white">Difficulty Level</label></br>
-											<select name="difficulty" style="color:white">
+											<select name="difficulty" style="color:white" required>
  													<option value="Easy" style="color:white">Easy</option>
  													<option value="Medium" style="color:white">Medium</option>
  													<option value="Hard" style="color:white">Hard</option>
@@ -187,13 +187,13 @@
 											<ul id="testcases">
 												<li style="border:2px solid grey;" id="case1">
 													<label style="color:white">Input File</label>
-													<input id="input" type="file" name="input1" style="color:white"/>
+													<input id="input" type="file" name="input1" style="color:white" required/>
 													</br>
 													<label style="color:white">Output File</label>
-													<input id="output" type="file" name="output1" style="color:white"/>
+													<input id="output" type="file" name="output1" style="color:white" required/>
 													</br>
 													<label style="color:white">Points</label>
-                                                    <input id = "point" type="text" name = "point1" style="...">
+                                                    <input id = "point" type="text" name = "point1" style="..." required>
 													</br>
 													<input id="editq" type="button" value="Add TestCase" onclick="testcase()"/>
 												</li>
@@ -289,10 +289,10 @@
 											</select>
 										</br>
 											<label style="color:white">Memory: </label>
-											<input id="memory" type="numeric" name = "memory_limit" style="width:50px;">kb</input>
+											<input id="memory" type="numeric" name = "memory_limit" style="width:50px;" required>kb</input>
 										</br>
 											<label style="color:white">Allowed Languages:</label>
-											<select name="languages" style="color:white">
+											<select name="languages" style="color:white" required>
  													<option value="C" style="color:white">C</option>
  													<option value="C++" style="color:white">C++</option>
  													<option value="Python" style="color:white">Python</option>
