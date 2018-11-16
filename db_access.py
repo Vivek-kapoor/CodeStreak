@@ -607,7 +607,7 @@ def set_plagiarism_report(c_id: str, report: list):
 
 if __name__ == "__main__":
 
-    temp = get_contest_details("c_dOHYbn")
+    temp = get_contest_details("c_34r")
     print(type(temp), temp)
     quit()
     start = time()
