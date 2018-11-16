@@ -108,7 +108,7 @@
 										<p id=1 >
 											{% for contest in active_contests %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">							
-											<p>{{contest.name}} <time style="margin-left:650px"><a href="{{ url_for('contest_page', cid=contest.c_id) }}">{{contest.time}}</time><button style="float:right;">Enter Contest</button></a></p>
+											<p>{{contest.name}} <a href="{{ url_for('contest_page', cid=contest.c_id) }}"><button style="float:right;">Enter Contest</button></a></p>
 											</div>
 											{% endfor %}
 										</p>

@@ -108,7 +108,7 @@
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">
 											
 
-											<p>{{contest.name}} <time style="margin-left:650px">{{contest.time}}</time><font color="green">Active</font></p>
+											<p>{{contest.name}} <span style="float:right; "><font color="green">ACTIVE</font></span></p>
 											</div>
 											{% endfor %}
 											
@@ -123,7 +123,7 @@
 											{% for contest in archived_contests %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;margin:10px">
 											
-											<p>{{contest.name}}<time style="margin-left:650px">{{contest.time}}</time><font color="red">Finished</font><a href="{{ url_for('contest_report', cid=contest.c_id) }}"><button style="float:right;">Report</button></a></p>
+											<p>{{contest.name}} <a href="{{ url_for('contest_report', cid=contest.c_id) }}"><button style="float:right;">Report</button></a> <span style="float:right; "><font color="red">Finished</font></span></p>
 											
 											</div>
 											{% endfor %}
