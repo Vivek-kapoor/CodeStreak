@@ -68,7 +68,7 @@ codestreak=# \d
 
 """
 
-none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()]
+none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple(), (None,)]
 logging.basicConfig(level="INFO")
 
 connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
@@ -313,6 +313,30 @@ def create_contest(p_id: str, name: str, start_time: str, end_time: str, questio
     return res
 
 
+def get_future_contest_student(usn: str, semester=None, section=None) -> list:
+    """
+    Gets a list of future contests for the given student
+    :param usn: usn of the student
+    :param semester: Optional parameter, student's semester
+    :param section: Optional parameter, student's section
+    :return: a list of contests with all details in JSON
+    """
+    if semester is None or section is None:
+        student_details = get_student_details(usn, get_ranks=False)
+        if student_details not in none_list:
+            semester = student_details['semester']
+            section = student_details['section']
+        else:
+            return []
+
+    query = """SELECT * FROM contest WHERE semester = \'{}\' AND section  = \'{}\' AND start_time >= NOW()"""
+    query = query.format(semester, section)
+    res = _execute_query(query, json_output=True)
+    if res in none_list:
+        return []
+    return res[0]
+
+
 def get_active_contest_student(usn: str, semester=None, section=None) -> list:
     """
     Gets a list of active contests for the given student
@@ -339,7 +363,7 @@ def get_active_contest_student(usn: str, semester=None, section=None) -> list:
 
 def get_archived_contest_student(usn: str, semester=None, section=None) -> list:
     """
-    Gets a list of active contests for the given student
+    Gets a list of archived contests for the given student
     :param usn: usn of the student
     :param semester: Optional parameter, student's semester
     :param section: Optional parameter, student's section
@@ -608,6 +632,9 @@ def set_plagiarism_report(c_id: str, report: list):
 
 
 if __name__ == "__main__":
+    temp = get_future_contest_student("01FB15ECS342")
+    print(type(temp), temp)
+
     temp = get_contest_details("c_34r")
     print(type(temp), temp)
     quit()
