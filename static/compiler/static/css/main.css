@@ -150,7 +150,6 @@ table {
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
-  top:
   margin: 0 auto;
   position: relative;
 }
@@ -171,10 +170,10 @@ table tbody tr:last-child {
   border: 0;
 }
 table td, table th {
-  text-align: left;
+  text-align: center;
 }
 table td.l, table th.l {
-  text-align: right;
+  text-align: center;
 }
 table td.c, table th.c {
   text-align: center;
@@ -231,6 +230,7 @@ tbody tr:hover {
 .column5 {
   width: 220px;
   text-align:center;
+  padding-left:20px;
 }
 
 
@@ -257,6 +257,7 @@ tbody tr:hover {
   }
   table tbody tr td:last-child {
     margin-bottom: 0;
+    padding-left: 50%
   }
   table tbody tr td:before {
     font-family: OpenSans-Regular;
@@ -291,7 +292,7 @@ tbody tr:hover {
   .column4,
   .column5,
   .column6 {
-    text-align: left;
+    text-align: center;
   }
 
   .column4,

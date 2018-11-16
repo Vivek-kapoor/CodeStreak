@@ -65,7 +65,7 @@
 
 {% endblock %}
 {% block comp %}
-<div   style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;" id="text-compile" rows="7" cols="140" readonly><span style="color: #2e6c80;">Your Output :</span>{{resrun}} {{ rescomp }}  {{test_case_output}}
+<div   style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;" id="text-compile" rows="7" cols="140" readonly><span style="color: #2e6c80;">Your Output :</span>{{resrun}} {{ rescomp }} 
     {%if display_output | length == 6   %}
     
     <ol style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;">
@@ -83,6 +83,25 @@
         <li style="clear: both;"><span style="color: #2e6c80;">Total Score</span><strong>{{display_output['score']}}</strong></li><br>
         <li style="clear: both;"><span style="color: #2e6c80;">Time taken </span><strong>{{display_output['time']}}</strong></li><br>
         <li style="clear: both;"><span style="color: #2e6c80;">Memory taken </span><strong>{{display_output['memory']}}</strong></li><br>
+        <li style="clear: both;"><span style="color: #2e6c80;"> Test Case Result :-</span><br><strong>
+            {% for test_case in test_case_output %}
+        <tr>
+        <td>             
+        {% if test_case['result'] == "Correct" %}<li style="clear: both;"><span style="color: #2e6c80;">Result <img src="/static/green.jpg" width = "25px" height = "25px"></span><strong><span style="background-color: #228B22; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['result']}}</span></strong>
+            <span style=" color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['time']}}</span>
+            <span style=" color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['memory']}}</span>
+        </li><br>
+        
+        {% else %}
+        <li style="clear: both;"><span style="color: #2e6c80;">Result<img src="/static/red.jpeg" width = "25px" height = "25px"></span><strong><span style="background-color: #FF0000; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['result']}}</span></strong>
+            <span  color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['time']}}</span>
+            <span  color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['memory']}}</span>
+        </li><br>
+        {%endif%}
+         </td><br>
+        </tr>
+        {% endfor %} 
+        </strong></li><br>
 
     </ol>
     {% elif display_output['Submission_status'] == "Successful" %}

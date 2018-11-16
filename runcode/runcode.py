@@ -41,12 +41,12 @@ class RunCCode(object):
         a, b = p.communicate(input = my_input.encode())
         return a , b
         
-    def update_test_status(self,time,memory,STATUS):
+    def update_test_status(self,time,memory,STATUS,test_case_disp):
         '''
         fetch the submission for the question
         update the test status
         '''
-        test_case_status={"status":STATUS ,"time":time,"memory":memory}
+        test_case_status={"status":STATUS ,"time":time,"memory":memory,"result":test_case_disp}
         self.test_case_output.append(test_case_status)
 
 
@@ -129,6 +129,8 @@ class RunCCode(object):
             correct_cases = 0
             self.test_case_output = []
             submission_correctness = True
+            #Shows each test case result if its correct or wrong
+            test_case_disp="No result yet!"
             total_cases = len(my_input)
             total_time = 0
             total_memory = 0
@@ -140,8 +142,10 @@ class RunCCode(object):
                 if(target_output==self.stdout):
                     score += my_input[i]["points"]
                     correct_cases += 1
+                    test_case_disp="Correct"
                 else:
-                    submission_correctness = False    
+                    submission_correctness = False  
+                    test_case_disp="Wrong" 
                 #checking if memory exceeded
                 arr = self.stderr.split()
                 tle_check = self.stdout.split(":")
@@ -171,7 +175,7 @@ class RunCCode(object):
                 elif(arr[0] == "FINISHED"):
                     status = "Running successful"
 
-                self.update_test_status(time_taken,memory_taken,status)
+                self.update_test_status(time_taken,memory_taken,status,test_case_disp)
             
                 '''
                     format the output in order to display the status
@@ -244,7 +248,7 @@ class RunCCode(object):
             result_run = self.stdout 
            
         self.cleanup_files(idx)
-        return result_compilation, result_run, display_output
+        return result_compilation, result_run, display_output,self.test_case_output
 
     def all_submissions(self):
         '''fetch form db'''
