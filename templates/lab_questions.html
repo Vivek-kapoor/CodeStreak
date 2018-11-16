@@ -120,7 +120,7 @@
 											{% for question in questions %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
 											<p><b>{{question.name}}</b>
-											<a href="{{ url_for('archived_lab_question',qid=question.q_id) }}">
+											<a href="{{ url_for('archive_lab_question',qid=question.q_id) }}">
 											<button type ="submit" style="float:right; margin-top:25px;">Show Submissions</button></a>
 											<a href="{{ url_for('contest_leaderboard') }}">
 											<button type ="submit" style="float:right; margin-top:25px;">Show Leaderboard</button></a>
@@ -130,7 +130,7 @@
 											</div>
 
 											{% endfor %}
-												
+											{% endif %}												
 										</p>
 										
 										
