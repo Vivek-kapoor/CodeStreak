@@ -10,6 +10,9 @@
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;}
+	label { width: 200px; float: left; margin: 0 20px 0 0; }
+span { display: block; margin: 0 0 3px; font-size: 1.2em; font-weight: bold; }
+input { width: 200px; border: 1px solid #000; padding: 5px; }
 	</style>
 <script>
 function profstat(evt, attr) {
@@ -26,6 +29,10 @@ function profstat(evt, attr) {
     document.getElementById(attr).style.display = "block";
     // evt.currentTarget.className += " active";
 }
+
+
+
+
 
 
 </script>
@@ -48,7 +55,7 @@ function profstat(evt, attr) {
 						<button id = "question" class="tablinks" onclick="profstat(event, 'quest')">Questions</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button id = "submission" class="tablinks" onclick="profstat(event, 'submis')">Submissions</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button id = "leaderbord" class="tablinks"onclick="profstat(event, 'leader')" >LeaderBoard</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<button class="tablinks">Plagiarism</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button class="tablinks" onclick="profstat(event, 'plag')">Plagiarism</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
 						
 						<nav class="main">
@@ -145,6 +152,40 @@ function profstat(evt, attr) {
 						
 						<div id="submis" class="tabcontent" >
 						<section>
+											<form style="margin-left:820px"><h4>Filter By:</h4>
+												<label for="company">
+												<span>USN</span>
+												<input type="text" id="USN" default="" />
+												</label>
+												<label for="contact">
+												<span>SCORE</span>
+												<input type="text" id="SCORE" default=""/>
+												
+															</label>
+											</form>
+											<button>Go!</button>
+											<script>
+											var dis1 = document.getElementById("USN");
+											var dis2 = document.getElementById("SCORE");
+												dis1.onchange = function () {
+
+													if (this.value != "" || this.value.length > 0) {
+														document.getElementById("SCORE").disabled = true;
+															}
+													else if(this.value==""){
+														dis2.disabled=false;}
+												}
+												dis2.onchange = function () {
+
+													if (this.value != "" || this.value.length > 0) {
+														document.getElementById("USN").disabled = true;
+															}
+													else if(this.value==""){
+													dis1.disabled=false;}
+												}
+											</script>
+   
+<br><br><br><br>
 									<h3>SUBMISSION PORTFOLIO</h3>
 									
 									<div class="table-wrapper" style="background-color:rgb(247, 238, 238)" >
@@ -211,6 +252,41 @@ function profstat(evt, attr) {
 								</section>
 
 						</div>
+						<div id="plag" class="tabcontent">
+						<section>
+									<h3>PLAGIARISM PORTFOLIO</h3>
+									<div class="table-wrapper" style="background-color:rgb(255, 255, 255)" >
+										<div id="plag_quest" style="background-color:rgb(0, 0, 0)" >
+										<p>Q_ID</p>
+										<p>QUESTION</p>
+										</div>
+										
+										<table>
+											
+												<tr>
+													<th>S. No.</th>
+													<th>USN 1</th> 
+													<th>USN 2</th>
+													<th>Line Something</th>
+													<th>Percent</th>
+												</tr>
+											
+											{% for question in questions %}
+												<tr {% if loop.index % 2 == 0 %} style="background-color: #f2f2f2" {% endif %}>
+													<td>{{question.name}}</td>
+													<td>{{question.problem}}</td>
+													<td>{{question.tags}}</td>
+													<td>{{question.difficulty}}</td>
+													<td>{{question.difficulty}}</td>
+												</tr>
+											{% endfor %}
+											</table>
+									</div>
+
+									
+								</section>
+
+						</div>
 						
 						
 
@@ -235,7 +311,7 @@ function profstat(evt, attr) {
 			<script src="../static/assets/js/breakpoints.min.js"></script>
 			<script src="../static/assets/js/util.js"></script>
 			<script src="../static/assets/js/main.js"></script>
-			<script type="text/javascript">
+			<!--<script type="text/javascript">
 				{% if tag == "question" %}
 					$('#question').trigger('click');
 				{% elif tag == "submission" %}
@@ -243,6 +319,6 @@ function profstat(evt, attr) {
 				{% elif tag == "leaderBoard" %}
 					$('#leaderboard').trigger('click');
 				{% endif %}
-			</script>
+			</script>-->
 	</body>
 </html>
