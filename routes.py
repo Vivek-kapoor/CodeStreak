@@ -128,6 +128,7 @@ def route_student_login():
     print("------------------------------------")
 
     if('usn' in session.keys()):
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         return redirect(url_for('student_dashboard'))
 
     data = request.form.to_dict(flat=False)
@@ -135,7 +136,9 @@ def route_student_login():
     if (data): #why is it so 
         
         data['usn'] = ''.join(data['usn'])
-        data['password'] = ''.join(data['usn'])
+        data['password'] = ''.join(data['password'])
+        print("##############################################################################################################")
+        print(data)
 
         response = db.validate_student(**data)
         if (response): # this is required in order to validate the user in database. wait. i'll call on whatsapp
@@ -296,7 +299,7 @@ def contest_questions(cid):
     print("contest info ->", contest_info)
     questions = db.get_questions_by_contest(session['c_id'])
     return render_template("lab_questions.html", questions=questions, c_name=contest_info['name'], 
-        s_time=contest_info['start_time'], e_time=contest_info['end_time'])
+        s_time=contest_info['start_time'], e_time=contest_info['end_time'], status = contest_info['status'])
 
 qid=0
 def route_runc(q_id):
