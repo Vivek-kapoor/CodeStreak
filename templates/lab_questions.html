@@ -247,6 +247,11 @@
 					var esec=etime[2];
 					edate=new Date(eyear, emonth, eday, ehour, emin, esec);
 					var date=new Date();
+					if(edate.getTime() <= date.getTime())
+					{
+						clearInterval(intv);
+						location.href=("https://www.google.com/");
+					}
 					var difference= edate.getTime() - date.getTime();
 					var daysdiff= Math.floor(difference/1000/60/60/24);
 					difference -= daysdiff*1000*60*60*24;
@@ -256,6 +261,12 @@
 					difference -= minutesdiff*1000*60;
 					var secondsdiff= Math.floor(difference/1000);
 					rtime.innerHTML=daysdiff+":"+hoursdiff+":"+minutesdiff+":"+secondsdiff;
+					if(minutesdiff <5 && hoursdiff==0 && daysdiff==0)
+					{
+
+						rtime.style.color="red";
+
+					}
 				}
 				
 			</script>
