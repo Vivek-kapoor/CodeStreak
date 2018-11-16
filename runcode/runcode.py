@@ -6,6 +6,8 @@ import subprocess
 import threading
 import socket
 import re
+import sys
+sys.path.append("/home/sumanth/projects/CodeStreak/CodeStreak") 
 from db_access import submit_code,get_submissions_by_student
 app = Flask(__name__)
 class RunCCode(object):
