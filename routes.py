@@ -66,6 +66,9 @@ def route_profile_page():
 
     return render_template("Student_profile.html", rating=rating, best_rating=best_rating, semester=semester, section=section, usn=usn, name=name, img_path=img_path)
 
+def route_about_us():
+    return render_template("AboutUS.html")
+
 
 def route_student_dashboard():
     print("------------------------------------")
