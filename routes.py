@@ -1,6 +1,7 @@
 import code
 import random
-
+import logging
+logging.basicConfig(level="CRITICAL")
 from flask import render_template, redirect, url_for, request, session, flash
 from graph import draw_submission_chart
 
@@ -66,6 +67,13 @@ def route_profile_page():
 
     return render_template("Student_profile.html", rating=rating, best_rating=best_rating, semester=semester, section=section, usn=usn, name=name, img_path=img_path)
 
+def route_about_us():
+    return render_template("AboutUS.html")
+
+def route_logout():
+    session.clear()
+    return render_template("index.html")
+
 
 def route_student_dashboard():
     print("------------------------------------")
@@ -128,6 +136,7 @@ def route_student_login():
     print("------------------------------------")
 
     if('usn' in session.keys()):
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         return redirect(url_for('student_dashboard'))
 
     data = request.form.to_dict(flat=False)
@@ -135,12 +144,16 @@ def route_student_login():
     if (data): #why is it so 
         
         data['usn'] = ''.join(data['usn'])
-        data['password'] = ''.join(data['usn'])
-
+        data['password'] = ''.join(data['password'])
+        print("##############################################################################################################")
+        print(data)
+        
         response = db.validate_student(**data)
+        print('########', response)
         if (response): # this is required in order to validate the user in database. wait. i'll call on whatsapp
             session['usn'] = data['usn'] # wait i will call if i shift my phone my internet goes ok
             student_details = db.get_student_details(data['usn'], get_ranks=False)
+            print("###################################")
             session['name'] = student_details['name'] #i think this is correct.no i haven't added the above line. 
             return redirect(url_for('student_dashboard')) 
         else:
@@ -273,8 +286,10 @@ def route_contest_report(cid):
     leaderboard_by_contest = db.get_leaderboard(cid)
     leaderboard_by_contest = sorted(leaderboard_by_contest, key=lambda k: (-k['score'], k['penalty']))
     print("Submission ->", submissions_by_contest)
-
-    return render_template("prof_Rep.html", questions = questions_by_contest, submissions = submissions_by_contest, 
+    #fetching the plagiarism report
+    plag_report = db.get_plagiarism_report(cid)
+    print("#################",plag_report)
+    return render_template("prof_Rep.html", plag_report = plag_report ,questions = questions_by_contest, submissions = submissions_by_contest, 
         leaderboard = leaderboard_by_contest, tag="question")
 
 def show_question(qid):
@@ -293,10 +308,19 @@ def contest_questions(cid):
     print("Session in contest_questions ",session)
     print("------------------------------------")
     contest_info = db.get_contest_details(session['c_id'])
-    print("contest info ->", contest_info)
     questions = db.get_questions_by_contest(session['c_id'])
+    print("====================================")
+    start_time = contest_info['start_time'].split('T')[1].split(":")
+    start_time = start_time[0] + ":" + start_time[1]
+
+    end_time = contest_info['end_time'].split('T')[1].split(":")
+    end_time = end_time[0] + ":" + end_time[1]
+
+    print("====================================")
+    print("start_time ",start_time)
+    print("====================================")
     return render_template("lab_questions.html", questions=questions, c_name=contest_info['name'], 
-        s_time=contest_info['start_time'], e_time=contest_info['end_time'])
+        s_time=start_time, e_time=end_time, status = contest_info['status'])
 
 qid=0
 def route_runc(q_id):

@@ -19,6 +19,15 @@ def codestreak():
 def profile_page():
 	return route_profile_page()
 
+@app.route('/about_us')
+def about_us():
+	return route_about_us()
+
+@app.route('/logout')
+def logout():
+	return route_logout()
+
+
 
 @app.route('/prof_page')
 def prof_page():
@@ -63,11 +72,11 @@ def archive_lab_question(qid):
 	return route_submission()
 
 
-@app.route("/lab_question/<qid>", methods=["GET", "POST"])
+@app.route("/lab_question/<qid>")
 def lab_question(qid):
 	return show_question(qid)
 
-@app.route("/contest_leaderboard", methods=['POST', 'GET'])
+@app.route("/contest_leaderboard")
 def contest_leaderboard():
 	cid = session['c_id']
 	return route_contest_leaderboard(cid)

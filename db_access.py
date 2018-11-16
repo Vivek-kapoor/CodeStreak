@@ -73,7 +73,7 @@ none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()
 logging.basicConfig(level="INFO")
 
 connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
-pool = psycopg2.pool.SimpleConnectionPool(2, 4, connect_str)
+pool = psycopg2.pool.SimpleConnectionPool(4, 8, connect_str)
 logging.info('Successfully established connection pool')
 
 
@@ -283,7 +283,7 @@ def get_questions_by_prof(p_id: str):  # todo remove if not needed
     return res[0]
 
 
-def get_questions():
+def get_questions() -> list:
     """
     Gets all the questions in descending order of the time it was created
     :return: list of dict where each question is a dict
@@ -292,7 +292,7 @@ def get_questions():
     res = _execute_query(query, json_output=True)
     if res in none_list:
         logging.error('Could not get any questions')
-        return None
+        return []
     return res[0]
 
 
@@ -313,7 +313,7 @@ def create_contest(p_id: str, name: str, start_time: str, end_time: str, questio
     return res
 
 
-def get_active_contest_student(usn: str, semester=None, section=None):
+def get_active_contest_student(usn: str, semester=None, section=None) -> list:
     """
     Gets a list of active contests for the given student
     :param usn: usn of the student
@@ -327,17 +327,17 @@ def get_active_contest_student(usn: str, semester=None, section=None):
             semester = student_details['semester']
             section = student_details['section']
         else:
-            return None
+            return []
 
     query = """SELECT * FROM contest WHERE semester = \'{}\' AND section  = \'{}\' AND start_time <= NOW() AND end_time >= NOW() """
     query = query.format(semester, section)
     res = _execute_query(query, json_output=True)
     if res in none_list:
-        return None
+        return []
     return res[0]
 
 
-def get_archived_contest_student(usn: str, semester=None, section=None):
+def get_archived_contest_student(usn: str, semester=None, section=None) -> list:
     """
     Gets a list of active contests for the given student
     :param usn: usn of the student
@@ -357,11 +357,11 @@ def get_archived_contest_student(usn: str, semester=None, section=None):
     query = query.format(semester, section)
     res = _execute_query(query, json_output=True)
     if res in none_list:
-        return None
+        return []
     return res[0]
 
 
-def get_archived_contest_professor(p_id: str):
+def get_archived_contest_professor(p_id: str) -> list:
     """
     Gets all the archived contest for given p_id
     :param p_id: Professor id
@@ -371,11 +371,11 @@ def get_archived_contest_professor(p_id: str):
     query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
-        return None
+        return []
     return res[0]
 
 
-def get_active_contest_professor(p_id: str):
+def get_active_contest_professor(p_id: str) -> list:
     """
     Gets all the active contest for given p_id
     :param p_id: Professor id
@@ -385,21 +385,9 @@ def get_active_contest_professor(p_id: str):
     query = query.format(p_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
-        return None
+        return []
     return res[0]
 
-def get_contest_details(c_id: str):
-    """
-    Get all the details of a contest
-    :param c_id: contest id
-    :return: a dictionary with all contest details if successful, else None
-    """
-    query = """SELECT * from contest WHERE c_id = \'{}\'"""
-    query = query.format(c_id)
-    res = _execute_query(query, json_output=True)
-    if res in none_list or res[0] in none_list == 0:
-        return None
-    return res[0][0]
 
 def get_contest_details(c_id: str):
     """
@@ -409,10 +397,17 @@ def get_contest_details(c_id: str):
     """
     query = """SELECT * from contest WHERE c_id = \'{}\'"""
     query = query.format(c_id)
-    res = _execute_query(query, json_output=True)
-    if res in none_list or res[0] in none_list == 0:
+    res1 = _execute_query(query, json_output=True)
+    if res1 in none_list or res1[0] in none_list:
         return None
-    return res[0][0]
+    query = """SELECT end_time >= NOW() from contest WHERE c_id = \'{}\'"""
+    query = query.format(c_id)
+    res2 = _execute_query(query)
+    if res2 in none_list:
+        return res1[0][0]
+    status = "active" if res2[0] == "t" else "archived"
+    res1[0][0]["status"] = status
+    return res1[0][0]
 
 
 def get_student_details(usn: str, get_ranks: bool = True):
@@ -461,7 +456,7 @@ def get_submission_distribution(usn: str):
     return res[0]
 
 
-def get_questions_by_contest(c_id: str):
+def get_questions_by_contest(c_id: str) -> list:
     """
     Fetches questions of a particular contest
     :param c_id: contest id
@@ -472,7 +467,7 @@ def get_questions_by_contest(c_id: str):
     res = _execute_query(query, json_output=True)
     if res in none_list:
         logging.error('Could not retrieve any questions for contest ' + c_id)
-        return None
+        return []
     return res[0]
 
 
@@ -499,7 +494,7 @@ def create_question(p_id: str, name: str, problem: str, difficulty: str, languag
     return res
 
 
-def get_submissions_by_student(usn: str, q_id: str, c_id: str):
+def get_submissions_by_student(usn: str, q_id: str, c_id: str) -> list:
     """
     Gets the submissions made by a student for a particular question for a particular contest
     :param usn: unique student id
@@ -513,11 +508,11 @@ def get_submissions_by_student(usn: str, q_id: str, c_id: str):
     res = _execute_query(query, json_output=True)
     if res in none_list:
         logging.error('Could not retrieve any submissions')
-        return None
+        return []
     return res[0]
 
 
-def get_submissions_by_contest(c_id: str):
+def get_submissions_by_contest(c_id: str) -> list:
     """
     Gets all the submissions for a contest for the professor to see
     :param c_id: contest id
@@ -528,7 +523,7 @@ def get_submissions_by_contest(c_id: str):
     res = _execute_query(query, json_output=True)
     if res in none_list:
         logging.error('Could not retrieve any submissions for given contest')
-        return None
+        return []
     return res[0]
 
 
@@ -557,7 +552,7 @@ def get_leaderboard(c_id: str) -> list:
     return leaderboard
 
 
-def get_plagiarism_code(c_id: str):
+def get_plagiarism_code(c_id: str) -> list:
     """
     Gets the candidate submissions to be detected for plagiarism
     :param c_id: contest id
@@ -568,7 +563,7 @@ def get_plagiarism_code(c_id: str):
     res = _execute_query(query, json_output=True)
     if res in none_list or res[0] in none_list:
         logging.info('Failed to retrieved submissions for ' + c_id)
-        return None
+        return []
 
     submissions_to_check = {}
     for submission in res[0]:
@@ -579,17 +574,17 @@ def get_plagiarism_code(c_id: str):
     return submissions_to_check
 
 
-def get_plagiarism_report(c_id: str):
+def get_plagiarism_report(c_id: str) -> list:
     """
     Returns the plagiarism report for a given contest
     :param c_id: contest id
-    :return: report as a list else None
+    :return: report as a list
     """
     query = """SELECT plagiarism from contest where c_id=\'{}\'"""
     query = query.format(c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
-        return None
+        return []
     return res[0]
 
 
@@ -612,7 +607,7 @@ def set_plagiarism_report(c_id: str, report: list):
 
 if __name__ == "__main__":
 
-    temp = get_contest_details("c_dOHYbn")
+    temp = get_contest_details("c_34r")
     print(type(temp), temp)
     quit()
     start = time()
