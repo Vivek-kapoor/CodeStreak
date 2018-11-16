@@ -257,28 +257,31 @@ function profstat(evt, attr) {
 									<h3>PLAGIARISM PORTFOLIO</h3>
 									<div class="table-wrapper" style="background-color:rgb(255, 255, 255)" >
 										<div id="plag_quest" style="background-color:rgb(0, 0, 0)" >
-										<p>Q_ID</p>
-										<p>QUESTION</p>
-										</div>
 										
-										<table>
+										{% for question in plag_report %}	
+											<p>{{ question.q_id }}</p>
+											<p>QUESTION NAME</p>
+											</div>
 											
-												<tr>
-													<th>S. No.</th>
-													<th>USN 1</th> 
-													<th>USN 2</th>
-													<th>Line Something</th>
-													<th>Percent</th>
-												</tr>
-											
-											{% for question in questions %}
-												<tr {% if loop.index % 2 == 0 %} style="background-color: #f2f2f2" {% endif %}>
-													<td>{{question.name}}</td>
-													<td>{{question.problem}}</td>
-													<td>{{question.tags}}</td>
-													<td>{{question.difficulty}}</td>
-													<td>{{question.difficulty}}</td>
-												</tr>
+											<table>
+												
+													<tr>
+														<th>Sl. No. </th>
+														<th>USN 1</th> 
+														<th>USN 2</th>
+														<th>Lines matched</th>
+														<th>Percentage</th>
+													</tr>
+												
+												{% for each_line in question.report %}
+													<tr>
+														<td> 1 </td>
+														<td>{{ each_line[0] }}</td>
+														<td>{{each_line[1]}}</td>
+														<td>{{each_line[2]}}</td>
+														<td>{{each_line[3]}}</td>
+													</tr>
+												{% endfor %}
 											{% endfor %}
 											</table>
 									</div>

@@ -276,8 +276,10 @@ def route_contest_report(cid):
     leaderboard_by_contest = db.get_leaderboard(cid)
     leaderboard_by_contest = sorted(leaderboard_by_contest, key=lambda k: (-k['score'], k['penalty']))
     print("Submission ->", submissions_by_contest)
-
-    return render_template("prof_Rep.html", questions = questions_by_contest, submissions = submissions_by_contest, 
+    #fetching the plagiarism report
+    plag_report = db.get_plagiarism_report(cid)
+    print(plag_report)
+    return render_template("prof_Rep.html", plag_report = plag_report ,questions = questions_by_contest, submissions = submissions_by_contest, 
         leaderboard = leaderboard_by_contest, tag="question")
 
 def show_question(qid):
