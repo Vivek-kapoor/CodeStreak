@@ -388,18 +388,6 @@ def get_active_contest_professor(p_id: str):
         return None
     return res[0]
 
-def get_contest_details(c_id: str):
-    """
-    Get all the details of a contest
-    :param c_id: contest id
-    :return: a dictionary with all contest details if successful, else None
-    """
-    query = """SELECT * from contest WHERE c_id = \'{}\'"""
-    query = query.format(c_id)
-    res = _execute_query(query, json_output=True)
-    if res in none_list or res[0] in none_list == 0:
-        return None
-    return res[0][0]
 
 def get_contest_details(c_id: str):
     """
@@ -409,10 +397,17 @@ def get_contest_details(c_id: str):
     """
     query = """SELECT * from contest WHERE c_id = \'{}\'"""
     query = query.format(c_id)
-    res = _execute_query(query, json_output=True)
-    if res in none_list or res[0] in none_list == 0:
+    res1 = _execute_query(query, json_output=True)
+    if res1 in none_list or res1[0] in none_list:
         return None
-    return res[0][0]
+    query = """SELECT end_time >= NOW() from contest WHERE c_id = \'{}\'"""
+    query = query.format(c_id)
+    res2 = _execute_query(query)
+    if res2 in none_list:
+        return res1[0][0]
+    status = "active" if res2[0] == "t" else "archived"
+    res1[0][0]["status"] = status
+    return res1[0][0]
 
 
 def get_student_details(usn: str, get_ranks: bool = True):
