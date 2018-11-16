@@ -170,11 +170,14 @@
 			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
 			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 			<script>
-				function time(){
+				/*function time(){
 					var stime=document.getElementById("stime");
 					var etime=document.getElementById("etime");
 					var rtime=document.getElementById("rtime");
 					var date=new Date();
+					var year=date.getFullYear();
+					var month=date.getMonth();
+					var day=date.getDate();
 					var hour=date.getHours();
 					var mins=date.getMinutes();
 					var secs=date.getSeconds();
@@ -224,10 +227,37 @@
 					{
 						rtime.style.color="red";
 					}
+				}*/
+				intv=setInterval(time,500);
+				//bod=document.getElementsByTagName("body");
+				//bod[0].style.display="none";
+
+
+				function time(){
+					var stime=document.getElementById("stime");
+					var etime=document.getElementById("etime");
+					var rtime=document.getElementById("rtime");
+					var etime=etime.innerHTML.split(":");
+					var edate=etime[0].split("-");
+					var eyear=edate[0];
+					var emonth=edate[1]-1;
+					var eday=edate[2].split("T")[0];
+					var ehour=edate[2].split("T")[1];
+					var emin=etime[1];
+					var esec=etime[2];
+					edate=new Date(eyear, emonth, eday, ehour, emin, esec);
+					var date=new Date();
+					var difference= edate.getTime() - date.getTime();
+					var daysdiff= Math.floor(difference/1000/60/60/24);
+					difference -= daysdiff*1000*60*60*24;
+					var hoursdiff= Math.floor(difference/1000/60/60);
+					difference -= hoursdiff*1000*60*60;
+					var minutesdiff= Math.floor(difference/1000/60);
+					difference -= minutesdiff*1000*60;
+					var secondsdiff= Math.floor(difference/1000);
+					rtime.innerHTML=daysdiff+":"+hoursdiff+":"+minutesdiff+":"+secondsdiff;
 				}
-				intv=setInterval(time,1000);
-				bod=document.getElementsByTagName("body");
-				bod[0].style.display="none";
+				
 			</script>
 	</body>
 </html>
