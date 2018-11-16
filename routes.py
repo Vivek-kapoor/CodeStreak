@@ -69,6 +69,10 @@ def route_profile_page():
 def route_about_us():
     return render_template("AboutUS.html")
 
+def route_logout():
+    session.clear()
+    return render_template("index.html")
+
 
 def route_student_dashboard():
     print("------------------------------------")

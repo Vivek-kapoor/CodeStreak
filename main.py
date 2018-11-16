@@ -23,6 +23,11 @@ def profile_page():
 def about_us():
 	return route_about_us()
 
+@app.route('/logout')
+def logout():
+	return route_logout()
+
+
 
 @app.route('/prof_page')
 def prof_page():
