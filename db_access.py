@@ -405,7 +405,7 @@ def get_contest_details(c_id: str):
     res2 = _execute_query(query)
     if res2 in none_list:
         return res1[0][0]
-    status = "active" if res2[0] == "t" else "archived"
+    status = "active" if res2[0][0] == True else "archived"
     res1[0][0]["status"] = status
     return res1[0][0]
 
