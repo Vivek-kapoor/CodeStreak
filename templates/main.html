@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {%block question %}
+
 <h2 style="color: #2e6c80;">Laboratory assignment 1</h2>
                 <h1 style="color: #5e9ca0;">Your assignment question is <span style="color: #2b2301;">{{question['name']}}</span></h1>
                 <p> {{question['problem']}} <br />Input will be of this format here&gt;</p>
@@ -84,24 +85,55 @@
         <li style="clear: both;"><span style="color: #2e6c80;">Time taken </span><strong>{{display_output['time']}}</strong></li><br>
         <li style="clear: both;"><span style="color: #2e6c80;">Memory taken </span><strong>{{display_output['memory']}}</strong></li><br>
         <li style="clear: both;"><span style="color: #2e6c80;"> Test Case Result :-</span><br><strong>
+        <table id="customers">
+                    <tr>
+                            <th>Result</th>
+                            <th>Accepted</th>
+                            <th>Time/Memory</th>
+                    </tr>
+                <tbody>         
             {% for test_case in test_case_output %}
         <tr>
-        <td>             
-        {% if test_case['result'] == "Correct" %}<li style="clear: both;"><span style="color: #2e6c80;">Result <img src="/static/green.jpg" width = "25px" height = "25px"></span><strong><span style="background-color: #228B22; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['result']}}</span></strong>
-            <span style=" color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['time']}}</span>
-            <span style=" color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['memory']}}</span>
-        </li><br>
-        
+              <td>
+        {% if test_case['result'] == "Correct" %}<li style="clear: both;">
+                <span style="background-color: #228B22; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['result']}}</span></strong>
+            </td>
+            <td>
+                    <span style="color: #2e6c80;"><img src="/static/green.jpg" width = "25px" height = "25px"></span><strong>
+           
+            </td>
+            <td>
+            <span style=" color: #000; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['time']}}</span>
+            <span style=" color: #000; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['memory']}}</span>
+            </td>
+        </li>
+
+    </tr>
+    
+        <td>
         {% else %}
-        <li style="clear: both;"><span style="color: #2e6c80;">Result<img src="/static/red.jpeg" width = "25px" height = "25px"></span><strong><span style="background-color: #FF0000; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['result']}}</span></strong>
-            <span  color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['time']}}</span>
-            <span  color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['memory']}}</span>
-        </li><br>
+        
+        <li style="clear: both;">
+                <span style="background-color: #FF0000; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['result']}}</span></strong>
+                </td>
+                <td>
+                        <span style="color: #2e6c80;"><img src="/static/red.jpeg" width = "25px" height = "25px"></span><strong>
+                
+                </td>
+                <td>
+            <span  style="color: #000; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['time']}}</span>
+            <span  style="color: #000; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['memory']}}</span>
+                </td>
+        </li>
         {%endif%}
-         </td><br>
+    
         </tr>
         {% endfor %} 
-        </strong></li><br>
+    </tbody>
+</table>
+
+</strong>
+    </li><br>
 
     </ol>
     {% elif display_output['Submission_status'] == "Successful" %}
