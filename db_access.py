@@ -691,12 +691,17 @@ def get_unallocated_locations(start_time, end_time) -> list:
 
 
 if __name__ == "__main__":
-    temp = get_unallocated_locations("2018-11-07T04:30:00", "2018-11-11T04:30:00")
-    print(type(temp), temp)
+    #temp = get_unallocated_locations("2018-11-07T04:30:00", "2018-11-11T04:30:00")
+    #print(type(temp), temp)
     #quit()
 
-    temp = get_unassigned_contests()
+    #temp = get_unassigned_contests()
+    #print(type(temp), temp)
+
+    temp = get_student_details("01FB15ECS342", get_ranks=False)
     print(type(temp), temp)
+
+
     quit()
 
     temp = get_future_contest_student("01FB15ECS342")
