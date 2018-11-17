@@ -19,14 +19,8 @@
 
 				<!-- Header -->
 					<header id="header">
-						<h1><a href="index.html">My dashboard</a></h1>
-						<nav class="links">
-							<ul>
-								<li><a href="#">Pending Submissions</a></li>
-								<li><a href="#">Contest Participation History</a></li>
-							
-							</ul>
-						</nav>
+						<h1>Codestreak</h1>
+						
 						<nav class="main">
 							<ul>
 								
@@ -40,37 +34,12 @@
 				<!-- Menu -->
 					<section id="menu">
 
-						<!-- Search -->
-							<section>
-								<form class="search" method="get" action="#">
-									<input type="text" name="query" placeholder="Search" />
-								</form>
-							</section>
-
-						<!-- Links -->
-							<section>
-								<ul class="links">
-									<li>
-										<a href="">
-											<h3>Homepage</h3>
-											<p>About us : Why use CodeStreak</p>
-										</a>
-									</li>
-									
-									<li>
-										<a href="#">
-											<h3>Edit Profile Settings</h3>
-										</a>
-									</li>
-									
-									
-								</ul>
-							</section>
+						
 
 						<!-- Actions -->
 							<section>
 								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Log Out</a></li>
+									<li><a href="{{ url_for('logout')}}" class="button large fit">Log Out</a></li>
 								</ul>
 							</section>
 
@@ -93,7 +62,7 @@
 								</header>
 								
 								<div class="title"  id="Lab">
-										<h2 style="margin-left:10px"><font>Active Contests </font></h2>
+										<h2 style="margin-left:10px"><font>Location unassigned Labs</font></h2>
 
 										<!-- Jinja2 part -->
 										
@@ -105,7 +74,7 @@
 											{% for contest in data %}
 
 											<div class="title" style="border:1px solid black;padding:5px;border-radius:25px;;margin:10px">							
-					<p>{{contest.name}} <time style="margin-left:450px"><p style="margin-left:880px"><button type = "submit">Enter Contest</button> 
+					<p>{{contest.name}} <time style="margin-left:450px"><p style="margin-left:880px"><button type = "submit">Add location</button> 
 						<select name="location"style="margin-left:160px;width:150px">
 							{% for location in contest.locations %}
 							<option value={{location}}>{{location}}</option>
@@ -139,9 +108,8 @@
 				<!-- Footer -->
 					<section id="footer">
 						<ul class="icons">
-							<li><a href="#" class="fa-github"><span class="label">GitHub</span></a></li>
-							<li><a href="#" class="fa-linkedin"><span class="label">LinkedIn</span></a></li>
-							<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
+							<li><a href="https://github.com/Vivek-kapoor/CodeStreak" class="fa-github"><span class="label">GitHub</span></a></li>
+							
 						</ul>
 						<!--<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>-->
 					</section>
