@@ -177,7 +177,8 @@
 														<td>{{submission.q_id}}</td>
 														<td>{{submission.status}}%</td>
 														<td>{{submission.score}}</td>
-														<td><a href='#'>view</a></td>
+														<td><a href="{{url_for('view_submission', 
+															usn = submission.usn, cid = cid, qid = submission.q_id)}}">view</a></td>
 													</tr>
 												{% endfor %}
 											</table>
