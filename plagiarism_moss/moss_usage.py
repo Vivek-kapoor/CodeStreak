@@ -6,6 +6,7 @@ userid = 881220386
 import os
 import sys
 sys.path.append("/home/sumanth/projects/CodeStreak/CodeStreak")
+sys.path.append("/home/sumanth/projects/CodeStreak/CodeStreak/plagiarism_moss")
 from db_access import *
 
 
@@ -27,12 +28,10 @@ def check_plagiarism(c_id):
 
 
 	# adding a base file
-	with open("submission/base.c", "w") as text_file:
+	with open("plagiarism_moss/submission/base.c", "w") as text_file:
 			text_file.write(base_code)
 
 
-
-	c_id = "c_34r"
 	submissions = get_plagiarism_code(c_id)
 	print(submissions)
 
@@ -69,7 +68,7 @@ def check_plagiarism(c_id):
 		current_dict['q_id'] = q_id 
 		m = mosspy.Moss(userid, "c")
 		# can add a base file(skeleton code which need not be compared)
-		m.addBaseFile("submission/base.c")
+		m.addBaseFile("plagiarism_moss/submission/base.c")
 		# Submission Files
 		print(question)
 		m.addFilesByWildcard(str(question)+"/*.c")
@@ -98,4 +97,3 @@ def check_plagiarism(c_id):
 		print("done checking")
 
 
-check_plagiarism("c_34r")

@@ -43,10 +43,10 @@
 			function submit_plag(cid) {
 				$.ajax({
 					type: "GET",
-					url: "/plagarism_test?c_id=" + cid
+					url: "/plagiarism_test?c_id=" + cid
 				}).done(function(o) {
 					// Do whatever u want to do with the results here!
-					console.log(o);
+					div = document.getElementById('mydiv').innerHTML = "Submissions have been checked for plagiarism"
 				});
 
 				swal({
@@ -223,12 +223,16 @@
 						<div id="plag" class="tabcontent">
 						<section>
 									<h3>PLAGIARISM PORTFOLIO</h3>
+									<button onclick="submit_plag('{{cid}}')" value="Check code for plagiarism"> Check code </button>
+
+									<div id="mydiv"><strong></strong></div>
 									<div class="table-wrapper" style="background-color:rgb(255, 255, 255)" >
 										<div id="plag_quest" style="background-color:rgb(0, 0, 0)" >
-									<button onclick="submit_plag({{cid}})" value="Check code for plagiarism" ></button>
+									
+									<div id="mydiv"> </div>
 									{% if plag_report[0]['plagiarism'] != "empty" %}	
 										{% for question in plag_report[0]['plagiarism'] %}	
-											<p>{{ question_details[question.q_id] }}</p>
+											<p>{{ question['q_id'] }}</p>
 											
 											</div>
 											

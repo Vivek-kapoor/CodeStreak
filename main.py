@@ -48,7 +48,7 @@ def codestreak():
 
 @app.route('/plagiarism_test')
 def plagiarism_test():
-	return route_plagiarism_test(request.args[c_id])
+	return route_plagiarism_test(request.args['c_id'])
 
 @app.route('/profile_page')
 def profile_page():
