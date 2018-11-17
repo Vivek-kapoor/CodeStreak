@@ -26,6 +26,7 @@ CONTENTS:
 20.submission			:
 21.runcpp			: Loads ide for c code
 22.runpy			: Loads ide for c code
+23.view_submission		: Loads template to view solution submitted for perticular question
 """
 
 # import os
@@ -141,6 +142,10 @@ def runcpp():
 @app.route("/runpy", methods=['POST', 'GET'])
 def runpy():
 	return route_runpy()
+
+@app.route('/view_submission/<usn>/<cid>/<qid>/')
+def view_submission(usn,cid,qid):
+	return route_view_submission(usn,cid,qid)
 
 if (__name__ == "__main__"):
     app.run(debug=True)
