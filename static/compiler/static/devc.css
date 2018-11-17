@@ -23,6 +23,7 @@ li {
 }
 
 
+
 #customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -99,6 +100,17 @@ p.border{
     right:10px;
     width:5%;
     top:1275px;
+    bottom:0px;
+	left:1400px;
+	font-weight: bold;
+    
+
+}
+#leaderboard{
+    position:absolute;
+    right:10px;
+    width:5%;
+    top:1375px;
     bottom:0px;
 	left:1400px;
 	font-weight: bold;
