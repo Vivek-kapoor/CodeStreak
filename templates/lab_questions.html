@@ -74,7 +74,7 @@
 								<a href="{{ url_for('contest_leaderboard') }}">
 								<button  type ="submit"  style="float:right; margin-left:25px; color: green ;">Leaderboard</button></a>
 								<div class="title"  id="Lab">
-										<h2 style="margin-left:10px"><font>Challenges </font></h2>
+										<h2 style="margin-left:10px"><font>Questions </font></h2>
 
 										<p id=1 >
 											
@@ -82,7 +82,7 @@
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
 											<p><b>{{question.name}}</b>
 											<a href="{{ url_for('lab_question',qid=question.q_id) }}">
-											<button type ="submit" style="float:right; margin-top:25px;">Enter Contest</button></a></p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
+											<button type ="submit" style="float:right; margin-top:25px;">Solve</button></a></p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
 											</div>
 
 											{% endfor %}
@@ -108,9 +108,8 @@
 				<!-- Footer -->
 					<section id="footer">
 						<ul class="icons">
-							<li><a href="#" class="fa-github"><span class="label">GitHub</span></a></li>
-							<li><a href="#" class="fa-linkedin"><span class="label">LinkedIn</span></a></li>
-							<li><a href="#" class="fa-envelope"><span class="label">Email</span></a></li>
+							<li><a href="https://github.com/Vivek-kapoor/CodeStreak" class="fa-github"><span class="label">GitHub</span></a></li>
+							
 						</ul>
 						<!--<p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>-->
 					</section>

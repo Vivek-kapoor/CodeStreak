@@ -46,6 +46,9 @@ app.config['SECRET_KEY'] = '59d3ca27e6701d3fd06eb960ca5866a5'
 def codestreak():
 	return route_codestreak()
 
+@app.route('/plagiarism_test')
+def plagiarism_test():
+	return route_plagiarism_test(request.args[c_id])
 
 @app.route('/profile_page')
 def profile_page():
@@ -86,6 +89,10 @@ def professor_dashboard():
 @app.route("/admin_dashboard", methods=["GET", "POST"])
 def admin_dashboard():
 	return route_admin_dashboard()
+
+@app.route("/set_location", methods=["GET", "POST"])
+def set_location():
+	return route_set_location()
 
 @app.route("/create_assignment", methods=["GET", "POST"])
 def create_assignment():

@@ -35,6 +35,7 @@ from graph import draw_submission_chart
 
 import db_access as db
 from runcode import runcode
+from plagiarism_moss import *
 qid=0
 temp=""
 
@@ -105,10 +106,11 @@ def route_student_dashboard():
     print("------------------------------------")
     active_contests = db.get_active_contest_student(session['usn'])
     archived_contests = db.get_archived_contest_student(session['usn'])
+    future_contests = db.get_future_contest_student(session['usn'])
     #active_contests = [{'name': "kys", 'time': "now", 'active': 1},{'name': "gabe", 'time': "now", 'active': 1}]
     #archived_contests = [{'name': "kys1", 'time': "now", 'active': 0},{'name': "gabe1", 'time': "now", 'active': 0}]
     #contests = active_contests + archived_contests    
-    return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests, name = session['name'])
+    return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests, future_contests = future_contests, name = session['name'])
 
 def route_professor_dashboard():
 
@@ -125,7 +127,45 @@ def route_professor_dashboard():
 def route_admin_dashboard():
 
     unassigned_contests = db.get_unassigned_contests()
-    return render_template("admin_dashboard.html", unassigned_contests = unassigned_contests)
+    data = []
+
+    for contest in unassigned_contests:
+
+        d = {}
+        d['locations'] = db.get_unallocated_locations(contest['start_time'], contest['end_time'])
+        d['name'] = contest['name']
+        d['c_id'] = contest['c_id']
+        data.append(d)
+
+    return render_template("admin_dashboard.html", data = data)
+
+
+def route_set_location():
+
+    data = request.form.to_dict(flat=False)
+    cid = ''.join(data['c_id'])
+    location = ''.join(data['location'])
+    res = db.set_contest_location(cid, location)
+
+    unassigned_contests = db.get_unassigned_contests()
+    data = []
+
+    for contest in unassigned_contests:
+
+        d = {}
+        d['locations'] = db.get_unallocated_locations(contest['start_time'], contest['end_time'])
+        d['name'] = contest['name']
+        d['c_id'] = contest['c_id']
+        data.append(d)
+
+    return render_template("admin_dashboard.html", data = data)
+
+
+
+
+def route_plagiarism_test(c_id):
+    #submit for plagiarsim
+
 
 
 def get_question(contest_id):
@@ -334,6 +374,7 @@ def route_contest_report(cid,tag='question'):
     #fetching the plagiarism report
     plag_report = db.get_plagiarism_report(cid)
 
+    question_details = db.get_question_details(cid)
 
     if((plag_report[0]['plagiarism'])==None):
         plag_report[0]['plagiarism'] = "empty"
@@ -351,7 +392,7 @@ def route_contest_report(cid,tag='question'):
                     plag_report[0]['plagiarism'][i]['report'][j][1] = re.sub('\([0-9%]*\)', '',plag_report[0]['plagiarism'][i]['report'][j][1] )
 
     return render_template("prof_Rep.html", plag_report = plag_report ,questions = questions_by_contest, submissions = submissions_by_contest, 
-        leaderboard = leaderboard_by_contest, tag=tag, cid = cid)
+        leaderboard = leaderboard_by_contest, tag=tag, cid = cid,question_details = question_details)
 
 def show_question(qid):
     print("------------------------------------")
