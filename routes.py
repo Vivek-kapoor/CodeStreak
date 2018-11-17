@@ -125,7 +125,43 @@ def route_professor_dashboard():
 def route_admin_dashboard():
 
     unassigned_contests = db.get_unassigned_contests()
-    return render_template("admin_dashboard.html", unassigned_contests = unassigned_contests)
+    data = []
+
+    for contest in unassigned_contests:
+
+        d = {}
+        d['locations'] = db.get_unallocated_locations(contest['start_time'], contest['end_time'])
+        d['name'] = contest['name']
+        d['c_id'] = contest['c_id']
+        data.append(d)
+
+    return render_template("admin_dashboard.html", data = data)
+
+
+def route_set_location():
+
+    data = request.form.to_dict(flat=False)
+    cid = ''.join(data['c_id'])
+    location = ''.join(data['location'])
+    res = db.set_contest_location(cid, location)
+
+    unassigned_contests = db.get_unassigned_contests()
+    data = []
+
+    for contest in unassigned_contests:
+
+        d = {}
+        d['locations'] = db.get_unallocated_locations(contest['start_time'], contest['end_time'])
+        d['name'] = contest['name']
+        d['c_id'] = contest['c_id']
+        data.append(d)
+
+    return render_template("admin_dashboard.html", data = data)
+
+
+
+
+
 
 
 def get_question(contest_id):

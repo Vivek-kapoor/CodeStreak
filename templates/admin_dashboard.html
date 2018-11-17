@@ -101,11 +101,24 @@
 										
 
 										<p id=1 >
-											{% for contest in unassigned_contests %}
+											<form action = "{{ url_for('set_location') }}" method = POST>
+											{% for contest in data %}
+
 											<div class="title" style="border:1px solid black;padding:5px;border-radius:25px;;margin:10px">							
-					<p>{{contest.name}} <time style="margin-left:450px"><a href="{{ url_for('contest_page', cid=contest.c_id) }}">{{contest.time}}</time></a></p><p style="margin-left:880px"><button>Enter Contest</button> <select name="Class"style="margin-left:160px;width:150px"><option value="class">CLASS</option></select>
-								</p>	</div>
+					<p>{{contest.name}} <time style="margin-left:450px"><p style="margin-left:880px"><button type = "submit">Enter Contest</button> 
+						<select name="location"style="margin-left:160px;width:150px">
+							{% for location in contest.locations %}
+							<option value={{location}}>{{location}}</option>
+							{% endfor %}
+							
+
+						</select>
+								</p>	
+							</div>
+											<input type = "hidden" name = "c_id" value = {{contest.c_id}}>
 											{% endfor %}
+
+										</form>
 										</p>
 
 										

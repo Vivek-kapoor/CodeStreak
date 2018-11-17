@@ -87,6 +87,10 @@ def professor_dashboard():
 def admin_dashboard():
 	return route_admin_dashboard()
 
+@app.route("/set_location", methods=["GET", "POST"])
+def set_location():
+	return route_set_location()
+
 @app.route("/create_assignment", methods=["GET", "POST"])
 def create_assignment():
 	return route_create_assignment()
