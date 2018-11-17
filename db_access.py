@@ -535,17 +535,23 @@ def create_question(p_id: str, name: str, problem: str, difficulty: str, languag
     return res
 
 
-def get_submissions_by_student(usn: str, q_id: str, c_id: str) -> list:
+def get_submissions_by_student(usn: str, q_id: str = None, c_id: str = None) -> list:
     """
-    Gets the submissions made by a student for a particular question for a particular contest
+    Gets the submissions made by a student
     :param usn: unique student id
     :param q_id: question id
     :param c_id: contest id
     :return: A list of submissions where each submission is a dict
     """
-
-    query = """SELECT * FROM submission WHERE usn = \'{}\' AND q_id = \'{}\' AND c_id = \'{}\' ORDER BY submit_time DESC"""
-    query = query.format(usn, q_id, c_id)
+    if q_id is None and c_id is None:
+        query = """SELECT * FROM submission WHERE usn = \'{}\' ORDER BY submit_time DESC"""
+        query = query.format(usn)
+    elif q_id is None:
+        query = """SELECT * from submission WHERE usn = \'{}\' AND c_id = \'{}\' ORDER BY submit_time DESC"""
+        query = query.format(usn, c_id)
+    else:
+        query = """SELECT * FROM submission WHERE usn = \'{}\' AND q_id = \'{}\' AND c_id = \'{}\' ORDER BY submit_time DESC"""
+        query = query.format(usn, q_id, c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
         logging.error('Could not retrieve any submissions')
