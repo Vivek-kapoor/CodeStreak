@@ -105,10 +105,11 @@ def route_student_dashboard():
     print("------------------------------------")
     active_contests = db.get_active_contest_student(session['usn'])
     archived_contests = db.get_archived_contest_student(session['usn'])
+    future_contests = db.get_future_contest_student(session['usn'])
     #active_contests = [{'name': "kys", 'time': "now", 'active': 1},{'name': "gabe", 'time': "now", 'active': 1}]
     #archived_contests = [{'name': "kys1", 'time': "now", 'active': 0},{'name': "gabe1", 'time': "now", 'active': 0}]
     #contests = active_contests + archived_contests    
-    return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests, name = session['name'])
+    return render_template("Student Dashboard.html", active_contests = active_contests, archived_contests = archived_contests, future_contests = future_contests, name = session['name'])
 
 def route_professor_dashboard():
 
