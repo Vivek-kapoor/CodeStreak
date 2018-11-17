@@ -66,7 +66,7 @@ none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()
 logging.basicConfig(level="INFO")
 
 connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
-pool = psycopg2.pool.SimpleConnectionPool(4, 8, connect_str)
+pool = psycopg2.pool.SimpleConnectionPool(2, 10, connect_str)
 logging.info('Successfully established connection pool')
 
 
@@ -76,6 +76,7 @@ def destroy_connections() -> None:
     Closes all connections from connection pool
     :return: None
     """
+    global pool
     if pool:
         pool.closeall()
         logging.info('Closed all connections with database')
@@ -140,7 +141,6 @@ def _execute_query(query: str, json_output: bool = False) -> any:
             logging.info('Returned: ' + str(res))
             conn.commit()
             cur.close()
-            pool.putconn(conn)
             return res
 
         except psycopg2.ProgrammingError:
@@ -156,6 +156,10 @@ def _execute_query(query: str, json_output: bool = False) -> any:
         except psycopg2.OperationalError:
             sleep(1)
             return _execute_query(query, json_output)
+
+        finally:
+            if conn:
+                pool.putconn(conn)
 
     return None
 
@@ -642,7 +646,55 @@ def set_plagiarism_report(c_id: str, report: list):
     return res
 
 
+def get_unassigned_contests() -> list:
+    """
+    Gets labs whose locations have not been assigned
+    Note: This does not care if the contest is in the past
+    :return: a list of c_ids
+    """
+
+    query = """SELECT * from contest WHERE location IS NULL"""
+    res = _execute_query(query, json_output=True)
+
+    if res in none_list:
+        logging.error("Could not get any unassigned labs")
+        return []
+
+    return res[0]
+
+
+def get_unallocated_locations(start_time, end_time) -> list:
+    """
+    Gets locations that have not been assigned for given time
+    :param start_time: start time of contest
+    :param end_time: end time of contest
+    :return: A list of locations
+    """
+    max_location = 9
+    locations = set(str(x) for x in range(max_location+1))
+    query = """SELECT location FROM contest WHERE \'{}\' >= start_time AND \'{}\' <= end_time"""
+    query = query.format(end_time, start_time)
+    res = _execute_query(query)
+
+    if res in none_list:
+        logging.error("No locations available")
+        return []
+
+    unavailable_locations = set(x[0] for x in res)
+    print(unavailable_locations)
+    available_locations = locations - unavailable_locations
+    return sorted(list(available_locations))
+
+
 if __name__ == "__main__":
+    temp = get_unallocated_locations("2018-11-07 04:30:00", "2018-11-11 04:30:00")
+    print(type(temp), temp)
+    quit()
+
+    temp = get_unassigned_contests()
+    print(type(temp), temp)
+    quit()
+
     temp = get_future_contest_student("01FB15ECS342")
     print(type(temp), temp)
 
