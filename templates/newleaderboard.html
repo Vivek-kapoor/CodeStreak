@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<title>LeaderBoard</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+	</head>
+	<body class="is-preload" style="background-color:rgb(255,255,255)">
+	<div id="wrapper">
+	<section id="menu">
+
+						<!-- Search -->
+							<section>
+								<form class="search" method="get" action="#">
+									<input type="text" name="query" placeholder="Search" />
+								</form>
+							</section>
+
+						<!-- Links -->
+							<section>
+								<ul class="links">
+									<li>
+										<a href="#">
+											<h3>DashBoard</h3>
+											<p>Active Contests</p>
+										</a>
+									</li>
+									
+								</ul>
+							</section>
+						<section>
+								<ul class="actions stacked">
+									<li><a href="{{ url_for('logout')}}" class="button large fit">Log Out</a></li>
+								</ul>
+							</section>
+	</section>
+		<body>
+		<div id="main" >
+		<div id="leader" class="tabcontent" >
+						<section>
+									<h3>RANKING PORTFOLIO</h3>
+									
+									<div class="table-wrapper" style="background-color:rgb(255, 255, 255)" >
+										<table>
+											
+												<tr>
+													<th>RANK</th>
+													<th>Score</th> 
+													<th>USN</th>
+													<th>TIME</th>
+												</tr>
+												{% for data in leaderboard %}
+													<tr {% if loop.index % 2 == 0 %} style="background-color: #f2f2f2" {% endif %}>
+														<td>{{loop.index}}</td>
+														<td>{{data.score}}</td>
+														<td>{{data.usn}}</td>
+														<td>{{data.penalty}}</td>
+													</tr>
+												{% endfor %}
+											</table>
+									</div>
+
+									
+								</section>
+
+						</div>
+		</div>
+		</body>
+
+				
+
+						
+	
+
+						
+
+		</div>
+<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+
+	</body>
+</html>
