@@ -28,14 +28,14 @@ CONTENTS
     19. get_student_details: Gets all student details including rating, best rating, rank, batch rank, class rank from database
     20. get_submission_distribution: Distribution of all submissions to create pie chart
     21. get_questions_by_contest: Fetches questions of a particular contest
-    22. create_question: Adds a question to the database with a random question id
-    23. get_submissions_by_student: Gets the submissions made by a student for a particular question for a particular contest
-    24. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
-    25. get_leaderboard: Gets the leaderboard of a contest
-    26. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
-    27. get_plagiarism_report: Returns the plagiarism report for a given contest
-    28. set_plagiarism_report: Saves the plagiarism report in the database
-
+    22. set_contest_location: Sets the location of a contest
+    23. create_question: Adds a question to the database with a random question id
+    24. get_submissions_by_student: Gets the submissions made by a student for a particular question for a particular contest
+    25. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+    26. get_leaderboard: Gets the leaderboard of a contest
+    27. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
+    28. get_plagiarism_report: Returns the plagiarism report for a given contest
+    29. set_plagiarism_report: Saves the plagiarism report in the database
 """
 
 import psycopg2
@@ -488,6 +488,22 @@ def get_questions_by_contest(c_id: str) -> list:
         logging.error('Could not retrieve any questions for contest ' + c_id)
         return []
     return res[0]
+
+
+def set_contest_location(c_id: str, location: str):
+    """
+    Sets the location of a contest
+    :param c_id: contest id
+    :param location: location of the lab
+    :return: 1 if successful
+    """
+    query = """UPDATE contest SET location = \'{}\' WHERE c_id = \'{}\'"""
+    query = query.format(location, c_id)
+    res = _execute_query(query)
+    if res in none_list:
+        logging.error("Could not update location")
+        return None
+    return res
 
 
 def create_question(p_id: str, name: str, problem: str, difficulty: str, languages: set, tags: set, test_cases: list,
