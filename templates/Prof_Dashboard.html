@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<head>
-		<title>Student Dashboard</title>
+		<title>Professor Dashboard</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../static/assets/css/main.css">
@@ -78,7 +78,7 @@
 						<!-- Actions -->
 							<section>
 								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Log Out</a></li>
+									<li><a href="{{ url_for('logout')}}" class="button large fit">Log Out</a></li>
 								</ul>
 							</section>
 
@@ -96,7 +96,7 @@
 									</div>
 									<div class="meta">
 										
-										<a href="#" class="author"><span class="name">Admin Name</span><img src="images/avatar.jpg" alt="" /></a>
+										<span class="name">{{name}}</span><img src="images/avatar.jpg" alt="" />
 									</div>
 								</header>
 								
@@ -155,11 +155,10 @@
 		<!-- Scripts -->
 
 			</script>	
-			<script src="../assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
+			<script src="../static/assets/js/jquery.min.js"></script>
+			<script src="../static/assets/js/browser.min.js"></script>
+			<script src="../static/assets/js/breakpoints.min.js"></script>
+			<script src="../static/assets/js/util.js"></script>
+			<script src="../static/assets/js/main.js"></script>
 	</body>
 </html>

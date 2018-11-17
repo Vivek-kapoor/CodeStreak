@@ -97,7 +97,7 @@ def route_professor_dashboard():
     #active_contests = [{'name': "kys", 'time': "now"},{'name': "gabe", 'time': "now"}]
     #archived_contests = [{'name': "kys1", 'time': "now"},{'name': "gabe1", 'time': "now"}]
 
-    return render_template("Prof_Dashboard.html", active_contests = active_contests, archived_contests = archived_contests)
+    return render_template("Prof_Dashboard.html", active_contests = active_contests, archived_contests = archived_contests, name = session['name'])
 
 
 def get_question(contest_id):
@@ -151,10 +151,10 @@ def route_student_login():
         
         response = db.validate_student(**data)
         print('########', response)
-        if (response): # this is required in order to validate the user in database. wait. i'll call on whatsapp
+        if (response): 
             session['usn'] = data['usn'] # wait i will call if i shift my phone my internet goes ok
             student_details = db.get_student_details(data['usn'], get_ranks=False)
-            print("###################################")
+            
             session['name'] = student_details['name'] #i think this is correct.no i haven't added the above line. 
             return redirect(url_for('student_dashboard')) 
         else:
@@ -184,6 +184,9 @@ def route_prof_login():
         if (response):
             print('here')
             session['p_id'] = data['p_id']
+            student_details = db.get_student_details(data['p_id'], get_ranks=False)
+            
+            session['name'] = student_details['name'] 
             return redirect(url_for('professor_dashboard'))
     return render_template('login.html',name = "Professor")
 
