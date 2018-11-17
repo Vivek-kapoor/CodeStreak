@@ -4,28 +4,28 @@ Run this file to start the application and to verify type http://localhost:5000 
 If it doesn't throw an error, it works!
 
 CONTENTS:
-1.	codestreak				: Starting point of the application
-2.	profile_page			: Get the profile page of the student
-3.	about_us				: Get this application developers info
-4.	logout					: Logout from the application
-5.	prof_page				: Loads login page for the professor 
-6.	student_page			: Loads login page for the Student
-7.	student_login			: Verify student credentail
-8.	student_dashboard		: Loads student dashboard page
-9.	prof_login				: Verify professor credentail
-10. professor_dashboard		: Loads professor dashboard page
-11.	admin_dashboard			: Loads admins dashboard page
-12. create_assignment		: Create new lab assignment
-13. add_questions			: Adds question to the question library
-14.	contest_page			: Shows all the questions for the selected contest/lab
-15. archive_lab_question	: Shows all the submission for particular question
-16. lab_question			: Loads ide for selected question in the contest/lab
-17. contest_leaderboard		: Gets the leaderboard for the contest/lab 
-18. contest_report			: Called from prof session to get the report for the contest
-19. runc					: Loads ide for c code
-20.	submission				:
-21.	runcpp					: Loads ide for c code
-22. runpy					: Loads ide for c code
+1. codestreak			: Starting point of the application
+2. profile_page			: Get the profile page of the student
+3. about_us			: Get this application developers info
+4. logout			: Logout from the application
+5. prof_page			: Loads login page for the professor 
+6. student_page			: Loads login page for the Student
+7. student_login		: Verify student credentail
+8. student_dashboard		: Loads student dashboard page
+9. prof_login			: Verify professor credentail
+10.professor_dashboard		: Loads professor dashboard page
+11.admin_dashboard		: Loads admins dashboard page
+12.create_assignment		: Create new lab assignment
+13.add_questions		: Adds question to the question library
+14.contest_page			: Shows all the questions for the selected contest/lab
+15.archive_lab_question		: Shows all the submission for particular question
+16.lab_question			: Loads ide for selected question in the contest/lab
+17.contest_leaderboard		: Gets the leaderboard for the contest/lab 
+18.contest_report		: Called from prof session to get the report for the contest
+19.runc				: Loads ide for c code
+20.submission			:
+21.runcpp			: Loads ide for c code
+22.runpy			: Loads ide for c code
 """
 
 # import os
@@ -137,15 +137,3 @@ def runpy():
 
 if (__name__ == "__main__"):
     app.run(debug=True)
-# @app.route('/student_login',methods = ['POST', 'GET'])
-# def student_login():
-
-# 	if request.method == 'POST':
-# 		print("here")
-# 		usn = request.form['usn']
-# 		password = request.form['password']
-
-# 		if validate_student(usn, password):
-# 			return contest_list(usn)
-# 		else:
-# 			return render_template("check.html")
