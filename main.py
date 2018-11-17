@@ -46,6 +46,9 @@ app.config['SECRET_KEY'] = '59d3ca27e6701d3fd06eb960ca5866a5'
 def codestreak():
 	return route_codestreak()
 
+@app.route('/plagiarism_test')
+def plagiarism_test():
+	return route_plagiarism_test(request.args[c_id])
 
 @app.route('/profile_page')
 def profile_page():

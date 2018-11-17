@@ -35,6 +35,7 @@ from graph import draw_submission_chart
 
 import db_access as db
 from runcode import runcode
+from plagiarism_moss import *
 qid=0
 temp=""
 
@@ -162,6 +163,8 @@ def route_set_location():
 
 
 
+def route_plagiarism_test(c_id):
+    #submit for plagiarsim
 
 
 
@@ -371,6 +374,7 @@ def route_contest_report(cid,tag='question'):
     #fetching the plagiarism report
     plag_report = db.get_plagiarism_report(cid)
 
+    question_details = db.get_question_details(cid)
 
     if((plag_report[0]['plagiarism'])==None):
         plag_report[0]['plagiarism'] = "empty"
@@ -388,7 +392,7 @@ def route_contest_report(cid,tag='question'):
                     plag_report[0]['plagiarism'][i]['report'][j][1] = re.sub('\([0-9%]*\)', '',plag_report[0]['plagiarism'][i]['report'][j][1] )
 
     return render_template("prof_Rep.html", plag_report = plag_report ,questions = questions_by_contest, submissions = submissions_by_contest, 
-        leaderboard = leaderboard_by_contest, tag=tag, cid = cid)
+        leaderboard = leaderboard_by_contest, tag=tag, cid = cid,question_details = question_details)
 
 def show_question(qid):
     print("------------------------------------")
