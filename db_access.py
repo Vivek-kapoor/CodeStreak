@@ -5,7 +5,6 @@ If it doesn't throw an error, it works!
 Connect from cmd: psql -h codestreak.postgres.database.azure.com -p 5432 -U codestreak@codestreak codestreak
 
 CONTENTS
-
     0. destroy_connections: Closes all connections from connection pool
     1. random_alnum: Generates a random alphanumeric of given length with a prefix
     2. connect_db: Connects to the postgres database
@@ -36,6 +35,8 @@ CONTENTS
     27. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
     28. get_plagiarism_report: Returns the plagiarism report for a given contest
     29. set_plagiarism_report: Saves the plagiarism report in the database
+    30. get_unassigned_contests: Gets labs whose locations have not been assigned
+    31. get_unallocated_locations: Gets locations that have not been assigned for given time
 """
 
 import psycopg2
