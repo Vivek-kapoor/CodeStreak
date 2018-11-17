@@ -30,7 +30,6 @@
 </div>{{question['tags']}}</div>-->
 
 <h2 style="color: #2e6c80;">Laboratory assignment 1</h2>
-                <h1 style="color: #5e9ca0;"><span style="color: #2b2301;">{{question['name']}}</span></h1>
                 <p style="font-size: 20px;"> {{question['problem']}} <br />Input will be of this format here&gt;</p>
                 <p><span style="background-color: #2e6c80; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">Difficulty - Medium</span></p>
                 <h2 style="color: #2e6c80;">Constraints</h2>
@@ -52,7 +51,7 @@
 <textarea id="text-code" name="code" rows={{ rows }} cols={{ cols }}>
 {{ code }}
 </textarea><br/>
-<div style="width:62%" id="text-code-ace" class="hidden">{{ code }}</div>
+<div style="width:64%" id="text-code-ace" class="hidden">{{ code }}</div>
 {% endblock %}
 
 <!--{% block run %}
@@ -95,7 +94,7 @@
             {% for test_case in test_case_output %}
         <tr>
               <td>
-        {% if test_case['result'] == "Correct" %}<li style="clear: both;">
+        {% if test_case['result'] == "Correct answer" %}<li style="clear: both;">
                 <span style="background-color: #228B22; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{test_case['result']}}</span></strong>
             </td>
             <td>

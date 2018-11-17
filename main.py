@@ -53,6 +53,10 @@ def prof_login():
 def professor_dashboard():
 	return route_professor_dashboard()
 
+@app.route("/admin_dashboard", methods=["GET", "POST"])
+def admin_dashboard():
+	return route_admin_dashboard()
+
 @app.route("/create_assignment", methods=["GET", "POST"])
 def create_assignment():
 	return route_create_assignment()
