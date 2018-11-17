@@ -125,7 +125,7 @@ def route_professor_dashboard():
 def route_admin_dashboard():
 
     unassigned_contests = db.get_unassigned_contests()
-    return render_template("Admin_Dashboard.html", unassigned_contests = unassigned_contests)
+    return render_template("admin_dashboard.html", unassigned_contests = unassigned_contests)
 
 
 def get_question(contest_id):
