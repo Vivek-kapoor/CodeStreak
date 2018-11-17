@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 </head>
-	<body class="single is-preload"  style="background-image:url(back.jpg)">
+	<body class="single is-preload" >
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -73,8 +73,8 @@
 					<div id="main">
 
 						<!-- Post -->
-							<article class="post" style="background-color:#D4EEFC">
-								<header style="background-color:#ADD1E5">
+							<article class="post" style="background-color:#E0E0E0">
+								<header style="background-color:#F0F0F0">
 									<div class="title">
 										<h2><a href="#"><font color="black">Contest Stats</font></a></h2>
 										<p> <h3>{{usn}}</h3></p>
@@ -85,9 +85,9 @@
 									</div>
 								</header>
 								
-								<div class="title" style="background-color:rgb(0,0,0);border-radius:15px" id="Lab">
-										<h2 style="margin-left:10px"><font color="white">Result Analysis</font></h2>
-										<div style="padding:10px"><h3><font color="white">Current Rating:{{rating}}  <br>Best Rating:{{best_rating}}  <br>Semester: {{semester}} <br>Section: {{section}} </font></div></h3>
+								<div class="title" style="background-color:#D3D3D3;border-radius:15px" id="Lab">
+										<h2 style="margin-left:10px"><font color="black">Result Analysis</font></h2>
+										<div style="padding:10px"><h3><font color="black">Current Rating:{{rating}}  <br>Best Rating:{{best_rating}}  <br>Semester: {{semester}} <br>Section: {{section}} </font></div></h3>
 										<p id=1 >
 											<div class="title" style="padding:10px;margin-left:600px;height: 300px; width: 50%;"" id="chartContainer" >
 												<img src = "{{ url_for('static', filename = img_path ) }}">
@@ -117,11 +117,11 @@
 					
 					</div>
 						
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="../static/assets/js/jquery.min.js"></script>
+			<script src="../static/assets/js/browser.min.js"></script>
+			<script src="../static/assets/js/breakpoints.min.js"></script>
+			<script src="../static/assets/js/util.js"></script>
+			<script src="../static/assets/js/main.js"></script>
 
 	</body>
 </html>
