@@ -171,11 +171,6 @@ def route_set_location():
 
 
 
-def route_plagiarism_test(c_id):
-    #submit for plagiarsim
-    print("umm")
-
-
 
 def get_question(contest_id):
     #Get all questions in a contest
