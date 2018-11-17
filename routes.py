@@ -99,6 +99,11 @@ def route_professor_dashboard():
 
     return render_template("Prof_Dashboard.html", active_contests = active_contests, archived_contests = archived_contests, name = session['name'])
 
+def route_admin_dashboard():
+
+    unassigned_contests = db.get_unassigned_contests()
+    return render_template("Admin_Dashboard.html", unassigned_contests = unassigned_contests)
+
 
 def get_question(contest_id):
     #Get all questions in a contest
@@ -144,10 +149,9 @@ def route_student_login():
     # verify the credentail of users
     if (data): #why is it so 
         
-        data['usn'] = ''.join(data['usn'])
-        data['password'] = ''.join(data['password'])
-        print("##############################################################################################################")
-        print(data)
+        data['usn'] = ''.join(data['usn']).upper()
+        data['password'] = ''.join(data['password']).upper()
+        
         
         response = db.validate_student(**data)
         print('########', response)
@@ -175,11 +179,18 @@ def route_prof_login():
     # verify the credentail of users
     if (data):
                     
-        data['p_id'] = ''.join(data['p_id'])
-        data['password'] = ''.join(data['password'])
+        data['p_id'] = ''.join(data['p_id']).upper()
+        data['password'] = ''.join(data['password']).upper()
         print("Data-> ", data)
 
+        
+
+
         response = db.validate_professor(**data)
+
+        if data['p_id'] == "01FB15ECS338":
+
+            return redirect(url_for('admin_dashboard'))
 
         if (response):
             print('here')
