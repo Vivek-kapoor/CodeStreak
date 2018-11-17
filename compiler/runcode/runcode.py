@@ -133,7 +133,7 @@ class RunCCode(object):
             result = "Correct Answer"
         else:
             result = "Wrong Answer"
-        output ="Submission status: "+str(result)+"\n"+str(correct_cases)+"/"+str(total_cases)+" Test Cases Passed\nScore "+str(score)+"\nTime taken ="+str(total_time)+"s"+"\nMemory taken = "+str(total_memory)+"bytes\n"
+        output ="Question_id:"+str(self.question['q_id'])+"\n"+"Submission status: "+str(result)+"\n"+str(correct_cases)+"/"+str(total_cases)+" Test Cases Passed\nScore "+str(score)+"\nTime taken ="+str(total_time)+"s"+"\nMemory taken = "+str(total_memory)+"bytes\n"
         return output,test_case_output,score,result
     
 
