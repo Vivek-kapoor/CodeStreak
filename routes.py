@@ -494,7 +494,7 @@ def route_submission():
         if(test_case_output == None):
             global qid
             return render_template("Table/table.html",output = [{"status":"No submissions to show", "score":"","test_case_status":"","submit_time":""}],qid=qid)
-        global qid
+        #global qid
         return render_template("Table/table.html",output=test_case_output,qid=qid)
 
 
