@@ -152,38 +152,14 @@ function profstat(evt, attr) {
 						
 						<div id="submis" class="tabcontent" >
 						<section>
-											<form style="margin-left:820px"><h4>Filter By:</h4>
+											<form style="margin-left:820px" action="url_for('contest_info', cid = cid, 
+											tag='submission')" method = "POST"><h4>Filter By:</h4>
 												<label for="company">
-												<span>USN</span>
-												<input type="text" id="USN" default="" />
+													<span>USN</span>
+													<input type="text" id="USN" name = "usn" />
 												</label>
-												<label for="contact">
-												<span>SCORE</span>
-												<input type="text" id="SCORE" default=""/>
-												
-															</label>
+												<input type="submit">
 											</form>
-											<button>Go!</button>
-											<script>
-											var dis1 = document.getElementById("USN");
-											var dis2 = document.getElementById("SCORE");
-												dis1.onchange = function () {
-
-													if (this.value != "" || this.value.length > 0) {
-														document.getElementById("SCORE").disabled = true;
-															}
-													else if(this.value==""){
-														dis2.disabled=false;}
-												}
-												dis2.onchange = function () {
-
-													if (this.value != "" || this.value.length > 0) {
-														document.getElementById("USN").disabled = true;
-															}
-													else if(this.value==""){
-													dis1.disabled=false;}
-												}
-											</script>
    
 <br><br><br><br>
 									<h3>SUBMISSION PORTFOLIO</h3>
@@ -319,7 +295,7 @@ function profstat(evt, attr) {
 			<script src="../static/assets/js/breakpoints.min.js"></script>
 			<script src="../static/assets/js/util.js"></script>
 			<script src="../static/assets/js/main.js"></script>
-			<!--<script type="text/javascript">
+			<script type="text/javascript">
 				{% if tag == "question" %}
 					$('#question').trigger('click');
 				{% elif tag == "submission" %}
@@ -327,6 +303,6 @@ function profstat(evt, attr) {
 				{% elif tag == "leaderBoard" %}
 					$('#leaderboard').trigger('click');
 				{% endif %}
-			</script>-->
+			</script>
 	</body>
 </html>

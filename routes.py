@@ -277,16 +277,23 @@ def route_contest_leaderboard(cid):
 
 
 
-def route_contest_report(cid):
+def route_contest_report(cid,tag = "question"):
     print("------------------------------------")
     print("Session in route_contest_report ",session)
     print("------------------------------------")
-
     questions_by_contest = db.get_questions_by_contest(cid)
-    submissions_by_contest = db.get_submissions_by_contest(cid)
+
+    if(tag == "submission"):
+        data = request.form.to_dict(flat=False)
+        request_data = {'cid' : cid, 
+                        'usn' : data['usn']
+                        }
+        submissions_by_contest = db.get_submission_by_student(**request_data)
+    else:
+        submissions_by_contest = db.get_submissions_by_contest(cid)
+
     leaderboard_by_contest = db.get_leaderboard(cid)
-    leaderboard_by_contest = sorted(leaderboard_by_contest, key=lambda k: (-k['score'], k['penalty']))
-    print("Submission ->", submissions_by_contest)
+
     #fetching the plagiarism report
     plag_report = db.get_plagiarism_report(cid)
 
@@ -307,7 +314,7 @@ def route_contest_report(cid):
                     plag_report[0]['plagiarism'][i]['report'][j][1] = re.sub('\([0-9%]*\)', '',plag_report[0]['plagiarism'][i]['report'][j][1] )
 
     return render_template("prof_Rep.html", plag_report = plag_report ,questions = questions_by_contest, submissions = submissions_by_contest, 
-        leaderboard = leaderboard_by_contest, tag="question")
+        leaderboard = leaderboard_by_contest, tag=tag, cid = cid)
 
 def show_question(qid):
     print("------------------------------------")
