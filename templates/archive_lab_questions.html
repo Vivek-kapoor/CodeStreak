@@ -10,7 +10,7 @@
 		<title>Student Dashboard</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../static/assets/css/main.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
 	</head>
 	<body class="single is-preload"  >
 
@@ -19,7 +19,7 @@
 
 				<!-- Header -->
 					<header id="header">
-						
+						<h1><a href="{{ url_for('student_dashboard') }}">My dashboard</a></h1>
 						<nav class="links">
 							<ul>
 								<li><a href="{{ url_for('about_us')}}">About Us</a></li>
@@ -37,6 +37,7 @@
 						</nav>
 					</header>
 
+
 				<!-- Menu -->
 					<section id="menu">
 
@@ -45,7 +46,7 @@
 						<!-- Actions -->
 							<section>
 								<ul class="actions stacked">
-									<li><a href="{{ url_for('logout')}}" class="button large fit">Log Out</a></li>
+									<li><a href="{{ url_for('logout')}}"class="button large fit">Log Out</a></li>
 								</ul>
 							</section>
 
@@ -55,59 +56,58 @@
 					<div id="main">
 
 						<!-- Post -->
+						
 							<article class="post" >
 								<header >
 									<div class="title">
-										<h2><a href="#">Contest Portfolio</a></h2>
+										<h2>{{c_name}}</h2>
+										<h1>Start Time:</h1><span id="stime">{{s_time}}</span>
+										<h1>End Time:</h1><span id="etime">{{e_time}}</span>
+										<h1>Remaining Time:</h1><span id="rtime"></span>
+										<h1>Description: </h1>AMauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. 
 										<p></p>
 									</div>
 									<div class="meta">
 										
-										<a href="{{ url_for('profile_page') }}" class="author"><span class="name">{{name}}</span><img src="images/avatar.jpg" alt="" /></a>
+										<a href="#" class="author" style="margin-top:auto; margin-bottom:auto;"><span class="name" >{{name}}</span><img src="images/avatar.jpg" alt="" /></a>
 									</div>
 								</header>
 								
 								<div class="title"  id="Lab">
-										<h2 style="margin-left:10px"><font>Active Contests </font></h2>
-
-										<!-- Jinja2 part -->
-										
-
-										
+										<h2 style="margin-left:10px"><font>Challenges </font></h2>
 
 										<p id=1 >
-											{% for contest in active_contests %}
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">							
-											<p>{{contest.name}} <a href="{{ url_for('contest_page', cid=contest.c_id) }}"><button style="float:right;">Enter Contest</button></a></p>
-											</div>
-											{% endfor %}
-										</p>
+											
 
+											{% for question in questions %}
+											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">											
+											<p><b>{{question.name}}</b>
+											<a href="{{ url_for('archive_lab_question',qid=question.q_id) }}">
+											<button type ="submit" style="float:right; margin-top:25px;">Show Submissions</button></a>
+											<a href="{{ url_for('contest_leaderboard') }}">
+											<button type ="submit" style="float:right; margin-top:25px;">Show Leaderboard</button></a>
+
+
+										</p>											<i>Tags:</i> {{question.tags}}  <i>Max Score:</i> 15 <i>Difficulty:</i> {{question.difficulty}}
+											</div>
+
+											{% endfor %}
+																						
+										</p>
+										
 										
 										
 										
 										<br>
+											}
 								</div>
 								
-								<br><br>
-								<div class="title"  >
-										<h2 style="margin-left:10px"><font >Archived Contests</font></h3>
-										<p>
-											{% for contest in archived_contests %}
-											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;margin:10px">											
-											<p>{{contest.name}} <a href="{{ url_for('contest_page',cid=contest.c_id) }}"> <button style="float:right;">View Details</button></a></p>	
-											</div>
-											{% endfor %}
-										</p>
-										
-										<!-- end of Jinja2 part-->
-										<br>
-								</div>
 								
 								
 								
 								
 							</article>
+							
 
 					</div>
 
@@ -126,11 +126,11 @@
 		<!-- Scripts -->
 
 				
-			<script src="../static/assets/js/jquery.min.js"></script>
-			<script src="../static/assets/js/browser.min.js"></script>
-			<script src="../static/assets/js/breakpoints.min.js"></script>
-			<script src="../static/assets/js/util.js"></script>
-			<script src="../static/assets/js/main.js"></script>
-
+			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+			
 	</body>
 </html>

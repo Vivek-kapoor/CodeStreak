@@ -5,7 +5,6 @@ If it doesn't throw an error, it works!
 Connect from cmd: psql -h codestreak.postgres.database.azure.com -p 5432 -U codestreak@codestreak codestreak
 
 CONTENTS
-
     0. destroy_connections: Closes all connections from connection pool
     1. random_alnum: Generates a random alphanumeric of given length with a prefix
     2. connect_db: Connects to the postgres database
@@ -28,14 +27,16 @@ CONTENTS
     19. get_student_details: Gets all student details including rating, best rating, rank, batch rank, class rank from database
     20. get_submission_distribution: Distribution of all submissions to create pie chart
     21. get_questions_by_contest: Fetches questions of a particular contest
-    22. create_question: Adds a question to the database with a random question id
-    23. get_submissions_by_student: Gets the submissions made by a student for a particular question for a particular contest
-    24. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
-    25. get_leaderboard: Gets the leaderboard of a contest
-    26. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
-    27. get_plagiarism_report: Returns the plagiarism report for a given contest
-    28. set_plagiarism_report: Saves the plagiarism report in the database
-
+    22. set_contest_location: Sets the location of a contest
+    23. create_question: Adds a question to the database with a random question id
+    24. get_submissions_by_student: Gets the submissions made by a student for a particular question for a particular contest
+    25. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+    26. get_leaderboard: Gets the leaderboard of a contest
+    27. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
+    28. get_plagiarism_report: Returns the plagiarism report for a given contest
+    29. set_plagiarism_report: Saves the plagiarism report in the database
+    30. get_unassigned_contests: Gets labs whose locations have not been assigned
+    31. get_unallocated_locations: Gets locations that have not been assigned for given time
 """
 
 import psycopg2
@@ -66,7 +67,7 @@ none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple()
 logging.basicConfig(level="INFO")
 
 connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
-pool = psycopg2.pool.SimpleConnectionPool(4, 8, connect_str)
+pool = psycopg2.pool.SimpleConnectionPool(2, 10, connect_str)
 logging.info('Successfully established connection pool')
 
 
@@ -76,6 +77,7 @@ def destroy_connections() -> None:
     Closes all connections from connection pool
     :return: None
     """
+    global pool
     if pool:
         pool.closeall()
         logging.info('Closed all connections with database')
@@ -140,7 +142,6 @@ def _execute_query(query: str, json_output: bool = False) -> any:
             logging.info('Returned: ' + str(res))
             conn.commit()
             cur.close()
-            pool.putconn(conn)
             return res
 
         except psycopg2.ProgrammingError:
@@ -156,6 +157,10 @@ def _execute_query(query: str, json_output: bool = False) -> any:
         except psycopg2.OperationalError:
             sleep(1)
             return _execute_query(query, json_output)
+
+        finally:
+            if conn:
+                pool.putconn(conn)
 
     return None
 
@@ -490,6 +495,22 @@ def get_questions_by_contest(c_id: str) -> list:
     return res[0]
 
 
+def set_contest_location(c_id: str, location: str):
+    """
+    Sets the location of a contest
+    :param c_id: contest id
+    :param location: location of the lab
+    :return: 1 if successful
+    """
+    query = """UPDATE contest SET location = \'{}\' WHERE c_id = \'{}\'"""
+    query = query.format(location, c_id)
+    res = _execute_query(query)
+    if res in none_list:
+        logging.error("Could not update location")
+        return None
+    return res
+
+
 def create_question(p_id: str, name: str, problem: str, difficulty: str, languages: set, tags: set, test_cases: list,
                     editorial: str = "N/A", time_limit: float = 1,
                     memory_limit: float = 1024, score: int = 0):
@@ -514,17 +535,23 @@ def create_question(p_id: str, name: str, problem: str, difficulty: str, languag
     return res
 
 
-def get_submissions_by_student(usn: str, q_id: str, c_id: str) -> list:
+def get_submissions_by_student(usn: str, q_id: str = None, c_id: str = None) -> list:
     """
-    Gets the submissions made by a student for a particular question for a particular contest
+    Gets the submissions made by a student
     :param usn: unique student id
     :param q_id: question id
     :param c_id: contest id
     :return: A list of submissions where each submission is a dict
     """
-
-    query = """SELECT * FROM submission WHERE usn = \'{}\' AND q_id = \'{}\' AND c_id = \'{}\' ORDER BY submit_time DESC"""
-    query = query.format(usn, q_id, c_id)
+    if q_id is None and c_id is None:
+        query = """SELECT * FROM submission WHERE usn = \'{}\' ORDER BY submit_time DESC"""
+        query = query.format(usn)
+    elif q_id is None:
+        query = """SELECT * from submission WHERE usn = \'{}\' AND c_id = \'{}\' ORDER BY submit_time DESC"""
+        query = query.format(usn, c_id)
+    else:
+        query = """SELECT * FROM submission WHERE usn = \'{}\' AND q_id = \'{}\' AND c_id = \'{}\' ORDER BY submit_time DESC"""
+        query = query.format(usn, q_id, c_id)
     res = _execute_query(query, json_output=True)
     if res in none_list:
         logging.error('Could not retrieve any submissions')
@@ -626,7 +653,55 @@ def set_plagiarism_report(c_id: str, report: list):
     return res
 
 
+def get_unassigned_contests() -> list:
+    """
+    Gets labs whose locations have not been assigned
+    Note: This does not care if the contest is in the past
+    :return: a list of c_ids
+    """
+
+    query = """SELECT * from contest WHERE location IS NULL"""
+    res = _execute_query(query, json_output=True)
+
+    if res in none_list:
+        logging.error("Could not get any unassigned labs")
+        return []
+
+    return res[0]
+
+
+def get_unallocated_locations(start_time, end_time) -> list:
+    """
+    Gets locations that have not been assigned for given time
+    :param start_time: start time of contest
+    :param end_time: end time of contest
+    :return: A list of locations
+    """
+    max_location = 9
+    locations = set(str(x) for x in range(max_location+1))
+    query = """SELECT location FROM contest WHERE \'{}\' >= start_time AND \'{}\' <= end_time"""
+    query = query.format(end_time, start_time)
+    res = _execute_query(query)
+
+    if res in none_list:
+        logging.error("No locations available")
+        return []
+
+    unavailable_locations = set(x[0] for x in res)
+    print(unavailable_locations)
+    available_locations = locations - unavailable_locations
+    return sorted(list(available_locations))
+
+
 if __name__ == "__main__":
+    temp = get_unallocated_locations("2018-11-07 04:30:00", "2018-11-11 04:30:00")
+    print(type(temp), temp)
+    quit()
+
+    temp = get_unassigned_contests()
+    print(type(temp), temp)
+    quit()
+
     temp = get_future_contest_student("01FB15ECS342")
     print(type(temp), temp)
 
