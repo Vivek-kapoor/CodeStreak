@@ -92,8 +92,7 @@
 										<p id=2 >
 											{% for contest in archived_contests %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;margin:10px">
-											
-											<p>{{contest.name}} <a href="{{ url_for('contest_report', cid=contest.c_id) }}"><button style="float:right;">Report</button></a> <span style="float:right; "><font color="red">Finished</font></span></p>
+											<p>{{contest.name}} <a href="{{ url_for('contest_report', cid=contest.c_id, tag='question') }}"><button style="float:right;">Report</button></a> <span style="float:right; "><font color="red">Finished</font></span></p>
 											
 											</div>
 											{% endfor %}
@@ -125,10 +124,10 @@
 		<!-- Scripts -->
 
 			</script>	
-			<script src="../static/assets/js/jquery.min.js"></script>
-			<script src="../static/assets/js/browser.min.js"></script>
-			<script src="../static/assets/js/breakpoints.min.js"></script>
-			<script src="../static/assets/js/util.js"></script>
-			<script src="../static/assets/js/main.js"></script>
+			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 	</body>
 </html>

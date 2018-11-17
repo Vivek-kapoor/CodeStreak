@@ -280,7 +280,7 @@ def route_contest_leaderboard(cid):
 
 
 
-def route_contest_report(cid,tag = "question"):
+def route_contest_report(cid,tag='question'):
     print("------------------------------------")
     print("Session in route_contest_report ",session)
     print("------------------------------------")
@@ -288,10 +288,11 @@ def route_contest_report(cid,tag = "question"):
 
     if(tag == "submission"):
         data = request.form.to_dict(flat=False)
-        request_data = {'cid' : cid, 
+        data['usn'] = ''.join(data['usn'])
+        request_data = {'c_id' : cid, 
                         'usn' : data['usn']
                         }
-        submissions_by_contest = db.get_submission_by_student(**request_data)
+        submissions_by_contest = db.get_submissions_by_student(**request_data)
     else:
         submissions_by_contest = db.get_submissions_by_contest(cid)
 

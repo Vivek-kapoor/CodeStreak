@@ -82,14 +82,8 @@ def contest_leaderboard():
 	return route_contest_leaderboard(cid)
 
 
-# used to show the contest report based on contest id
-@app.route('/contest_report/<cid>', methods=['POST', 'GET'])
-def contest_report(cid):
-	return route_contest_report(cid)
-
-# used when filter is used on submission in contest report page
 @app.route('/contest_report/<cid>/<tag>', methods=['POST', 'GET'])
-def contest_report_by_tag(cid,tag):
+def contest_report(cid,tag):
 	return route_contest_report(cid,tag)
 
 @app.route("/runc", methods=['POST', 'GET'])
