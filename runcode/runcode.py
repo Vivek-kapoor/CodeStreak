@@ -144,10 +144,10 @@ class RunCCode(object):
                 if(target_output==self.stdout):
                     score += my_input[i]["points"]
                     correct_cases += 1
-                    test_case_disp="Correct"
+                    test_case_disp="Correct answer"
                 else:
                     submission_correctness = False  
-                    test_case_disp="Wrong" 
+                    test_case_disp="Wrong answer" 
                 #checking if memory exceeded
                 arr = self.stderr.split()
                 tle_check = self.stdout.split(":")
