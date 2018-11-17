@@ -47,7 +47,7 @@ import string
 import re
 import json
 import atexit
-from time import time, sleep
+from time import time
 
 """
 codestreak=# \d
@@ -64,7 +64,6 @@ codestreak=# \d
 """
 
 none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple(), (None,)]
-logging.basicConfig(level="INFO")
 
 connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
 pool = psycopg2.pool.SimpleConnectionPool(2, 10, connect_str)
@@ -144,22 +143,20 @@ def _execute_query(query: str, json_output: bool = False) -> any:
             cur.close()
             return res
 
-        except psycopg2.ProgrammingError:
-            logging.error('Something went wrong with the query')
-            pool.closeall()
+        except psycopg2.ProgrammingError as e:
+            logging.error('Something went wrong with the query: %s', e)
             return None
 
-        except psycopg2.IntegrityError:
-            logging.error('Something went wrong with the query')
-            pool.closeall()
+        except psycopg2.IntegrityError as e:
+            logging.error('Something went wrong with the query: %s', e)
             return None
 
-        except psycopg2.OperationalError:
-            sleep(1)
-            return _execute_query(query, json_output)
+        except psycopg2.OperationalError as e:
+            logging.error('Operational error: %s', e)
+            return None
 
         finally:
-            if conn:
+            if conn:  # if an error occurred after picking a connection
                 pool.putconn(conn)
 
     return None
