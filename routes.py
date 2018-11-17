@@ -330,9 +330,12 @@ def contest_questions(cid):
     print("====================================")
     print("start_time ",contest_info['start_time'])
     print("====================================")
-    
-    return render_template("lab_questions.html", questions=questions, c_name=contest_info['name'], 
-        s_time=contest_info['start_time'], e_time=contest_info['end_time'], status = contest_info['status'])
+    if contest_info['status'] == "active":
+
+        return render_template("lab_questions.html", questions=questions, c_name=contest_info['name'], s_time=contest_info['start_time'], e_time=contest_info['end_time'])
+    else:
+        return render_template("archive_lab_questions.html", questions=questions, c_name=contest_info['name'], s_time=contest_info['start_time'], e_time=contest_info['end_time'])
+
 
 qid=0
 def route_runc(q_id):
