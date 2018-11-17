@@ -25,6 +25,8 @@ CONTENTS:
 18. route_submission            : Renders template table to show all the submission for particular question
 19. route_runcpp
 20. route_runpy
+21. route_view_submission       : Renders template view submission to view submitted code for particular question in
+                                  contest
 """
 
 import code
@@ -535,3 +537,13 @@ def route_runpy():
                            resrun=resrun,
                            rescomp=rescompil,#"No compilation for Python",
                            rows=default_rows, cols=default_cols)
+
+  
+def route_view_submission(usn,cid,qid):
+  request_data = {
+      'usn' : usn,
+      'c_id': cid,
+      'q_id' : qid
+  }
+  code = db.get_submissions_by_student(**request_data)[0]['code']
+  return render_template('view_submission.html',code = code)
