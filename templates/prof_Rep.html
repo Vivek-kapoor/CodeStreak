@@ -235,7 +235,7 @@
 											<table>
 												
 													<tr  {% if loop.index % 2 == 0 %} style="background-color: #f2f2f2" {% endif %}>
-														<th>Sl. No. </th>
+														
 														<th>USN 1</th> 
 														<th>USN 2</th>
 														<th>Lines matched</th>
@@ -244,7 +244,7 @@
 												
 												{% for each_line in question.report %}
 													<tr  {% if loop.index % 2 == 0 %} style="background-color: #f2f2f2" {% endif %}>
-														<td> <b>1</b></td>
+														
 														<td><b>{{ each_line[0] }}</b></td>
 														<td><b>{{each_line[1]}}</b></td>
 														<td><b>{{each_line[2]}}</b></td>

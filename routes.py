@@ -384,6 +384,7 @@ def route_contest_report(cid,tag='question'):
     else:
         for i in range(len(plag_report[0]['plagiarism'])):
             plag_report[0]['plagiarism'][i]["q_id"] = plag_report[0]['plagiarism'][i]["q_id"].split('/')[-1]
+            plag_report[0]['plagiarism'][i]["q_id"] = get_question_details(plag_report[0]['plagiarism'][i]["q_id"])['name']
             for j in range(len(plag_report[0]['plagiarism'][i]['report'])):
                 if(len(plag_report[0]['plagiarism'][i]['report'][j])==3):
                     plag_report[0]['plagiarism'][i]['report'][j][0] = plag_report[0]['plagiarism'][i]['report'][j][0].split('/')[-1]
