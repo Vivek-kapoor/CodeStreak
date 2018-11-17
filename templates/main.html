@@ -1,6 +1,10 @@
 {% extends "base.html" %}
-{%block question %}
+{%block back %}
+<a href="{{ url_for('contest_page', cid=c_id) }}">
+<button  class="button buttonround" style="float:right;width:9%;height: 5%;" type ="submit" id="somebutton">Back to Contest</button></a>
 
+{% endblock %}
+{%block question %}
 <h2 style="color: #2e6c80;">Laboratory assignment 1</h2>
                 <h1 style="color: #5e9ca0;">Your assignment question is <span style="color: #2b2301;">{{question['name']}}</span></h1>
                 <p> {{question['problem']}} <br />Input will be of this format here&gt;</p>

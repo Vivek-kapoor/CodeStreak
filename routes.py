@@ -471,6 +471,7 @@ def route_runc(q_id):
         test_case_output="None"
     
     return render_template("main.html",
+                           c_id=session['c_id'],
                            question= question,
                            code=code,    
                            target="runc",
