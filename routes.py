@@ -1,8 +1,35 @@
+"""
+This file contains the actual implemetation to routes of the application.
+
+CONTENTS:
+1.  route_codestreak            : Renders index template to choose the login actor.
+2.  route_profile_page          : Renders Student profile page with all ratings and personal info.
+3.  route_about_us              : Renders the AboutUS page of developers of this application. 
+4.  route_logout                : Renders index template to choose the login actor and reset the session varaible
+5.  route_student_dashboard     : Renders Student Dashboard template 
+6.  route_professor_dashboard   : Renders Professor Dashboard template
+7.  route_admin_dashboard       : Renders Admin Dashboard template
+8.  get_question                : Get all the questions in the contest
+9.  route_student_login         : Verify student credential.
+10. route_prof_login            : Verify professors credentail.
+11. route_create_assignment     : Renders template to create assignment and request database to add assignment.
+12. route_add_questions         : Renders template to create assignment and request database to add question.
+13. route_contest_leaderboard   : Renders leaderboard template to get the leaderboard of the contest.
+14. route_contest_report        : Renders prof report template to get the summary of contest i.e., submission, 
+                                  plagarism report, leadeaboard for the contest and list of questions in the contest.
+15. show_question               : Sets question in seesion varaible in order to pass it to be accessed in ide to submit 
+                                  solutions for.
+16. contest_questions           : Renders template based on status of the contest i.e., active or archived and shows the
+                                  list of question in the contest.
+17. route_runc                  : Renders the ide to submit the code.
+18. route_submission            : Renders template table to show all the submission for particular question
+19. route_runcpp
+20. route_runpy
+"""
+
 import code
 import random
-import logging
 import re
-logging.basicConfig(level="CRITICAL")
 from flask import render_template, redirect, url_for, request, session, flash
 from graph import draw_submission_chart
 
@@ -10,6 +37,7 @@ import db_access as db
 from runcode import runcode
 qid=0
 temp=""
+
 default_c_code = """#include <stdio.h>
 
 int main(int argc, char **argv)
@@ -58,11 +86,6 @@ def route_profile_page():
     usn = session['usn']
     name = session['name']
     img_path = "plots/"+ usn + ".png"
-    
-    
-    
-
-
     stats = db.get_submission_distribution(usn)
     draw_submission_chart(stats, usn)
 
@@ -286,7 +309,6 @@ def route_add_questions():
 def route_contest_leaderboard(cid):
 
     leaderboard_by_contest = db.get_leaderboard(cid)
-    leaderboard_by_contest = sorted(leaderboard_by_contest, key=lambda k: (-k['score'], k['penalty']))
     return render_template("leaderboard.html", leaderboard = leaderboard_by_contest)
 
 

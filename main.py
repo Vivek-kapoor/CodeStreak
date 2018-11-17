@@ -1,3 +1,33 @@
+"""
+This file contains the code to route to different parts of the application
+Run this file to start the application and to verify type http://localhost:5000 in browsers url
+If it doesn't throw an error, it works!
+
+CONTENTS:
+1.	codestreak				: Starting point of the application
+2.	profile_page			: Get the profile page of the student
+3.	about_us				: Get this application developers info
+4.	logout					: Logout from the application
+5.	prof_page				: Loads login page for the professor 
+6.	student_page			: Loads login page for the Student
+7.	student_login			: Verify student credentail
+8.	student_dashboard		: Loads student dashboard page
+9.	prof_login				: Verify professor credentail
+10. professor_dashboard		: Loads professor dashboard page
+11.	admin_dashboard			: Loads admins dashboard page
+12. create_assignment		: Create new lab assignment
+13. add_questions			: Adds question to the question library
+14.	contest_page			: Shows all the questions for the selected contest/lab
+15. archive_lab_question	: Shows all the submission for particular question
+16. lab_question			: Loads ide for selected question in the contest/lab
+17. contest_leaderboard		: Gets the leaderboard for the contest/lab 
+18. contest_report			: Called from prof session to get the report for the contest
+19. runc					: Loads ide for c code
+20.	submission				:
+21.	runcpp					: Loads ide for c code
+22. runpy					: Loads ide for c code
+"""
+
 # import os
 # from flask import Flask, render_template, request
 # from db_access import validate_student, validate_professor
@@ -11,9 +41,11 @@ app = Flask(__name__)
 app._static_folder = os.path.join(os.getcwd(),"static")
 app.config['SECRET_KEY'] = '59d3ca27e6701d3fd06eb960ca5866a5'
 
+
 @app.route('/')
 def codestreak():
 	return route_codestreak()
+
 
 @app.route('/profile_page')
 def profile_page():
@@ -26,8 +58,6 @@ def about_us():
 @app.route('/logout')
 def logout():
 	return route_logout()
-
-
 
 @app.route('/prof_page')
 def prof_page():
@@ -69,12 +99,10 @@ def add_questions():
 def contest_page(cid):
 	return contest_questions(cid)
 
-
 @app.route("/archive_lab_question/<qid>", methods=["GET", "POST"])
 def archive_lab_question(qid):
 	session['q_id'] = qid
 	return route_submission()
-
 
 @app.route("/lab_question/<qid>")
 def lab_question(qid):
@@ -84,7 +112,6 @@ def lab_question(qid):
 def contest_leaderboard():
 	cid = session['c_id']
 	return route_contest_leaderboard(cid)
-
 
 @app.route('/contest_report/<cid>/<tag>', methods=['POST', 'GET'])
 def contest_report(cid,tag):
