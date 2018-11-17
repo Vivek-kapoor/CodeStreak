@@ -5,8 +5,7 @@ userid = 881220386
 
 import os
 import sys
-sys.path.append("/home/sumanth/projects/CodeStreak/CodeStreak")
-sys.path.append("/home/sumanth/projects/CodeStreak/CodeStreak/plagiarism_moss")
+sys.path.append("/plagiarism_moss")
 from db_access import *
 
 

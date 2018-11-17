@@ -38,7 +38,7 @@ from graph import draw_submission_chart
 import db_access as db
 from runcode import runcode
 import sys
-sys.path.append("/home/sumanth/projects/CodeStreak/CodeStreak/plagiarism_moss")
+sys.path.append("plagiarism_moss")
 from moss_usage import * 
 qid=0
 temp=""
