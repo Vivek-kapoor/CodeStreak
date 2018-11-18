@@ -41,6 +41,7 @@ from runcode import runcode
 import sys
 sys.path.append("plagiarism_moss")
 from moss_usage import * 
+import os
 qid=0
 temp=""
 
@@ -462,10 +463,38 @@ def route_runc(q_id):
         global Index
         Index += 1
         ID = Index
+
+        os.chmod(os.getcwd() , 0o777)
+        for root,dirs,f in os.walk(os.getcwd()):
+            for d in dirs :
+                try:
+                    os.chmod(os.path.join(root,d) , 0o777)
+                except PermissionError:
+                    continue
+            for file in f:
+                try:
+                    os.chmod(os.path.join(root,file) , 0o777)
+                except:
+                    continue
+                    
         instr = "./running/input"+str(ID)+".txt"
         f = open(instr,"w")
         f.write(resinput)
-        f.close()  
+        f.close()
+        
+        os.chmod(os.getcwd() , 0o777)
+        for root,dirs,f in os.walk(os.getcwd()):
+            for d in dirs :
+                try:
+                    os.chmod(os.path.join(root,d) , 0o777)
+                except PermissionError:
+                    continue
+            for file in f:
+                try:
+                    os.chmod(os.path.join(root,file) , 0o777)
+                except:
+                    continue
+          
         run = runcode.RunCCode(question,code,custom_input,Index)
         rescompil, resrun , display_outputi , status ,test_case_output= run.run_c_code()
         print(test_case_output)
