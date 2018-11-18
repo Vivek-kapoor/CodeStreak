@@ -34,7 +34,9 @@ def check_plagiarism(c_id):
 	submissions = get_plagiarism_code(c_id)
 	print(submissions)
 
-
+	if(submissions==None):
+		res = set_plagiarism_report(c_id,[])
+		return 
 	for usn in submissions.keys():
 		if not os.path.exists("submission/questions/"+str(usn[0])):
 			os.makedirs("submission/questions/"+str(usn[0]))

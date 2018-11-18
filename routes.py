@@ -396,7 +396,7 @@ def route_contest_report(cid,tag='question'):
         plag_report[0]['plagiarism'] = "empty"
     else:
         for i in range(len(plag_report[0]['plagiarism'])):
-            plag_report[0]['plagiarism'][i]["q_id"] = plag_report[0]['plagiarism'][i]["q_id"].split('\\')[-1]
+            plag_report[0]['plagiarism'][i]["q_id"] = plag_report[0]['plagiarism'][i]["q_id"].split('/')[-1]
             print("qid",plag_report[0]['plagiarism'][i]["q_id"])
             if(get_question_details(plag_report[0]['plagiarism'][i]["q_id"])!=None):
                 plag_report[0]['plagiarism'][i]["q_id"] = get_question_details(plag_report[0]['plagiarism'][i]["q_id"])['name']
@@ -404,8 +404,8 @@ def route_contest_report(cid,tag='question'):
             for j in range(len(plag_report[0]['plagiarism'][i]['report'])):
                 if(len(plag_report[0]['plagiarism'][i]['report'][j])==3):
                     total_cheaters +=2
-                    plag_report[0]['plagiarism'][i]['report'][j][0] = plag_report[0]['plagiarism'][i]['report'][j][0].split('\\')[-1]
-                    plag_report[0]['plagiarism'][i]['report'][j][1] = plag_report[0]['plagiarism'][i]['report'][j][1].split('\\')[-1]
+                    plag_report[0]['plagiarism'][i]['report'][j][0] = plag_report[0]['plagiarism'][i]['report'][j][0].split('/')[-1]
+                    plag_report[0]['plagiarism'][i]['report'][j][1] = plag_report[0]['plagiarism'][i]['report'][j][1].split('/')[-1]
                     print( plag_report[0]['plagiarism'][i]['report'][j][0])
                     print(re.findall("[0-9]*%",plag_report[0]['plagiarism'][i]['report'][j][0]))
                     plag_report[0]['plagiarism'][i]['report'][j].append(re.findall("[0-9]*%",plag_report[0]['plagiarism'][i]['report'][j][0])[0])
@@ -473,18 +473,7 @@ def route_runc(q_id):
         Index += 1
         ID = Index
 
-        os.chmod(os.getcwd() , 0o777)
-        for root,dirs,f in os.walk(os.getcwd()):
-            for d in dirs :
-                try:
-                    os.chmod(os.path.join(root,d) , 0o777)
-                except PermissionError:
-                    continue
-            for file in f:
-                try:
-                    os.chmod(os.path.join(root,file) , 0o777)
-                except:
-                    continue
+       
                     
         instr = "./running/input"+str(ID)+".txt"
         f = open(instr,"w")

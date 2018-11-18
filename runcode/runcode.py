@@ -248,7 +248,6 @@ class RunCCode(object):
                 print(session['c_id'])
                 c_id=session['c_id']
                 s_id=session['usn']
-                code = "''"+code+"''"
                 submit_code(s_id, q_id,c_id, code,"C", score, status, self.test_case_output)
             
             result_run = self.stdout 
