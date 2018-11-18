@@ -590,11 +590,20 @@ def get_leaderboard(c_id: str) -> list:
         leaderboard[usn]["score"] += submission["score"]
         leaderboard[usn]["penalty"] = max(leaderboard[usn]["penalty"], submission["submit_time"])
 
-    leaderboard = [{"usn": usn, "score": leaderboard[usn]["score"], "penalty": leaderboard[usn]["penalty"]} for usn in
-                   leaderboard]
-    leaderboard.sort(key=lambda x: x["penalty"])
-    leaderboard.sort(key=lambda x: x["score"], reverse=True)
-    return leaderboard
+    rank_list = list()
+    for usn in leaderboard:
+        name = get_student_details(usn, get_ranks=False)["name"]
+        rank_list.append(
+            {
+                "usn": usn,
+                "score": leaderboard[usn]["score"],
+                "penalty": leaderboard[usn]["penalty"],
+                "name": name
+            }
+        )
+    rank_list.sort(key=lambda x: x["penalty"])
+    rank_list.sort(key=lambda x: x["score"], reverse=True)
+    return rank_list
 
 
 def get_plagiarism_code(c_id: str):
@@ -691,17 +700,18 @@ def get_unallocated_locations(start_time, end_time) -> list:
 
 
 if __name__ == "__main__":
-    #temp = get_unallocated_locations("2018-11-07T04:30:00", "2018-11-11T04:30:00")
-    #print(type(temp), temp)
-    #quit()
+    start = time()
 
-    #temp = get_unassigned_contests()
-    #print(type(temp), temp)
-
-    temp = get_student_details("01FB15ECS342", get_ranks=False)
+    temp = get_leaderboard("c_dOHYbn")
     print(type(temp), temp)
 
+    quit()
 
+    temp = get_unallocated_locations("2018-11-07 04:30:00", "2018-11-11 04:30:00")
+    print(type(temp), temp)
+
+    temp = get_unassigned_contests()
+    print(type(temp), temp)
     quit()
 
     temp = get_future_contest_student("01FB15ECS342")
@@ -709,7 +719,7 @@ if __name__ == "__main__":
 
     temp = get_contest_details("c_34r")
     print(type(temp), temp)
-    start = time()
+
     # temp = create_question(**{'test_cases': [{'point': 1.0, 'output': 'dlroW olleH', 'input': 'Hello World'}], 'time_limit': 0.5, 'difficulty': 'Easy', 'problem': 'Reverse given string', 'languages': {'C'}, 'name': 'Reverse String', 'p_id': '01FB15ECS342', 'tags': {'Warmup'}, 'memory_limit': 1.0})
     # print(type(temp), temp)
     # quit()
@@ -785,8 +795,7 @@ if __name__ == "__main__":
     temp = get_question_details("q_3423km23f")
     print(type(temp), temp)
 
-    temp = get_leaderboard("c_dOHYbn")
-    print(type(temp), temp)
+
 
     print(random_alnum())
     print(time() - start)
