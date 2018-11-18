@@ -8,7 +8,16 @@
   
   
       <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	
+		
+<script type="text/javascript">
+history.pushState(null, null, '<?php echo $_SERVER["REQUEST_URI"]; ?>');
+window.addEventListener('popstate', function(event) {
+    window.location.assign(location.href);
+});
+</script>
 
+	
   
 </head>
 
