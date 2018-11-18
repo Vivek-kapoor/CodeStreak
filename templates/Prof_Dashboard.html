@@ -21,7 +21,7 @@
 
 				<!-- Header -->
 					<header id="header">
-						<h1><a href="{{ url_for('professor_dashboard') }}">My dashboard</a></h1>
+						<h1>My dashboard</h1>
 						<nav class="links">
 							<ul>
 								
@@ -61,7 +61,7 @@
 							<article class="post" >
 								<header>
 									<div class="title">
-										<h2><a href="#">Lab Portfolio</a></h2>
+										<h2>Lab Portfolio</h2>
 										<p></p>
 									</div>
 									<div class="meta">
@@ -92,7 +92,7 @@
 										<p id=2 >
 											{% for contest in archived_contests %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;margin:10px">
-											<p>{{contest.name}} <a href="{{ url_for('contest_report', cid=contest.c_id, tag='question') }}"><button style="float:right;">Report</button></a> <span style="float:right; "><font color="red">Finished</font></span></p>
+											<p>{{contest.name}} <a href="{{ url_for('contest_report', cid=contest.c_id, tag='question') }}"><button style="float:right;">Get Statistics</button></a> <span style="float:right; ">STATUS: <font color="red">FINISHED</font></span></p>
 											
 											</div>
 											{% endfor %}
