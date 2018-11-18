@@ -64,7 +64,6 @@ codestreak=# \d
 """
 
 none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple(), (None,)]
-
 connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
 pool = psycopg2.pool.SimpleConnectionPool(2, 10, connect_str)
 logging.info('Successfully established connection pool')
@@ -454,7 +453,7 @@ def get_student_details(usn: str, get_ranks: bool = True):
         sec_clause = "section = '" + str(student_details['section']) + "'"
         for attr, clause1, clause2 in [('rank', 'true', 'true'), ('batch_rank', sem_clause, 'true'),
                                        ('class_rank', sem_clause, sec_clause)]:
-            query = """SELECT rank FROM (SELECT usn, rank() over (order by rating desc) as rank FROM student WHERE \'{}\' and \'{}\') as a WHERE usn = \'{}\'"""
+            query = """SELECT rank FROM (SELECT usn, rank() over (order by rating desc) as rank FROM student WHERE {} and {}) as a WHERE usn = \'{}\'"""
             query = query.format(clause1, clause2, usn)
             res = _execute_query(query)
             student_details[attr] = int(res[0][0])
@@ -585,25 +584,22 @@ def get_leaderboard(c_id: str) -> list:
     leaderboard = dict()
     for submission in res:
         usn = submission["usn"]
+        name = submission["name"]
         if usn not in leaderboard:
-            leaderboard[usn] = {"score": 0, "penalty": "0"}
+            leaderboard[usn] = {"score": 0, "penalty": "0", "name": name}
         leaderboard[usn]["score"] += submission["score"]
         leaderboard[usn]["penalty"] = max(leaderboard[usn]["penalty"], submission["submit_time"])
 
-    rank_list = list()
-    for usn in leaderboard:
-        name = get_student_details(usn, get_ranks=False)["name"]
-        rank_list.append(
-            {
-                "usn": usn,
-                "score": leaderboard[usn]["score"],
-                "penalty": leaderboard[usn]["penalty"],
-                "name": name
-            }
-        )
-    rank_list.sort(key=lambda x: x["penalty"])
-    rank_list.sort(key=lambda x: x["score"], reverse=True)
-    return rank_list
+    leaderboard = [{
+        "usn": usn,
+        "name": leaderboard[usn]["name"],
+        "score": leaderboard[usn]["score"],
+        "penalty": leaderboard[usn]["penalty"]
+    } for usn in leaderboard]
+
+    leaderboard.sort(key=lambda x: x["penalty"])
+    leaderboard.sort(key=lambda x: x["score"], reverse=True)
+    return leaderboard
 
 
 def get_plagiarism_code(c_id: str):
@@ -623,8 +619,8 @@ def get_plagiarism_code(c_id: str):
     for submission in res[0]:
         tup = (submission["q_id"], submission["usn"])
         if tup not in submissions_to_check:
+            submission["name"] = get_student_details(submission["usn"], get_ranks=False)["name"]  # add the name
             submissions_to_check[tup] = submission
-
     return submissions_to_check
 
 
@@ -702,7 +698,7 @@ def get_unallocated_locations(start_time, end_time) -> list:
 if __name__ == "__main__":
     start = time()
 
-    temp = get_leaderboard("c_dOHYbn")
+    temp = get_plagiarism_code("c_dOHYbn")
     print(type(temp), temp)
 
     quit()
@@ -794,8 +790,6 @@ if __name__ == "__main__":
 
     temp = get_question_details("q_3423km23f")
     print(type(temp), temp)
-
-
 
     print(random_alnum())
     print(time() - start)
