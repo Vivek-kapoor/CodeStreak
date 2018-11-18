@@ -78,7 +78,7 @@
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;;margin:10px">
 											
 
-											<p>{{contest.name}} <span style="float:right; "><font color="green">ACTIVE</font></span></p>
+											<p><b>{{contest.name}} </b><span style="float:right; "><font color="green">ACTIVE</font></span></p>
 											</div>
 											{% endfor %}
 											
@@ -92,7 +92,7 @@
 										<p id=2 >
 											{% for contest in archived_contests %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;margin:10px">
-											<p>{{contest.name}} <a href="{{ url_for('contest_report', cid=contest.c_id, tag='question') }}"><button style="float:right;">Get Statistics</button></a> <span style="float:right; ">STATUS: <font color="red">FINISHED</font></span></p>
+											<p><b>{{contest.name}}</b> <a href="{{ url_for('contest_report', cid=contest.c_id, tag='question') }}"><button style="float:right;">Get Statistics</button></a> <span style="float:right; ">STATUS: <font color="red">FINISHED</font></span></p>
 											
 											</div>
 											{% endfor %}

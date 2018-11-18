@@ -78,7 +78,7 @@
 										<p id=1 >
 											{% for contest in active_contests %}
 											<div class="title" style="border:1px solid black;padding:10px;border-radius:25px;margin:10px;background-color:#f2f2f2">							
-											<p>{{contest.name}} <a href="{{ url_for('contest_page', cid=contest.c_id) }}"><button style="float:right;">Enter Lab</button></a></p>
+											<p><b>{{contest.name}} </b><a href="{{ url_for('contest_page', cid=contest.c_id) }}"><button style="float:right;">Enter Lab</button></a></p>
 											<p>Lab location: {{contest.location}}</p>
 											<p>Start: {{contest.start_time}}</p>
 											<p>End: {{contest.end_time}}</p>
@@ -103,7 +103,7 @@
 										<p id=1 >
 											{% for contest in future_contests %}
 											<div class="title" style="border-style:outset;padding:10px;border-radius:25px;background-color:#f2f2f2;margin:10px">							
-											<p>{{contest.name}} </p>
+											<p><b>{{contest.name}}</b> </p>
 											<p>Lab location: {{contest.location}}</p>
 											<p>Start: {{contest.start_time}}</p>
 											<p>End: {{contest.end_time}}</p>
@@ -123,7 +123,7 @@
 										<p>
 											{% for contest in archived_contests %}
 											<div class="title" style="border:1px outset black;padding:10px;border-radius:25px;margin:10px;background-color:#f2f2f2;">											
-											<p>{{contest.name}} <a href="{{ url_for('contest_page',cid=contest.c_id) }}"> <button style="float:right;">View Details</button></a></p>
+											<p><b>{{contest.name}}</b> <a href="{{ url_for('contest_page',cid=contest.c_id) }}"> <button style="float:right;">View Details</button></a></p>
 											<p>Lab location: {{contest.location}}</p>
 											<p>Start: {{contest.start_time}}</p>
 											<p>End: {{contest.end_time}}</p>	

@@ -89,18 +89,21 @@ def route_codestreak():
 
 def route_profile_page():
 
-    student_details = db.get_student_details(session['usn'], get_ranks=False)
+    student_details = db.get_student_details(session['usn'], get_ranks=True)
     rating = student_details['rating']
     best_rating = student_details['best']
     semester = student_details['semester']
     section = student_details['section']
+    overall_rank = student_details['rank']
+    batch_rank = student_details['batch_rank']
+    class_rank = student_details['class_rank']
     usn = session['usn']
     name = session['name']
     img_path = "plots/"+ usn + ".png"
     stats = db.get_submission_distribution(usn)
     draw_submission_chart(stats, usn)
 
-    return render_template("Student_profile.html", rating=rating, best_rating=best_rating, semester=semester, section=section, usn=usn, name=name, img_path=img_path)
+    return render_template("Student_profile.html", overall_rank=overall_rank, batch_rank=batch_rank, class_rank=class_rank, rating=rating, best_rating=best_rating, semester=semester, section=section, usn=usn, name=name, img_path=img_path)
 
 def route_about_us():
     return render_template("AboutUS.html")

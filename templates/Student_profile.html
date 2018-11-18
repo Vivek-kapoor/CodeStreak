@@ -37,35 +37,10 @@
 				<!-- Menu -->
 					<section id="menu">
 
-						<!-- Search -->
-							<section>
-								<form class="search" method="get" action="#">
-									<input type="text" name="query" placeholder="Search" />
-								</form>
-							</section>
-
-						<!-- Links -->
-							<section>
-								<ul class="links">
-									<li>
-										<a href="">
-											<h3>Homepage</h3>
-											<p>About us : Why use CodeStreak</p>
-										</a>
-									</li>
-									<li>
-									<li>
-										<a href="#">
-											<h3>Edit Profile Settings</h3>
-										</a>
-									</li>
-									
-									
-								</ul>
-							</section>
+						
 							<section>
 								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Log Out</a></li>
+									<li><a href="{{ url_for('logout')}}" class="button large fit">Log Out</a></li>
 								</ul>
 							</section>
 
@@ -87,8 +62,12 @@
 								
 								<div class="title" style="background-color:white;border-radius:15px" id="Lab">
 										<h2 style="margin-left:10px"><font color="black">Result Analysis</font></h2>
-										<div style="padding:10px"><h3><font color="black">Current Rating:{{rating}}  <br>Best Rating:{{best_rating}}  <br>Semester: {{semester}} <br>Section: {{section}} </font></div></h3>
-										<img src = "{{ url_for('static', filename = img_path ) }}" style="margin-left:600px;height:350px;top:-30px;">
+										<div style="padding:10px"><h3><font color="black">Current Rating:{{rating}}  <br>Best Rating:{{best_rating}}  <br>
+											University rank: {{overall_rank}} <br>
+											Batch rank: {{batch_rank}} <br>
+											Class rank: {{class_rank}} <br>
+											Semester: {{semester}} <br>Section: {{section}} </font></div></h3>
+										<img src = "{{ url_for('static', filename = img_path ) }}" style="margin-left:600px;height:500px;top:-30px;">
 										<!--<p id=1 >
 											<div class="title" style="padding:10px;margin-left:600px;height: 100px; width: 50%;top:-10px;" id="chartContainer" >
 												

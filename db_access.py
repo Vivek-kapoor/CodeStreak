@@ -718,6 +718,10 @@ def get_unallocated_locations(start_time, end_time) -> list:
 if __name__ == "__main__":
     start = time()
 
+    temp = get_student_details("01FB15ECS342", get_ranks=True)
+    print(type(temp), temp)
+    quit()
+
     temp = get_professor_details("0")
     print(type(temp), temp)
 
