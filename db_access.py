@@ -114,7 +114,7 @@ def connect_db():
         return None
 
 
-def _execute_query(query: str, json_output: bool = False) -> any:
+def _execute_query(query: str, json_output: bool = False, data=None) -> any:
     """
     Helper function to execute any query and fetches all rows
     :param query: Query string in SQL
@@ -131,7 +131,10 @@ def _execute_query(query: str, json_output: bool = False) -> any:
             if json_output:
                 json_query = """SELECT array_to_json(array_agg(row_to_json(t))) FROM ({}) t"""
                 query = json_query.format(query)
-            cur.execute(query)
+            if data:
+                cur.execute(query, data)
+            else:
+                cur.execute(query)
             logging.info('Executed: ' + query)
             res = cur.rowcount
             if re.fullmatch(r"^SELECT.*", query, re.IGNORECASE):
@@ -227,11 +230,9 @@ def submit_code(usn: str, q_id: str, c_id: str, code: str, language: str, score:
 
     s_id = random_alnum(prefix="s_")
     test_case_status = json.dumps(test_case_status)
-    code = json.dumps(code)
-
-    query = """INSERT INTO submission (s_id, usn, q_id, c_id, code, language, score, status, test_case_status) VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\')"""
-    query = query.format(s_id, usn, q_id, c_id, code, language, score, status, test_case_status)
-    res = _execute_query(query)
+    query = """INSERT INTO submission (s_id, usn, q_id, c_id, code, language, score, status, test_case_status) VALUES (\'{}\', \'{}\', \'{}\', \'{}\', (%s), \'{}\', \'{}\', \'{}\', \'{}\')"""
+    query = query.format(s_id, usn, q_id, c_id, language, score, status, test_case_status)
+    res = _execute_query(query, data=(code,))
     if res in none_list:
         logging.error('Failed to add submission to database')
         return None
@@ -761,19 +762,20 @@ if __name__ == "__main__":
     temp = get_plagiarism_code("c_dOHYbn")
     print(type(temp), temp)
 
-    # temp = submit_code(
-    #     **{
-    #         "usn": "01FB15ECS341",
-    #         "q_id": "q_3423km23f",
-    #         "c_id": "c_dOHYbn",
-    #         "code": "input()",
-    #         "language": "python",
-    #         "score": 0,
-    #         "status": "AC"
-    #     }
-    # )
-    #
-    # print(type(temp), temp)
+    temp = submit_code(
+        **{
+            "usn": "01FB15ECS341",
+            "q_id": "q_3423km23f",
+            "c_id": "c_dOHYbn",
+            "code": "inp'u't()",
+            "language": "python",
+            "test_case_status": [],
+            "score": 0,
+            "status": "AC"
+        }
+    )
+
+    print("SUBMIT CODE", type(temp), temp)
 
     # temp = create_question(
     #     **{"p_id": "01FB15ECS342",
