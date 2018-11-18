@@ -33,6 +33,7 @@ class RunCCode(object):
         result = p.wait()
         a, b = p.communicate()
         self.stdout, self.stderr = a.decode("utf-8"), b.decode("utf-8")
+        print(self.stderr,self.stdout)
         return result
 
 
@@ -230,7 +231,7 @@ class RunCCode(object):
         
         #self.line_prepender(filename,line_to_add)
         res = self._compile_c_code(filename,prog_output)
-        result_compilation = self.stdout
+        result_compilation = self.stdout+self.stderr
     
         display_output=''
         status='error'
