@@ -377,7 +377,8 @@ def route_contest_report(cid,tag='question'):
 
     #fetching the plagiarism report
     plag_report = db.get_plagiarism_report(cid)
-
+    total_cheaters = 0 
+    total_questions = 0
 
     if((plag_report[0]['plagiarism'])==None):
         plag_report[0]['plagiarism'] = "empty"
@@ -385,8 +386,10 @@ def route_contest_report(cid,tag='question'):
         for i in range(len(plag_report[0]['plagiarism'])):
             plag_report[0]['plagiarism'][i]["q_id"] = plag_report[0]['plagiarism'][i]["q_id"].split('/')[-1]
             plag_report[0]['plagiarism'][i]["q_id"] = get_question_details(plag_report[0]['plagiarism'][i]["q_id"])['name']
+            total_questions = len(plag_report[0]['plagiarism'])
             for j in range(len(plag_report[0]['plagiarism'][i]['report'])):
                 if(len(plag_report[0]['plagiarism'][i]['report'][j])==3):
+                    total_cheaters +=2
                     plag_report[0]['plagiarism'][i]['report'][j][0] = plag_report[0]['plagiarism'][i]['report'][j][0].split('/')[-1]
                     plag_report[0]['plagiarism'][i]['report'][j][1] = plag_report[0]['plagiarism'][i]['report'][j][1].split('/')[-1]
                     print( plag_report[0]['plagiarism'][i]['report'][j][0])
@@ -396,7 +399,7 @@ def route_contest_report(cid,tag='question'):
                     plag_report[0]['plagiarism'][i]['report'][j][1] = re.sub('\([0-9%]*\)', '',plag_report[0]['plagiarism'][i]['report'][j][1] )
 
     return render_template("prof_Rep.html", plag_report = plag_report ,questions = questions_by_contest, submissions = submissions_by_contest, 
-        leaderboard = leaderboard_by_contest, tag=tag, cid = cid)
+        leaderboard = leaderboard_by_contest, tag=tag, cid = cid,total_cheaters=total_cheaters,total_questions=total_questions  )
 
 def show_question(qid):
     print("------------------------------------")
@@ -460,7 +463,7 @@ def route_runc(q_id):
         f.write(resinput)
         f.close()  
         run = runcode.RunCCode(question,code,custom_input,Index)
-        rescompil, resrun , display_outputi,test_case_output= run.run_c_code()
+        rescompil, resrun , display_outputi , status ,test_case_output= run.run_c_code()
         print(test_case_output)
         
        
@@ -471,6 +474,7 @@ def route_runc(q_id):
         resrun = 'No result! no run yet.'
         rescompil = ''
         display_outputi={}
+        status=""
         test_case_output="None"
     
     return render_template("main.html",
@@ -482,7 +486,9 @@ def route_runc(q_id):
                            rescomp=rescompil,
                            test_case_output=test_case_output,
                            display_output = display_outputi,
-                           rows=default_rows, cols=default_cols)
+                           status=status,
+                           rows=default_rows, 
+                           cols=default_cols)
 
 
 def route_submission():

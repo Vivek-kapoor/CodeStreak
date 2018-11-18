@@ -73,14 +73,15 @@
     {%if display_output | length == 6  %}
     
     <ol style="list-style: none; font-size: 18px; line-height: 32px; font-weight: bold;">
-        
-        {% if display_output['Submission_status'] == "Correct Answer" %}
+            <li style="clear: both;"><span style="color: #2e6c80;"> </span><strong><span style="background-color: rgb(194, 194, 194); color: #000; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{display_output['Submission_status']}}</span></strong>
+            </li><br>
+        {% if status == "Correct Answer" %}
        
-        <li style="clear: both;"><span style="color: #2e6c80;">Submission Status <img src="/static/green.jpg" width = "25px" height = "25px"></span><strong><span style="background-color: #228B22; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{display_output['Submission_status']}}</span></strong>
+        <li style="clear: both;"><span style="color: #2e6c80;">Submission Status <img src="/static/green.jpg" width = "25px" height = "25px"></span><strong><span style="background-color: #228B22; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{status}}</span></strong>
         </li><br>
         
         {% else %}
-        <li style="clear: both;"><span style="color: #2e6c80;">Submission Status <img src="/static/red.jpeg" width = "25px" height = "25px"></span><strong><span style="background-color: #FF0000; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{display_output['Submission_status']}}</span></strong>
+        <li style="clear: both;"><span style="color: #2e6c80;">Submission Status <img src="/static/red.jpeg" width = "25px" height = "25px"></span><strong><span style="background-color: #FF0000; color: #fff; display: inline-block; padding: 3px 10px; font-weight: bold; border-radius: 5px;">{{status}}</span></strong>
         </li><br>
         {%endif%}
         <li style="clear: both;"><span style="color: #2e6c80;">Correct test cases </span><strong>{{display_output['correct_cases']}}  </strong>out of {{display_output['total_cases']}}</li><br>

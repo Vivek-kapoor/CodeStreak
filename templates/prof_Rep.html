@@ -47,6 +47,7 @@
 				}).done(function(o) {
 					// Do whatever u want to do with the results here!
 					div = document.getElementById('mydiv').innerHTML = "Submissions have been checked for plagiarism"
+					
 				});
 
 				swal({
@@ -220,17 +221,49 @@
 						<section>
 									<h3>PLAGIARISM PORTFOLIO</h3>
 									<button onclick="submit_plag('{{cid}}')" value="Check code for plagiarism"> Check code for plagiarism</button>
+									{% if plag_report[0]['plagiarism'] != "empty" %}
 
 									<div id="mydiv"><strong></strong></div>
+
+									<div id="thisdiv"><strong>The Submissions are already tested for plagiarism and here are the results! </strong></div>
 									<div class="table-wrapper" style="background-color:rgb(255, 255, 255)" >
-										<div id="plag_quest" style="background-color:rgb(0, 0, 0)" >
-									
-									<div id="mydiv"> </div>
-									{% if plag_report[0]['plagiarism'] != "empty" %}	
+										<div id="plag_quest" style="background-color:rgb(196, 212, 216)" >
+									<table>
+										<th>
+												<tr>
+														<th>
+															contest ID 
+														</th>
+														<th>
+															Total number of Questions 
+														</th>
+		
+														<th>
+																Total Plagiarised Students
+														</th>
+													</tr>
+											<tr>
+												<td>
+													 {{cid}}
+												</td>
+												<td>
+													 {{total_questions}} 
+												</td>	
+
+												<td>
+												     {{total_cheaters}} 
+												</td>
+											</tr>
+
+										</th>
+
+									</table>
+									</div>
+										
 										{% for question in plag_report[0]['plagiarism'] %}	
 											<p>{{ question['q_id'] }}</p>
 											
-											</div>
+											
 											
 											<table>
 												

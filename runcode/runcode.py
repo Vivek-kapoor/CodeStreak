@@ -99,9 +99,9 @@ class RunCCode(object):
                 format the output in order to display the status
             '''
             if(submission_correctness):
-                result = "Successful"
+                result = "Run Successful"
             else:
-                result = "Unsuccessful"
+                result = "Run Unsuccessful"
             output ={"Submission_status":str(result),
                 "time":str(time_taken),
                 "memory":str(memory_taken)}
@@ -191,7 +191,7 @@ class RunCCode(object):
                 result = "Correct Answer"
             else:
                 result = "Wrong Answer"
-            output ={"Submission_status":str(result),
+            output ={"Submission_status":str(status),
             "correct_cases":str(correct_cases),
             "total_cases":str(total_cases),
             "score":str(score),
@@ -233,6 +233,7 @@ class RunCCode(object):
         result_compilation = self.stdout
     
         display_output=''
+        status='error'
         if res == 0:
             display_output,score,status= self._run_c_prog(prog_output,idx)
             if(not(self.custom_input)):
@@ -250,7 +251,7 @@ class RunCCode(object):
             result_run = self.stdout 
            
         self.cleanup_files(idx)
-        return result_compilation, result_run, display_output,self.test_case_output
+        return result_compilation, result_run, display_output,status,self.test_case_output
 
     def all_submissions(self):
         '''fetch form db'''
