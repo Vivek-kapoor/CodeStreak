@@ -267,9 +267,9 @@ def route_prof_login():
         if (response):
             print('here')
             session['p_id'] = data['p_id']
-            student_details = db.get_student_details(data['p_id'], get_ranks=False)
+            professor_details = db.get_professor_details(data['p_id'])
             
-            session['name'] = student_details['name'] 
+            session['name'] = professor_details['name']
             return redirect(url_for('professor_dashboard'))
     return render_template('login.html',name = "Professor", attempt="1")
 

@@ -431,6 +431,23 @@ def get_contest_details(c_id: str):
     return res1[0][0]
 
 
+def get_professor_details(p_id: str):
+    """
+    Gets the details of a professor
+    :param p_id: professor id
+    :return: dictionary if success, else None
+    """
+    query = "SELECT * from professor WHERE p_id = \'{}\'"
+    query = query.format(p_id)
+    res = _execute_query(query, json_output=True)
+
+    if res in none_list or res[0] in none_list:
+        logging.error('Could not fetch professor details')
+        return None
+
+    return res[0][0]
+
+
 def get_student_details(usn: str, get_ranks: bool = True):
     """
     Gets all student details including rating, best rating, rank, batch rank, class rank from database
@@ -697,6 +714,11 @@ def get_unallocated_locations(start_time, end_time) -> list:
 
 if __name__ == "__main__":
     start = time()
+
+    temp = get_professor_details("0")
+    print(type(temp), temp)
+    quit()
+
 
     temp = get_plagiarism_code("c_dOHYbn")
     print(type(temp), temp)
