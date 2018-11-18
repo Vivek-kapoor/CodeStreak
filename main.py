@@ -7,26 +7,27 @@ CONTENTS:
 1. codestreak			: Starting point of the application
 2. profile_page			: Get the profile page of the student
 3. about_us			: Get this application developers info
-4. logout			: Logout from the application
-5. prof_page			: Loads login page for the professor 
-6. student_page			: Loads login page for the Student
-7. student_login		: Verify student credentail
-8. student_dashboard		: Loads student dashboard page
-9. prof_login			: Verify professor credentail
-10.professor_dashboard		: Loads professor dashboard page
-11.admin_dashboard		: Loads admins dashboard page
-12.create_assignment		: Create new lab assignment
-13.add_questions		: Adds question to the question library
-14.contest_page			: Shows all the questions for the selected contest/lab
-15.archive_lab_question		: Shows all the submission for particular question
-16.lab_question			: Loads ide for selected question in the contest/lab
-17.contest_leaderboard		: Gets the leaderboard for the contest/lab 
-18.contest_report		: Called from prof session to get the report for the contest
-19.runc				: Loads ide for c code
-20.submission			:
-21.runcpp			: Loads ide for c code
-22.runpy			: Loads ide for c code
-23.view_submission		: Loads template to view solution submitted for perticular question
+4. faq				: Get this application faq details
+5. logout			: Logout from the application
+6. prof_page			: Loads login page for the professor 
+7. student_page			: Loads login page for the Student
+8. student_login		: Verify student credentail
+9. student_dashboard		: Loads student dashboard page
+10. prof_login			: Verify professor credentail
+11.professor_dashboard		: Loads professor dashboard page
+12.admin_dashboard		: Loads admins dashboard page
+13.create_assignment		: Create new lab assignment
+14.add_questions		: Adds question to the question library
+15.contest_page			: Shows all the questions for the selected contest/lab
+16.archive_lab_question		: Shows all the submission for particular question
+17.lab_question			: Loads ide for selected question in the contest/lab
+18.contest_leaderboard		: Gets the leaderboard for the contest/lab 
+19.contest_report		: Called from prof session to get the report for the contest
+20.runc				: Loads ide for c code
+21.submission			:
+22.runcpp			: Loads ide for c code
+23.runpy			: Loads ide for c code
+24.view_submission		: Loads template to view solution submitted for perticular question
 """
 
 # import os
@@ -58,6 +59,10 @@ def profile_page():
 @app.route('/about_us')
 def about_us():
 	return route_about_us()
+
+@app.route('/faq')
+def faq():
+	return route_faq()
 
 @app.route('/logout')
 def logout():
