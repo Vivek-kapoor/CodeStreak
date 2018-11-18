@@ -70,8 +70,9 @@
 										
 
 										
-											<form action = "{{ url_for('set_location') }}" method = POST>
+											
 											{% for contest in data %}
+											<form action = "{{ url_for('set_location') }}" method = POST>
 
 											<div class="title" style="border:1px solid black;padding:15px;border-radius:25px;;margin:10px;background-color::#E0E0E0">							
 					<p>{{contest.name}}<p style="margin-left:880px">
@@ -85,9 +86,10 @@
 								</p>	
 							</div>
 											<input type = "hidden" name = "c_id" value = {{contest.c_id}}>
+											</form>
 											{% endfor %}
 
-										</form>
+										
 										</p>
 
 										

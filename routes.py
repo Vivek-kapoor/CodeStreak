@@ -161,7 +161,11 @@ def route_set_location():
     data = request.form.to_dict(flat=False)
     cid = ''.join(data['c_id'])
     location = ''.join(data['location'])
+
     res = db.set_contest_location(cid, location)
+    print("################### ADMIN Dashboard ##############")
+    print(cid)
+    print(type(location),location)
 
     unassigned_contests = db.get_unassigned_contests()
     data = []
