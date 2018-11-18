@@ -68,7 +68,9 @@ body {
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
-					
+					{% if attempt=="1" %}
+					<span style="color:red;">Invalid credentials</span>
+					{% endif %}
 					<div class="container-login100-form-btn">
 						<input type="submit" value ="Login" class="login100-form-btn">
 							
@@ -101,7 +103,9 @@ body {
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
-					
+					{% if attempt=="1" %}
+					<span style="color:red;">Invalid credentials</span>
+					{% endif %}
 					<div class="container-login100-form-btn">
 						<input type="submit" value="Login" class="login100-form-btn">
 							

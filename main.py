@@ -70,11 +70,11 @@ def logout():
 
 @app.route('/prof_page')
 def prof_page():
-	return render_template("login.html", name = "Professor")
+	return render_template("login.html", name = "Professor", attempt="0")
 
 @app.route('/student_page')
 def student_page():
-	return render_template("login.html", name = "Student")
+	return render_template("login.html", name = "Student", attempt="0")
 
 @app.route("/student_login", methods=["GET", "POST"])
 def student_login():

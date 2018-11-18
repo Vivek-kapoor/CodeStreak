@@ -234,8 +234,8 @@ def route_student_login():
             session['name'] = student_details['name'] #i think this is correct.no i haven't added the above line. 
             return redirect(url_for('student_dashboard')) 
         else:
-            return render_template('login.html', name = "Student")
-    return render_template('login.html', name = "Student")
+            return render_template('login.html', name = "Student", attempt="1")
+    return render_template('login.html', name = "Student", attempt="1")
 
 
 def route_prof_login():
@@ -271,7 +271,7 @@ def route_prof_login():
             
             session['name'] = student_details['name'] 
             return redirect(url_for('professor_dashboard'))
-    return render_template('login.html',name = "Professor")
+    return render_template('login.html',name = "Professor", attempt="1")
 
 def route_create_assignment():
     print("------------------------------------")
