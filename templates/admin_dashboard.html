@@ -69,19 +69,19 @@
 
 										
 
-										<p id=1 >
+										
 											<form action = "{{ url_for('set_location') }}" method = POST>
 											{% for contest in data %}
 
-											<div class="title" style="border:1px solid black;padding:5px;border-radius:25px;;margin:10px">							
-					<p>{{contest.name}} <time style="margin-left:450px"><p style="margin-left:880px"><button type = "submit">Add location</button> 
-						<select name="location"style="margin-left:160px;width:150px">
+											<div class="title" style="border:1px solid black;padding:15px;border-radius:25px;;margin:10px;background-color::#E0E0E0">							
+					<p>{{contest.name}}<p style="margin-left:880px">
+						<select name="location">
 							{% for location in contest.locations %}
 							<option value={{location}}>{{location}}</option>
 							{% endfor %}
 							
 
-						</select>
+						</select><br><button type = "submit" style = "margin-left:180px;">Add location</button> 
 								</p>	
 							</div>
 											<input type = "hidden" name = "c_id" value = {{contest.c_id}}>
