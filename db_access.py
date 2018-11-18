@@ -227,6 +227,7 @@ def submit_code(usn: str, q_id: str, c_id: str, code: str, language: str, score:
 
     s_id = random_alnum(prefix="s_")
     test_case_status = json.dumps(test_case_status)
+    code = json.dumps(code)
 
     query = """INSERT INTO submission (s_id, usn, q_id, c_id, code, language, score, status, test_case_status) VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\', \'{}\')"""
     query = query.format(s_id, usn, q_id, c_id, code, language, score, status, test_case_status)
