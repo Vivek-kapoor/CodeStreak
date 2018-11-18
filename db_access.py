@@ -104,12 +104,12 @@ def connect_db():
         logging.info('Connection successful')
         return conn
 
-    except psycopg2.OperationalError:
-        logging.error('Check your connection')
+    except psycopg2.OperationalError as e:
+        logging.error('Check your connection %s', e)
         return None
 
-    except psycopg2.DatabaseError:
-        logging.error('Failed to connect to database')
+    except psycopg2.DatabaseError as e:
+        logging.error('Failed to connect to database %s', e)
         return None
 
 
