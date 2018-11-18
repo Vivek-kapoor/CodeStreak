@@ -25,19 +25,20 @@ CONTENTS
     16. get_archived_contest_professor: Gets all the archived contest for given p_id
     17. get_active_contest_professor: Gets all the active contest for given p_id
     18. get_contest_details: Get all the details of a contest
-    19. get_student_details: Gets all student details including rating, best rating, rank, batch rank, class rank from database
-    20. get_submission_distribution: Distribution of all submissions to create pie chart
-    21. get_questions_by_contest: Fetches questions of a particular contest
-    22. set_contest_location: Sets the location of a contest
-    23. create_question: Adds a question to the database with a random question id
-    24. get_submissions_by_student: Gets the submissions made by a student for a particular question for a particular contest
-    25. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
-    26. get_leaderboard: Gets the leaderboard of a contest
-    27. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
-    28. get_plagiarism_report: Returns the plagiarism report for a given contest
-    29. set_plagiarism_report: Saves the plagiarism report in the database
-    30. get_unassigned_contests: Gets labs whose locations have not been assigned
-    31. get_unallocated_locations: Gets locations that have not been assigned for given time
+    19. get_professor_details: Gets the details of a professor
+    20. get_student_details: Gets all student details including rating, best rating, rank, batch rank, class rank from database
+    21. get_submission_distribution: Distribution of all submissions to create pie chart
+    22. get_questions_by_contest: Fetches questions of a particular contest
+    23. set_contest_location: Sets the location of a contest
+    24. create_question: Adds a question to the database with a random question id
+    25. get_submissions_by_student: Gets the submissions made by a student
+    26. get_submissions_by_contest: Gets all the submissions for a contest for the professor to see
+    27. get_leaderboard: Gets the leaderboard of a contest
+    28. get_plagiarism_code: Gets the candidate submissions to be detected for plagiarism
+    29. get_plagiarism_report: Returns the plagiarism report for a given contest
+    30. set_plagiarism_report: Saves the plagiarism report in the database
+    31. get_unassigned_contests: Gets labs whose locations have not been assigned
+    32. get_unallocated_locations: Gets locations that have not been assigned for given time
 """
 
 import psycopg2
@@ -719,7 +720,11 @@ def get_unallocated_locations(start_time, end_time) -> list:
 if __name__ == "__main__":
     start = time()
 
-    temp = get_unassigned_contests()
+    temp = set_contest_location("c_HcvL", "8")
+    print(type(temp), temp)
+    quit()
+
+    temp = get_student_details("01FB15ECS342", get_ranks=True)
     print(type(temp), temp)
     quit()
 
