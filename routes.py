@@ -5,28 +5,29 @@ CONTENTS:
 1.  route_codestreak            : Renders index template to choose the login actor.
 2.  route_profile_page          : Renders Student profile page with all ratings and personal info.
 3.  route_about_us              : Renders the AboutUS page of developers of this application. 
-4.  route_logout                : Renders index template to choose the login actor and reset the session varaible
-5.  route_student_dashboard     : Renders Student Dashboard template 
-6.  route_professor_dashboard   : Renders Professor Dashboard template
-7.  route_admin_dashboard       : Renders Admin Dashboard template
-8.  get_question                : Get all the questions in the contest
-9.  route_student_login         : Verify student credential.
-10. route_prof_login            : Verify professors credentail.
-11. route_create_assignment     : Renders template to create assignment and request database to add assignment.
-12. route_add_questions         : Renders template to create assignment and request database to add question.
-13. route_contest_leaderboard   : Renders leaderboard template to get the leaderboard of the contest.
-14. route_contest_report        : Renders prof report template to get the summary of contest i.e., submission, 
+4.  route_faq                   : Renders the FAQ page of this application.
+5.  route_logout                : Renders index template to choose the login actor and reset the session varaible.
+6.  route_student_dashboard     : Renders Student Dashboard template. 
+7.  route_professor_dashboard   : Renders Professor Dashboard template.
+8.  route_admin_dashboard       : Renders Admin Dashboard template.
+9.  get_question                : Get all the questions in the contest.
+10. route_student_login         : Verify student credential.
+11. route_prof_login            : Verify professors credentail.
+12. route_create_assignment     : Renders template to create assignment and request database to add assignment.
+13. route_add_questions         : Renders template to create assignment and request database to add question.
+14. route_contest_leaderboard   : Renders leaderboard template to get the leaderboard of the contest.
+15. route_contest_report        : Renders prof report template to get the summary of contest i.e., submission, 
                                   plagarism report, leadeaboard for the contest and list of questions in the contest.
-15. show_question               : Sets question in seesion varaible in order to pass it to be accessed in ide to submit 
+16. show_question               : Sets question in seesion varaible in order to pass it to be accessed in ide to submit 
                                   solutions for.
-16. contest_questions           : Renders template based on status of the contest i.e., active or archived and shows the
+17. contest_questions           : Renders template based on status of the contest i.e., active or archived and shows the
                                   list of question in the contest.
-17. route_runc                  : Renders the ide to submit the code.
-18. route_submission            : Renders template table to show all the submission for particular question
-19. route_runcpp
-20. route_runpy
-21. route_view_submission       : Renders template view submission to view submitted code for particular question in
-                                  contest
+18. route_runc                  : Renders the ide to submit the code.
+19. route_submission            : Renders template table to show all the submission for particular question.
+20. route_runcpp
+21. route_runpy
+22. route_view_submission       : Renders template view submission to view submitted code for particular question in
+                                  contest.
 """
 
 import code
@@ -102,6 +103,9 @@ def route_profile_page():
 
 def route_about_us():
     return render_template("AboutUS.html")
+
+def route_faq():
+    return render_template("faq.html")
 
 def route_logout():
     session.clear()
