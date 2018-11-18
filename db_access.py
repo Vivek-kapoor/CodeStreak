@@ -2,7 +2,8 @@
 This file contains the code that connects the backend to database
 Run this file to check if the connection to database works
 If it doesn't throw an error, it works!
-Connect from cmd: psql -h codestreak.postgres.database.azure.com -p 5432 -U codestreak@codestreak codestreak
+(OLD) Connect from cmd: psql -h codestreak.postgres.database.azure.com -p 5432 -U codestreak@codestreak codestreak
+Connect from cmd: psql -h codestreaknew.postgres.database.azure.com -p 5432 -U codestreak@codestreaknew codestreak
 
 CONTENTS
     0. destroy_connections: Closes all connections from connection pool
@@ -64,7 +65,8 @@ codestreak=# \d
 """
 
 none_list = ['None', None, False, {}, [], set(), 'null', 'NULL', 0, "0", tuple(), (None,)]
-connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
+# connect_str = "dbname='codestreak' user='codestreak@codestreak' host='codestreak.postgres.database.azure.com' password='Student123' port='5432' "
+connect_str = "dbname='codestreak' user='codestreak@codestreaknew' host='codestreaknew.postgres.database.azure.com' password='Student123' port='5432'"
 pool = psycopg2.pool.SimpleConnectionPool(2, 10, connect_str)
 logging.info('Successfully established connection pool')
 
@@ -697,7 +699,7 @@ def get_unallocated_locations(start_time, end_time) -> list:
     :return: A list of locations
     """
     max_location = 9
-    locations = set(str(x) for x in range(max_location+1))
+    locations = set(str(x) for x in range(max_location + 1))
     query = """SELECT location FROM contest WHERE \'{}\' >= start_time AND \'{}\' <= end_time"""
     query = query.format(end_time, start_time)
     res = _execute_query(query)
@@ -717,20 +719,15 @@ if __name__ == "__main__":
 
     temp = get_professor_details("0")
     print(type(temp), temp)
-    quit()
-
 
     temp = get_plagiarism_code("c_dOHYbn")
     print(type(temp), temp)
-
-    quit()
 
     temp = get_unallocated_locations("2018-11-07 04:30:00", "2018-11-11 04:30:00")
     print(type(temp), temp)
 
     temp = get_unassigned_contests()
     print(type(temp), temp)
-    quit()
 
     temp = get_future_contest_student("01FB15ECS342")
     print(type(temp), temp)
