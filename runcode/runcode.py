@@ -122,6 +122,7 @@ class RunCCode(object):
             time_limit  = self.question['time_limit']
             my_input = self.question['test_cases']
             
+            memory_limit += 5000
             
 
          
@@ -247,6 +248,7 @@ class RunCCode(object):
                 print(session['c_id'])
                 c_id=session['c_id']
                 s_id=session['usn']
+                code = "''"+code+"''"
                 submit_code(s_id, q_id,c_id, code,"C", score, status, self.test_case_output)
             
             result_run = self.stdout 
