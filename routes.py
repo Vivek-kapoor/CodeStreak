@@ -353,7 +353,7 @@ def route_add_questions():
 def route_contest_leaderboard(cid):
 
     leaderboard_by_contest = db.get_leaderboard(cid)
-    return render_template("leaderboard.html", leaderboard = leaderboard_by_contest)
+    return render_template("newleaderboard.html", leaderboard = leaderboard_by_contest)
 
 
 

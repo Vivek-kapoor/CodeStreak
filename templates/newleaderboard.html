@@ -34,27 +34,27 @@
 								</ul>
 							</section>
 	</section>
-		<body>
+		
 		<div id="main" >
 		<div id="leader" class="tabcontent" >
 						<section>
 									<h3>RANKING PORTFOLIO</h3>
 									
-									<div class="table-wrapper" style="background-color:rgb(255, 255, 255)" >
+									<div class="table-wrapper" style="background-color:rgb(0, 0, 0);color:white;" >
 										<table>
 											
 												<tr>
-													<th>RANK</th>
-													<th>Score</th> 
-													<th>USN</th>
-													<th>TIME</th>
+													<th style="color:white">RANK</th>
+													<th style="color:white">Score</th> 
+													<th style="color:white">USN</th>
+													<th style="color:white">TIME</th>
 												</tr>
 												{% for data in leaderboard %}
 													<tr {% if loop.index % 2 == 0 %} style="background-color: #f2f2f2" {% endif %}>
-														<td>{{loop.index}}</td>
-														<td>{{data.score}}</td>
-														<td>{{data.usn}}</td>
-														<td>{{data.penalty}}</td>
+														<td style="color:white">{{loop.index}}</td>
+														<td style="color:white">{{data.score}}</td>
+														<td style="color:white">{{data.usn}}</td>
+														<td style="color:white">{{data.penalty}}</td>
 													</tr>
 												{% endfor %}
 											</table>
@@ -65,7 +65,7 @@
 
 						</div>
 		</div>
-		</body>
+		
 
 				
 
