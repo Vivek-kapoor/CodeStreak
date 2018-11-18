@@ -389,14 +389,16 @@ def route_contest_report(cid,tag='question'):
         plag_report[0]['plagiarism'] = "empty"
     else:
         for i in range(len(plag_report[0]['plagiarism'])):
-            plag_report[0]['plagiarism'][i]["q_id"] = plag_report[0]['plagiarism'][i]["q_id"].split('/')[-1]
-            plag_report[0]['plagiarism'][i]["q_id"] = get_question_details(plag_report[0]['plagiarism'][i]["q_id"])['name']
+            plag_report[0]['plagiarism'][i]["q_id"] = plag_report[0]['plagiarism'][i]["q_id"].split('\\')[-1]
+            print("qid",plag_report[0]['plagiarism'][i]["q_id"])
+            if(get_question_details(plag_report[0]['plagiarism'][i]["q_id"])!=None):
+                plag_report[0]['plagiarism'][i]["q_id"] = get_question_details(plag_report[0]['plagiarism'][i]["q_id"])['name']
             total_questions = len(plag_report[0]['plagiarism'])
             for j in range(len(plag_report[0]['plagiarism'][i]['report'])):
                 if(len(plag_report[0]['plagiarism'][i]['report'][j])==3):
                     total_cheaters +=2
-                    plag_report[0]['plagiarism'][i]['report'][j][0] = plag_report[0]['plagiarism'][i]['report'][j][0].split('/')[-1]
-                    plag_report[0]['plagiarism'][i]['report'][j][1] = plag_report[0]['plagiarism'][i]['report'][j][1].split('/')[-1]
+                    plag_report[0]['plagiarism'][i]['report'][j][0] = plag_report[0]['plagiarism'][i]['report'][j][0].split('\\')[-1]
+                    plag_report[0]['plagiarism'][i]['report'][j][1] = plag_report[0]['plagiarism'][i]['report'][j][1].split('\\')[-1]
                     print( plag_report[0]['plagiarism'][i]['report'][j][0])
                     print(re.findall("[0-9]*%",plag_report[0]['plagiarism'][i]['report'][j][0]))
                     plag_report[0]['plagiarism'][i]['report'][j].append(re.findall("[0-9]*%",plag_report[0]['plagiarism'][i]['report'][j][0])[0])
